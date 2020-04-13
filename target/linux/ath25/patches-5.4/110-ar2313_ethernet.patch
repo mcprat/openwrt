@@ -33,7 +33,7 @@
 +obj-$(CONFIG_NET_AR231X) += ar231x.o
 --- /dev/null
 +++ b/drivers/net/ethernet/atheros/ar231x/ar231x.c
-@@ -0,0 +1,1119 @@
+@@ -0,0 +1,1109 @@
 +/*
 + * ar231x.c: Linux driver for the Atheros AR231x Ethernet device.
 + *
@@ -1133,17 +1133,7 @@
 +		return PTR_ERR(phydev);
 +	}
 +
-+	/* mask with MAC supported features */
-+	phydev->supported &= (SUPPORTED_10baseT_Half
-+		| SUPPORTED_10baseT_Full
-+		| SUPPORTED_100baseT_Half
-+		| SUPPORTED_100baseT_Full
-+		| SUPPORTED_Autoneg
-+		/* | SUPPORTED_Pause | SUPPORTED_Asym_Pause */
-+		| SUPPORTED_MII
-+		| SUPPORTED_TP);
-+
-+	phydev->advertising = phydev->supported;
++	phy_set_max_speed(phydev, SPEED_100);
 +
 +	sp->phy_dev = phydev;
 +
