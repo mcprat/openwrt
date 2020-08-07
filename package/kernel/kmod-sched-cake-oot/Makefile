@@ -20,24 +20,11 @@ PKG_MAINTAINER:=Kevin Darbyshire-Bryant <ldir@darbyshire-bryant.me.uk>
 
 include $(INCLUDE_DIR)/package.mk
 
-define KernelPackage/sched-cake-oot
-  SUBMENU:=Network Support
-  TITLE:=OOT Cake fq_codel/blue derived shaper
-  URL:=https://github.com/dtaht/sch_cake
-  FILES:=$(PKG_BUILD_DIR)/sch_cake.ko
-  AUTOLOAD:=$(call AutoLoad,75,sch_cake)
-  DEPENDS:=@LINUX_4_14 +kmod-sched-core +kmod-ipt-conntrack
-endef
-
-define KernelPackage/sched-cake-oot/description
-  O(ut) O(f) T(ree) Common Applications Kept Enhanced fq_codel/blue derived shaper
-endef
-
 define KernelPackage/sched-cake-virtual
   SUBMENU:=Network Support
   TITLE:=Virtual package for sched-cake
   URL:=https://github.com/dtaht/sch_cake
-  DEPENDS:=+!LINUX_4_14:kmod-sched-cake +LINUX_4_14:kmod-sched-cake-oot
+  DEPENDS:=+kmod-sched-cake
 endef
 
 define KernelPackage/sched-cake-virtual/description
@@ -50,5 +37,4 @@ define Build/Compile
 	$(KERNEL_MAKE) M="$(PKG_BUILD_DIR)" modules
 endef
 
-$(eval $(call KernelPackage,sched-cake-oot))
 $(eval $(call KernelPackage,sched-cake-virtual))
