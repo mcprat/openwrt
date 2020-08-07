@@ -273,7 +273,7 @@ endef
 
 define Package/wpad-mesh
 $(call Package/wpad/Default,$(1))
-  DEPENDS+=@PACKAGE_kmod-cfg80211 @(!TARGET_uml||BROKEN)
+  DEPENDS+=@PACKAGE_kmod-cfg80211
   PROVIDES+=wpa-supplicant-mesh wpad-mesh
 endef
 
@@ -345,7 +345,7 @@ endef
 
 define Package/wpa-supplicant-mesh/Default
 $(call Package/wpa-supplicant/Default,$(1))
-  DEPENDS+=@PACKAGE_kmod-cfg80211 @(!TARGET_uml||BROKEN)
+  DEPENDS+=@PACKAGE_kmod-cfg80211
   PROVIDES+=wpa-supplicant-mesh
 endef
 

@@ -79,7 +79,7 @@ $(eval $(call KernelPackage,sound-core))
 
 define AddDepends/sound
   SUBMENU:=$(SOUND_MENU)
-  DEPENDS+=kmod-sound-core $(1) @!TARGET_uml
+  DEPENDS+=kmod-sound-core $(1)
 endef
 
 

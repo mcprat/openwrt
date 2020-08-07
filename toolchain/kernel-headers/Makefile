@@ -33,10 +33,6 @@ PATCH_DIR := ./patches$(if $(wildcard ./patches-$(LINUX_VERSION)),-$(LINUX_VERSI
 include $(INCLUDE_DIR)/toolchain-build.mk
 include $(INCLUDE_DIR)/kernel-defaults.mk
 
-ifeq ($(strip $(BOARD)),uml)
-  LINUX_KARCH:=$(subst x86_64,x86,$(subst i386,x86,$(ARCH)))
-endif
-
 HOST_EXTRACFLAGS=
 
 LINUX_HAS_HEADERS_INSTALL:=y

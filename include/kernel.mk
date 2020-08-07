@@ -34,13 +34,8 @@ else
 
   LINUX_KMOD_SUFFIX=ko
 
-  ifneq (,$(findstring uml,$(BOARD)))
-    KERNEL_CC?=$(HOSTCC)
-    KERNEL_CROSS?=
-  else
-    KERNEL_CC?=$(TARGET_CC)
-    KERNEL_CROSS?=$(TARGET_CROSS)
-  endif
+  KERNEL_CC?=$(TARGET_CC)
+  KERNEL_CROSS?=$(TARGET_CROSS)
 
   ifeq ($(TARGET_BUILD),1)
     PATCH_DIR ?= $(CURDIR)/patches$(if $(wildcard ./patches-$(KERNEL_PATCHVER)),-$(KERNEL_PATCHVER))
@@ -81,9 +76,7 @@ else
   endif
 endif
 
-ifneq (,$(findstring uml,$(BOARD)))
-  LINUX_KARCH=um
-else ifneq (,$(findstring $(ARCH) , aarch64 aarch64_be ))
+ifneq (,$(findstring $(ARCH) , aarch64 aarch64_be ))
   LINUX_KARCH := arm64
 else ifneq (,$(findstring $(ARCH) , arceb ))
   LINUX_KARCH := arc

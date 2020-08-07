@@ -28,7 +28,7 @@ config KERNEL_PRINTK
 
 config KERNEL_CRASHLOG
 	bool "Crash logging"
-	depends on !(arm || powerpc || sparc || TARGET_uml || i386 || x86_64)
+	depends on !(arm || powerpc || sparc || i386 || x86_64)
 	default y
 
 config KERNEL_SWAP
@@ -239,7 +239,6 @@ config KERNEL_KALLSYMS
 
 config KERNEL_FTRACE
 	bool "Compile the kernel with tracing support"
-	depends on !TARGET_uml
 	default n
 
 config KERNEL_FTRACE_SYSCALLS
@@ -896,7 +895,6 @@ config KERNEL_SECCOMP_FILTER
 
 config KERNEL_SECCOMP
 	bool "Enable seccomp support"
-		depends on !(TARGET_uml)
 		select KERNEL_SECCOMP_FILTER
 		default y if !SMALL_FLASH
 		help
