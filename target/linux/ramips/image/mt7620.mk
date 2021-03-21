@@ -461,6 +461,21 @@ define Device/engenius_epg600
 endef
 TARGET_DEVICES += engenius_epg600
 
+define Device/engenius_esr300
+  $(Device/uimage-lzma-loader)
+  SOC := mt7620n
+  BLOCKSIZE := 4k
+  IMAGE_SIZE := 15680k
+  IMAGES += factory.dlf
+  IMAGE/factory.dlf := $$(sysupgrade_bin) | check-size | \
+	senao-header -r 0x101 -p 0x59 -t 2
+  DEVICE_VENDOR := EnGenius
+  DEVICE_MODEL := ESR300
+  DEVICE_PACKAGES += kmod-usb-ohci kmod-usb-storage kmod-usb2 \
+	uboot-envtools
+endef
+TARGET_DEVICES += engenius_esr300
+
 define Device/engenius_esr350
   $(Device/uimage-lzma-loader)
   SOC := mt7620a
