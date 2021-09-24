@@ -1,32 +1,3 @@
---- a/libltdl/config/general.m4sh
-+++ b/libltdl/config/general.m4sh
-@@ -45,15 +45,22 @@ progpath="$0"
- M4SH_VERBATIM([[
- : ${CP="cp -f"}
- test "${ECHO+set}" = set || ECHO=${as_echo-'printf %s\n'}
--: ${EGREP="@EGREP@"}
--: ${FGREP="@FGREP@"}
--: ${GREP="@GREP@"}
- : ${LN_S="@LN_S@"}
- : ${MAKE="make"}
- : ${MKDIR="mkdir"}
- : ${MV="mv -f"}
- : ${RM="rm -f"}
--: ${SED="@SED@"}
-+if test -n "$STAGING_DIR_HOST"; then
-+	: ${EGREP="$STAGING_DIR_HOST/bin/grep -E"}
-+	: ${FGREP="$STAGING_DIR_HOST/bin/grep -F"}
-+	: ${GREP="$STAGING_DIR_HOST/bin/grep"}
-+	: ${SED="$STAGING_DIR_HOST/bin/sed"}
-+else
-+	: ${EGREP="@EGREP@"}
-+	: ${FGREP="@FGREP@"}
-+	: ${GREP="@GREP@"}
-+	: ${SED="@SED@"}
-+fi
- : ${SHELL="${CONFIG_SHELL-/bin/sh}"}
- : ${Xsed="$SED -e 1s/^X//"}
- 
 --- a/libtoolize.in
 +++ b/libtoolize.in
 @@ -40,11 +40,18 @@
@@ -50,53 +21,36 @@
 +	: ${SED="@SED@"}
 +fi
  
-   # Locations for important files:
-   prefix=@prefix@
--  datadir=@datadir@
--  pkgdatadir=@pkgdatadir@
--  pkgltdldir=@pkgdatadir@
--  aclocaldir=@aclocaldir@
-+  if test -n "$STAGING_DIR_HOST"; then
-+    datadir="$STAGING_DIR_HOST/share"
-+    pkgdatadir="$STAGING_DIR_HOST/share/libtool"
-+    pkgltdldir="$STAGING_DIR_HOST/share/libtool"
-+    aclocaldir="$STAGING_DIR_HOST/share/aclocal"
-+  else
-+    datadir=@datadir@
-+    pkgdatadir=@pkgdatadir@
-+    pkgltdldir=@pkgdatadir@
-+    aclocaldir=@aclocaldir@
-+  fi
-   auxdir=
-   macrodir=
-   configure_ac=configure.in
---- a/libtoolize.m4sh
-+++ b/libtoolize.m4sh
-@@ -1453,10 +1453,17 @@ func_check_macros ()
+ 
+ ## -------------------------- ##
+@@ -1901,11 +1908,19 @@ func_require_seen_libtool ()
+   pkgmacro_files="@pkgmacro_files@"
  
    # Locations for important files:
-   prefix=@prefix@
--  datadir=@datadir@
--  pkgdatadir=@pkgdatadir@
--  pkgltdldir=@pkgdatadir@
--  aclocaldir=@aclocaldir@
-+  if test -n "$STAGING_DIR_HOST"; then
-+    datadir="$STAGING_DIR_HOST/share"
-+    pkgdatadir="$STAGING_DIR_HOST/share/libtool"
-+    pkgltdldir="$STAGING_DIR_HOST/share/libtool"
-+    aclocaldir="$STAGING_DIR_HOST/share/aclocal"
+-  prefix="@prefix@"
+-  datadir="@datadir@"
+-  pkgauxdir="@pkgauxdir@"
+-  pkgltdldir="@pkgdatadir@"
+-  aclocaldir="@aclocaldir@"
++  if test -n "$STAGING_DIR"; then
++    prefix="$STAGING_DIR/../host"
++    datadir="$STAGING_DIR/../host/share"
++    pkgauxdir="$STAGING_DIR/../host/share/libtool/build-aux"
++    pkgltdldir="$STAGING_DIR/../host/share/libtool"
++    aclocaldir="$STAGING_DIR/../host/share/aclocal"
 +  else
-+    datadir=@datadir@
-+    pkgdatadir=@pkgdatadir@
-+    pkgltdldir=@pkgdatadir@
-+    aclocaldir=@aclocaldir@
++    prefix="@prefix@"
++    datadir="@datadir@"
++    pkgauxdir="@pkgauxdir@"
++    pkgltdldir="@pkgdatadir@"
++    aclocaldir="@aclocaldir@"
 +  fi
-   auxdir=
-   macrodir=
-   configure_ac=configure.in
---- a/libltdl/m4/libtool.m4
-+++ b/libltdl/m4/libtool.m4
-@@ -907,9 +907,8 @@ dnl AC_DEFUN([AC_LIBTOOL_RC], [])
+ 
+   # Allow the user to override the master libtoolize repository:
+   if test -n "$_lt_pkgdatadir"; then
+--- a/m4/libtool.m4
++++ b/m4/libtool.m4
+@@ -929,9 +929,8 @@ dnl AC_DEFUN([AC_LIBTOOL_RC], [])
  # ----------------
  m4_defun([_LT_TAG_COMPILER],
  [AC_REQUIRE([AC_PROG_CC])dnl
