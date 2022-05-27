@@ -41,7 +41,7 @@ HOST_CONFIGURE_ARGS := \
 HOST_LDFLAGS += -Wl,-rpath,$(STAGING_DIR_HOST)/lib
 
 define Host/Compile/Default
-	+$(NINJA) -C $(HOST_BUILD_DIR) $(1)
+	$(NINJA) -C $(HOST_BUILD_DIR) $(1)
 endef
 
 define Host/Install/Default
