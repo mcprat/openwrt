@@ -51,7 +51,7 @@ $(curdir)/expat/compile := $(curdir)/cmake/compile
 $(curdir)/e2fsprogs/compile := $(curdir)/libtool/compile
 $(curdir)/fakeroot/compile := $(curdir)/libtool/compile
 $(curdir)/findutils/compile := $(curdir)/bison/compile
-$(curdir)/firmware-utils/compile += $(curdir)/libressl/compile $(curdir)/zlib/compile
+$(curdir)/firmware-utils/compile := $(curdir)/cmake/compile $(curdir)/zlib/compile
 $(curdir)/flex/compile := $(curdir)/libtool/compile
 $(curdir)/gengetopt/compile := $(curdir)/libtool/compile
 $(curdir)/gmp/compile := $(curdir)/libtool/compile
@@ -85,7 +85,7 @@ endif
 ifeq ($(HOST_OS),Darwin)
   tools-y += bash
 else
-  $(curdir)/dwarves/compile += $(curdir)/elfutils/compile
+  $(curdir)/dwarves/compile += $(curdir)/cmake/compile $(curdir)/elfutils/compile
   $(curdir)/elfutils/compile := $(curdir)/m4/compile $(curdir)/zlib/compile
   tools-$(CONFIG_DWARVES) += dwarves
   tools-y += elfutils
