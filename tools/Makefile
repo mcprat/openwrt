@@ -134,7 +134,7 @@ endif
 ifeq ($(HOST_OS),Darwin)
   tools-y += bash
 else
-  $(curdir)/dwarves/compile += $(curdir)/elfutils/compile
+  $(curdir)/dwarves/compile += $(curdir)/cmake/compile $(curdir)/elfutils/compile
   $(curdir)/elfutils/compile := $(curdir)/m4/compile $(curdir)/zlib/compile
   tools-$(if $(CONFIG_BUILD_ALL_HOST_TOOLS)$(CONFIG_DWARVES),y) += dwarves
   tools-y += elfutils
