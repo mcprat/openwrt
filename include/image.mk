@@ -517,9 +517,12 @@ endef
 endif
 
 define Device/Build/compile
-  $$(_COMPILE_TARGET): $(KDIR)/$(1)
+  $$(_TARGET): $(KDIR)/$(1)
   $(eval $(call Device/Export,$(KDIR)/$(1)))
-  $(KDIR)/$(1): FORCE
+
+  $(patsubst %$(1),%$(1):,$(call reverse,$(foreach compile,$(COMPILE),$(KDIR)/$(compile))))
+
+  $(KDIR)/$(1): $(if $(_PROFILE_SET),FORCE)
 	rm -f $(KDIR)/$(1)
 	$$(call concat_cmd,$(COMPILE/$(1)))
 
