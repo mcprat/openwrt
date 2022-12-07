@@ -520,7 +520,7 @@ define Device/Build/compile
   $$(_TARGET): $(KDIR)/$(1)
   $(eval $(call Device/Export,$(KDIR)/$(1)))
 
-  $(KDIR)/$(1): $(if $(_PROFILE_SET),FORCE)
+  $(patsubst %$(1),%$(1):,$(COMPILE_RDEP)) $(if $(_PROFILE_SET),FORCE)
 	rm -f $(KDIR)/$(1)
 	$$(call concat_cmd,$(COMPILE/$(1)))
 
@@ -674,9 +674,8 @@ define Device/Build
   $(if $(CONFIG_TARGET_ROOTFS_INITRAMFS),$(call Device/Build/initramfs,$(1)))
   $(call Device/Build/kernel,$(1))
 
-  COMPILE_RDEP:=$$(call reverse,$$(COMPILE))
-  $$(warning $$(if $$(COMPILE),$$(foreach compile,$$(COMPILE),$$(patsubst %$$(compile),%$$(compile):,$$(foreach dep,$$(COMPILE_RDEP),$(KDIR)/$$(dep))) ;)))
-  $$(if $$(COMPILE),$$(foreach compile,$$(COMPILE),$$(patsubst %$$(compile),%$$(compile):,$$(foreach dep,$$(COMPILE_RDEP),$(KDIR)/$$(dep))) ;))
+  COMPILE_RDEP:=$$(call reverse,$$(foreach compile,$$(COMPILE),$(KDIR)/$$(compile)))
+  $$(warning $$(if $$(COMPILE),$$(foreach compile,$$(COMPILE),$$(patsubst %$$(compile),%$$(compile):,$$(COMPILE_RDEP)) ;)))
   $$(eval $$(foreach compile,$$(COMPILE), \
     $$(call Device/Build/compile,$$(compile),$(1))))
 
