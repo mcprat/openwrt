@@ -81,8 +81,7 @@ endef
 
 define Device/loader-okli-uimage
   LOADER_TYPE := bin
-  COMPILE := loader-$(1).bin loader-$(1).uImage
-  COMPILE/loader-$(1).bin := loader-okli-compile
+  COMPILE := loader-$(1).uImage
   COMPILE/loader-$(1).uImage := loader-okli-compile | pad-to 64k | \
 	lzma | uImage lzma
 endef
