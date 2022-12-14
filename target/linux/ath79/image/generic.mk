@@ -1334,7 +1334,8 @@ define Device/fortinet_fap-221-b
   IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
 	append-rootfs | pad-rootfs | \
 	check-size | pad-to $$$$(IMAGE_SIZE) | \
-	append-loader-okli-uimage $(1) | gzip
+	append-loader-okli-uimage $(1) | pad-to 10944k | \
+	gzip
 endef
 TARGET_DEVICES += fortinet_fap-221-b
 
