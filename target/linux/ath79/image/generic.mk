@@ -1329,13 +1329,14 @@ define Device/fortinet_fap-221-b
   SOC := ar9344
   DEVICE_VENDOR := Fortinet
   DEVICE_MODEL := FAP-221-B
+  FACTORY_IMG_NAME := FP221B-9.99-AP-build999-999999-patch99
   IMAGE_SIZE := 9216k
   LOADER_FLASH_OFFS := 0x040000
   IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
 	append-rootfs | pad-rootfs | \
 	check-size | pad-to $$$$(IMAGE_SIZE) | \
 	append-loader-okli-uimage $(1) | pad-to 10944k | \
-	gzip
+	gzip-filename $$$$(FACTORY_IMG_NAME)
 endef
 TARGET_DEVICES += fortinet_fap-221-b
 
