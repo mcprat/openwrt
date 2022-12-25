@@ -37,12 +37,16 @@
 
 &ath9k {
 	ieee80211-freq-limit = <2402000 2482000>;
+
+	nvmem-cells = <&calibration_pcie>;
+	nvmem-cell-names = "calibration";
 };
 
 &wmac {
 	ieee80211-freq-limit = <2402000 2482000 4900000 5990000>;
 
-	mac-address-increment = <1>;
+	nvmem-cells = <&calibration_wmac>;
+	nvmem-cell-names = "calibration";
 };
 
 &art {

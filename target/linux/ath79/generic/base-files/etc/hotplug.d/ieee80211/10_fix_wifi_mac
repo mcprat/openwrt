@@ -38,6 +38,8 @@ case "$board" in
 	fortinet,fap-221-b)
 		[ "$PHYNBR" -eq 0 ] && \
 			macaddr_add "$(mtd_get_mac_text u-boot 0x3ff80 12)" 1 > /sys${DEVPATH}/macaddress
+		[ "$PHYNBR" -eq 1 ] && \
+			macaddr_add "$(mtd_get_mac_text u-boot 0x3ff80 12)" 8 > /sys${DEVPATH}/macaddress
 		;;
 	iodata,wn-ac1600dgr)
 		# There is no eeprom data for 5 GHz wlan in "art" partition
