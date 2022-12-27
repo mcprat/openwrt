@@ -19,6 +19,10 @@ preinit_set_mac_address() {
 	siemens,ws-ap3610)
 		ip link set dev eth0 address $(mtd_get_mac_ascii cfg1 ethaddr)
 		;;
+	fortinet,fap-221-b)
+		lan_mac=$(mtd_get_mac_text u-boot 0x3ff80 12)
+		ip link set dev eth0 address $lan_mac
+		;;
 	tplink,deco-s4-v2)
 		base_mac=$(mtd_get_mac_encrypted_deco $(find_mtd_part config))
 		ip link set dev eth0 address $base_mac

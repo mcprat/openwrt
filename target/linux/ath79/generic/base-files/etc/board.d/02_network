@@ -676,7 +676,6 @@ ath79_setup_macs()
 		label_mac=$(mtd_get_mac_ascii u-boot-env0 ethaddr)
 		;;
 	fortinet,fap-221-b)
-		lan_mac=$(mtd_get_mac_text u-boot 0x3ff80 12)
 		label_mac=$lan_mac
 		;;
 	hak5,lan-turtle|\
