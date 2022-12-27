@@ -57,10 +57,9 @@
 				reg = <0x950000 0x1a0000>;
 			};
 
-			partition@af0000 {
+			fwconcat2: partition@af0000 {
 				label = "reserved";
 				reg = <0xaf0000 0x500000>;
-				read-only;
 			};
 
 			art: partition@ff0000 {

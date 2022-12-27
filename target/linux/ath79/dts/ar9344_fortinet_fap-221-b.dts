@@ -21,6 +21,18 @@
 			default-state = "on";
 		};
 
+		eth_amber {
+			label = "amber:eth";
+			gpios = <&gpio 15 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+
+		eth_green {
+			label = "green:eth";
+			gpios = <&gpio 14 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+
 		wifi5g {
 			label = "green:wifi5g";
 			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
@@ -32,6 +44,10 @@
 			gpios = <&gpio 19 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "phy1tpt";
 		};
+	};
+
+	virtual_flash {
+		devices = <&fwconcat0 &fwconcat1 &fwconcat2>;
 	};
 };
 
