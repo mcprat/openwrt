@@ -59,7 +59,6 @@
 	ath9k: wifi@0,0,0 {
 		compatible = "pci168c,0030";
 		reg = <0x0 0 0 0 0>;
-		qca,no-eeprom;
 	};
 };
 
