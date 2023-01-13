@@ -11,6 +11,36 @@
 
 	aliases {
 		label-mac-device = &eth0;
+		led-boot = &led_wifi5g;
+		led-failsafe = &led_wifi5g;
+		led-upgrade = &led_wifi5g;
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		reset {
+			label = "reset";
+			gpios = <&gpio 21 GPIO_ACTIVE_LOW>;
+			debounce-interval = <60>;
+			linux,code = <KEY_RESTART>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		wifi2g {
+			label = "green:wifi2g";
+			gpios = <&gpio 14 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "phy1tpt";
+		};
+
+		led_wifi5g: wifi5g {
+			label = "green:wifi5g";
+			gpios = <&gpio 15 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "phy0tpt";
+		};
 	};
 };
 
@@ -89,7 +119,7 @@
 	mac-address-increment = <1>;
 };
 
-&ath10k {
+&ath10k_1 {
 	status = "okay";
 
 	nvmem-cells = <&macaddr_art_0>, <&calibration_art_5000>;
