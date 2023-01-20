@@ -68,11 +68,11 @@ define Device/Default
   MTDPARTS :=
   BLOCKSIZE := 64k
   KERNEL := kernel-bin | append-dtb | lzma | uImage lzma
-  KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | uImage lzma
+  KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | loader-kernel | uImage none
   LOADER_KERNEL_MAGIC :=
   LOADER_FLASH_MAX :=
   LOADER_FLASH_OFFS :=
-  LOADER_TYPE :=
+  LOADER_TYPE := bin
   COMPILE :=
   IMAGES := sysupgrade.bin
   IMAGE/sysupgrade.bin = append-kernel | pad-to $$$$(BLOCKSIZE) | \
