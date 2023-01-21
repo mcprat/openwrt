@@ -23,15 +23,15 @@ FLASH_START	:=
 FLASH_OFFS	:=
 FLASH_MAX	:=
 PLATFORM	:=
-CACHE_FLAGS	:=
+SUBTARGET	:=
+CACHE_FLAGS	:= -DCONFIG_ICACHE_SIZE="(32 * 1024)" \
+		   -DCONFIG_DCACHE_SIZE="(16 * 1024)" -DCONFIG_CACHELINE_SIZE=32
 
 CC		:= $(CROSS_COMPILE)gcc
 LD		:= $(CROSS_COMPILE)ld
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
 OBJDUMP		:= $(CROSS_COMPILE)objdump
 
-
-include $(PLATFORM).mk
 
 BIN_FLAGS	:= -O binary -R .reginfo -R .note -R .comment -R .mdebug \
 		   -R .MIPS.abiflags -S
@@ -54,7 +54,27 @@ LDFLAGS		+= -flto -fwhole-program -Wl,-z,max-page-size=4096
 
 O_FORMAT 	= $(shell $(OBJDUMP) -i | head -2 | grep elf32)
 
-OBJECTS		:= head.o loader.o cache.o board-$(PLATFORM).o printf.o LzmaDecode.o
+OBJECTS		:= head.o loader.o cache.o board.o printf.o LzmaDecode.o
+
+ifeq ($(SUBTARGET),)
+$(error "Please specify a SUBTARGET!")
+endif
+
+ifeq ($(strip $(SUBTARGET)),mt7620)
+CFLAGS	+= -DSOC_MT7620
+endif
+
+ifeq ($(SUBTARGET),mt7621)
+CFLAGS	+= -DSOC_MT7621
+endif
+
+ifeq ($(SUBTARGET),rt305x)
+CFLAGS	+= -DSOC_RT305X
+endif
+
+ifeq ($(SUBTARGET),rt3883)
+CFLAGS	+= -DSOC_RT3883
+endif
 
 ifneq ($(strip $(LOADER_DATA)),)
 OBJECTS		+= data.o
