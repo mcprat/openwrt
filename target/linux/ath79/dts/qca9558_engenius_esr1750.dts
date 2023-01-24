@@ -58,7 +58,6 @@
 
 	nvmem-cells = <&calibration_wmac>;
 	nvmem-cell-names = "calibration";
-	mac-address-increment = <1>;
 };
 
 &ath10k_0 {
@@ -66,7 +65,6 @@
 
 	nvmem-cells = <&calibration_pcie>;
 	nvmem-cell-names = "calibration";
-	mac-address-increment = <2>;
 };
 
 &usb_phy1 {
