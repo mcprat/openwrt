@@ -62,5 +62,13 @@
 };
 
 &wmac {
-	qca,no-eeprom;
+	nvmem-cells = <&calibration_art_1000>;
+	nvmem-cell-names = "calibration";
+};
+
+&ath10k_0 {
+	status = "okay";
+
+	nvmem-cells = <&calibration_art_5000>;
+	nvmem-cell-names = "calibration";
 };
