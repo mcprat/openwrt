@@ -1282,7 +1282,7 @@ define Device/engenius_epg5000
   IMAGE/factory.dlf := append-kernel | pad-to $$$$(BLOCKSIZE) | \
 	append-rootfs | pad-rootfs | check-size | \
 	senao-header -r 0x101 -p 0x71 -t 2
-  SUPPORTED_DEVICES += epg5000
+  SUPPORTED_DEVICES += epg5000 engenius,esr1200 engenius,esr1750
 endef
 TARGET_DEVICES += engenius_epg5000
 
