@@ -1310,7 +1310,7 @@ define Device/engenius_esr1750
   IMAGE/factory.dlf := append-kernel | pad-to $$$$(BLOCKSIZE) | \
 	append-rootfs | pad-rootfs | check-size | \
 	senao-header -r 0x101 -p 0x62 -t 2
-  SUPPORTED_DEVICES += esr1750
+  SUPPORTED_DEVICES += esr1750 engenius,epg5000 engenius,esr1200
 endef
 TARGET_DEVICES += engenius_esr1750
 
