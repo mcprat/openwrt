@@ -1,5 +1,5 @@
-Date:   Tue,  9 Aug 2022 23:00:31 -0700
-Subject: [PATCH v1 2/9] driver core: fw_devlink: Improve check for fwnode with no device/driver
+Date:   Mon,  6 Feb 2023 17:41:54 -0800
+Subject: [PATCH v3 02/12] driver core: fw_devlink: Improve check for fwnode with no device/driver
 From:   Saravana Kannan <saravanak@google.com>
 
 fw_devlink shouldn't defer the probe of a device to wait on a supplier
@@ -9,6 +9,8 @@ check its ancestors. We need to check the ancestors too because if the
 ancestor will never probe, then the supplier will never probe either.
 
 Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
 ---
  drivers/base/core.c | 40 ++++++++++++++++++++++++++++++++++++++--
  1 file changed, 38 insertions(+), 2 deletions(-)
@@ -51,7 +53,7 @@ Signed-off-by: Saravana Kannan <saravanak@google.com>
  /**
   * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
   * @con: consumer device for the device link
-@@ -1843,9 +1872,16 @@ static int fw_devlink_create_devlink(str
+@@ -1847,9 +1876,16 @@ static int fw_devlink_create_devlink(str
  		goto out;
  	}
  

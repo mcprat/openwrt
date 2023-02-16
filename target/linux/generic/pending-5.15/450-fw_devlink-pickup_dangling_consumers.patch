@@ -1,5 +1,5 @@
-Date:   Tue,  9 Aug 2022 23:00:30 -0700
-Subject: [PATCH v1 1/9] driver core: fw_devlink: Don't purge child fwnode's consumer links
+Date:   Mon,  6 Feb 2023 17:41:53 -0800
+Subject: [PATCH v3 01/12] driver core: fw_devlink: Don't purge child fwnode's consumer links
 From:   Saravana Kannan <saravanak@google.com>
 
 When a device X is bound successfully to a driver, if it has a child
@@ -16,18 +16,19 @@ device dependencies more accurately and ensure better
 probe/suspend/resume ordering.
 
 Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
 ---
- drivers/base/core.c | 91 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 74 insertions(+), 17 deletions(-)
+ drivers/base/core.c | 97 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 79 insertions(+), 18 deletions(-)
 
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -51,11 +51,12 @@ early_param("sysfs.deprecated", sysfs_de
- static LIST_HEAD(deferred_sync);
+@@ -52,10 +52,11 @@ static LIST_HEAD(deferred_sync);
  static unsigned int defer_sync_state_count = 1;
  static DEFINE_MUTEX(fwnode_link_lock);
-+static void __fw_devlink_link_to_consumers(struct device *dev);
  static bool fw_devlink_is_permissive(void);
++static void __fw_devlink_link_to_consumers(struct device *dev);
  static bool fw_devlink_drv_reg_done;
  
  /**
@@ -76,7 +77,7 @@ Signed-off-by: Saravana Kannan <saravanak@google.com>
 +
 +int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
 +{
-+	int ret = 0;
++	int ret;
 +
 +	mutex_lock(&fwnode_link_lock);
 +	ret = __fwnode_link_add(con, sup);
@@ -165,3 +166,16 @@ Signed-off-by: Saravana Kannan <saravanak@google.com>
  	}
  	device_remove_file(dev, &dev_attr_waiting_for_supplier);
  
+@@ -1754,7 +1811,11 @@ static int fw_devlink_create_devlink(str
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
+ 
+-	sup_dev = get_dev_from_fwnode(sup_handle);
++	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
++		sup_dev = fwnode_get_next_parent_dev(sup_handle);
++	else
++		sup_dev = get_dev_from_fwnode(sup_handle);
++
+ 	if (sup_dev) {
+ 		/*
+ 		 * If it's one of those drivers that don't actually bind to
