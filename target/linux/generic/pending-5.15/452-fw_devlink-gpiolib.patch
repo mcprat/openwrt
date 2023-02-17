@@ -1,0 +1,34 @@
+Date:   Mon,  6 Feb 2023 17:41:56 -0800
+Subject: [PATCH v3 04/12] gpiolib: Clear the gpio_device's fwnode initialized flag before adding
+From:   Saravana Kannan <saravanak@google.com>
+
+Registering an irqdomain sets the flag for the fwnode. But having the
+flag set when a device is added is interpreted by fw_devlink to mean the
+device has already been initialized and will never probe. This prevents
+fw_devlink from creating device links with the gpio_device as a
+supplier. So, clear the flag before adding the device.
+
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Acked-by: Bartosz Golaszewski <brgl@bgdev.pl>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+---
+ drivers/gpio/gpiolib.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -521,6 +521,13 @@ static int gpiochip_setup_dev(struct gpi
+ {
+ 	int ret;
+ 
++	/*
++	 * If fwnode doesn't belong to another device, it's safe to clear its
++	 * initialized flag.
++	 */
++	if (gdev->dev.fwnode && !gdev->dev.fwnode->dev)
++		fwnode_dev_initialized(gdev->dev.fwnode, false);
++
+ 	ret = gcdev_register(gdev, gpio_devt);
+ 	if (ret)
+ 		return ret;

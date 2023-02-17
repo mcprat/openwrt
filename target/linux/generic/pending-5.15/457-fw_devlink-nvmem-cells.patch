@@ -1,0 +1,46 @@
+Date:   Mon,  6 Feb 2023 17:42:04 -0800
+Subject: [PATCH v3 12/12] mtd: mtdpart: Don't create platform device that'll never probe
+From:   Saravana Kannan <saravanak@google.com>
+
+These "nvmem-cells" platform devices never get probed because there's no
+platform driver for it and it's never used anywhere else. So it's a
+waste of memory. These devices also cause fw_devlink to block nvmem
+consumers of "nvmem-cells" partition from probing because the supplier
+device never probes.
+
+So stop creating platform devices for nvmem-cells partitions to avoid
+wasting memory and to avoid blocking probing of consumers.
+
+Reported-by: Maxim Kiselev <bigunclemax@gmail.com>
+Fixes: bcdf0315a61a ("mtd: call of_platform_populate() for MTD partitions")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+---
+ drivers/mtd/mtdpart.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -711,6 +711,7 @@ static int mtd_part_of_parse(struct mtd_
+ {
+ 	struct mtd_part_parser *parser;
+ 	struct device_node *np;
++	struct device_node *child;
+ 	struct property *prop;
+ 	struct device *dev;
+ 	const char *compat;
+@@ -728,6 +729,15 @@ static int mtd_part_of_parse(struct mtd_
+ 	else
+ 		np = of_get_child_by_name(np, "partitions");
+ 
++	/*
++	 * Don't create devices that are added to a bus but will never get
++	 * probed. That'll cause fw_devlink to block probing of consumers of
++	 * this partition until the partition device is probed.
++	 */
++	for_each_child_of_node(np, child)
++		if (of_device_is_compatible(child, "nvmem-cells"))
++			of_node_set_flag(child, OF_POPULATED);
++
+ 	of_property_for_each_string(np, "compatible", prop, compat) {
+ 		parser = mtd_part_get_compatible_parser(compat);
+ 		if (!parser)
