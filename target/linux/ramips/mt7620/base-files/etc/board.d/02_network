@@ -15,7 +15,6 @@ ramips_setup_interfaces()
 	dlink,dwr-921-c1|\
 	dlink,dwr-922-e2|\
 	dovado,tiny-ac|\
-	engenius,esr300|\
 	ohyeah,oy-0001|\
 	phicomm,psg1208|\
 	planex,db-wrt01|\
@@ -114,6 +113,7 @@ ramips_setup_interfaces()
 			"0:lan" "6@eth0"
 		;;
 	dlink,dir-810l|\
+	engenius,esr300|\
 	netcore,nw5212|\
 	netgear,jwnr2010-v5|\
 	phicomm,k2-v22.4|\

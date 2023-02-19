@@ -17,7 +17,7 @@
 	};
 
 	chosen {
-		bootargs = "console=ttyS0,115200 mem=64M";
+		bootargs = "console=ttyS0,115200";
 	};
 
 	keys {
@@ -50,8 +50,8 @@
 			gpios = <&gpio2 4 GPIO_ACTIVE_LOW>;
 		};
 
-		wlan {
-			label = "blue:wlan";
+		wlan2g {
+			label = "blue:wlan2g";
 			gpios = <&gpio3 0 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "phy0tpt";
 		};
@@ -92,13 +92,18 @@
 			partition@30000 {
 				label = "u-boot-env";
 				reg = <0x30000 0x10000>;
-				read-only;
 			};
 
 			factory: partition@40000 {
 				label = "factory";
 				reg = <0x40000 0x10000>;
 				read-only;
+
+				compatible = "nvmem-cells";
+
+				macaddr_factory_4: macaddr@4 {
+					reg = <0x4 0x6>;
+				};
 			};
 
 			partition@50000 {
@@ -123,7 +128,8 @@
 };
 
 &ethernet {
-	mtd-mac-address = <&factory 0x4>;
+	nvmem-cells = <&macaddr_factory_4>;
+	nvmem-cell-names = "mac-address";
 };
 
 &wmac {
