@@ -810,7 +810,28 @@ define BuildImage
 	$(if $(CONFIG_TARGET_ROOTFS_INITRAMFS),$(if $(IB),,$(call Image/BuildKernel/Initramfs)))
 	$(call Image/InstallKernel)
 
-  $(foreach device,$(TARGET_DEVICES),$(call Device,$(device)))
+  $(foreach device, \
+    $(TARGET_DEVICES), \
+      $(call Device,$(device)) \
+  )
+
+  $(warning \
+    $(subst Device/,, \
+    $(filter-out Device/Build%, \
+    $(filter-out Device/Check%, \
+    $(filter-out Device/Common%, \
+    $(filter-out Device/Default%, \
+    $(filter-out Device/Dump%, \
+    $(filter-out Device/Export%, \
+    $(filter-out Device/Init%, \
+    $(filter Device/%, \
+      $(.VARIABLES) \
+    ))))))))), \
+  )
+
+  $(warning \
+    $(TARGET_DEVICES), \
+  )
 
   install-images: kernel_prepare $(foreach fs,$(filter-out $(if $(UBIFS_OPTS),,ubifs),$(TARGET_FILESYSTEMS) $(fs-subtypes-y)),$(KDIR)/root.$(fs))
 	$(foreach fs,$(TARGET_FILESYSTEMS),
