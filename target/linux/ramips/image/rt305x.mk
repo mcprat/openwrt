@@ -67,7 +67,6 @@ TARGET_DEVICES += accton_wr6202
 
 define Device/airlive_air3gii
   SOC := rt5350
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := AirLive
   DEVICE_MODEL := Air3GII
@@ -173,7 +172,6 @@ TARGET_DEVICES += argus_atp-52b
 
 define Device/asiarf_awapn2403
   SOC := rt3052
-  BLOCKSIZE := 4k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := AsiaRF
   DEVICE_MODEL := AWAPN2403
@@ -207,7 +205,6 @@ TARGET_DEVICES += asiarf_awm002-evb-8m
 
 define Device/asus_rt-g32-b1
   SOC := rt3050
-  BLOCKSIZE := 4k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := ASUS
   DEVICE_MODEL := RT-G32
@@ -219,7 +216,6 @@ TARGET_DEVICES += asus_rt-g32-b1
 
 define Device/asus_rt-n10-plus
   SOC := rt3050
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := ASUS
   DEVICE_MODEL := RT-N10+
@@ -240,7 +236,6 @@ TARGET_DEVICES += asus_rt-n13u
 
 define Device/asus_wl-330n
   SOC := rt3050
-  BLOCKSIZE := 4k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := ASUS
   DEVICE_MODEL := WL-330N
@@ -251,7 +246,6 @@ TARGET_DEVICES += asus_wl-330n
 
 define Device/asus_wl-330n3g
   SOC := rt3050
-  BLOCKSIZE := 4k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := ASUS
   DEVICE_MODEL := WL-330N3G
@@ -304,7 +298,6 @@ TARGET_DEVICES += belkin_f7c027
 
 define Device/buffalo_whr-g300n
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3712k
   DEVICE_VENDOR := Buffalo
   DEVICE_MODEL := WHR-G300N
@@ -370,7 +363,6 @@ TARGET_DEVICES += dlink_dir-300-b1
 
 define Device/dlink_dir-300-b7
   SOC := rt5350
-  BLOCKSIZE := 4k
   IMAGE_SIZE := 7872k
   DEVICE_VENDOR := D-Link
   DEVICE_MODEL := DIR-300
@@ -406,7 +398,6 @@ TARGET_DEVICES += dlink_dir-600-b1
 define Device/dlink_dir-610-a1
   $(Device/seama)
   SOC := rt5350
-  BLOCKSIZE := 4k
   SEAMA_SIGNATURE := wrgn59_dlob.hans_dir610
   KERNEL := $(KERNEL_DTB)
   IMAGE_SIZE := 3776k
@@ -435,7 +426,6 @@ TARGET_DEVICES += dlink_dir-615-d
 define Device/dlink_dir-615-h1
   $(Device/uimage-lzma-loader)
   SOC := rt3352
-  BLOCKSIZE := 4k
   IMAGES += factory.bin
   IMAGE_SIZE := 3776k
   IMAGE/factory.bin := $$(sysupgrade_bin) | senao-header -r 0x218 -p 0x30 -t 3
@@ -524,7 +514,6 @@ TARGET_DEVICES += edimax_3g-6200nl
 
 define Device/engenius_esr-9753
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := EnGenius
   DEVICE_MODEL := ESR-9753
@@ -548,7 +537,6 @@ TARGET_DEVICES += fon_fonera-20n
 
 define Device/hame_mpr-a1
   SOC := rt5350
-  BLOCKSIZE := 4k
   IMAGE_SIZE := 3776k
   UIMAGE_NAME:= Linux Kernel Image
   DEVICE_VENDOR := HAME
@@ -608,7 +596,6 @@ TARGET_DEVICES += hootoo_ht-tm02
 
 define Device/huawei_d105
   SOC := rt3050
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Huawei
   DEVICE_MODEL := D105
@@ -809,7 +796,6 @@ TARGET_DEVICES += omnima_miniembwifi
 
 define Device/petatel_psr-680w
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Petatel
   DEVICE_MODEL := PSR-680W Wireless 3G Router
@@ -820,7 +806,6 @@ TARGET_DEVICES += petatel_psr-680w
 
 define Device/planex_mzk-dp150n
   SOC := rt5350
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Planex
   DEVICE_MODEL := MZK-DP150N
@@ -942,7 +927,6 @@ TARGET_DEVICES += prolink_pwh2004
 
 define Device/ralink_v22rw-2x2
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Ralink
   DEVICE_MODEL := AP-RT3052-V22RW-2X2
@@ -953,7 +937,6 @@ TARGET_DEVICES += ralink_v22rw-2x2
 
 define Device/sitecom_wl-351
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Sitecom
   DEVICE_MODEL := WL-351 v1
@@ -965,7 +948,6 @@ TARGET_DEVICES += sitecom_wl-351
 
 define Device/skyline_sl-r7205
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Skyline
   DEVICE_MODEL := SL-R7205 Wireless 3G Router
@@ -976,7 +958,6 @@ TARGET_DEVICES += skyline_sl-r7205
 
 define Device/sparklan_wcr-150gn
   SOC := rt3050
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Sparklan
   DEVICE_MODEL := WCR-150GN
@@ -996,7 +977,6 @@ TARGET_DEVICES += teltonika_rut5xx
 
 define Device/tenda_3g150b
   SOC := rt5350
-  BLOCKSIZE := 4k
   IMAGE_SIZE := 3776k
   UIMAGE_NAME:= Linux Kernel Image
   DEVICE_VENDOR := Tenda
@@ -1044,7 +1024,6 @@ TARGET_DEVICES += tenda_w306r-v2
 
 define Device/trendnet_tew-638apb-v2
   SOC := rt3050
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   IMAGE/sysupgrade.bin := $$(sysupgrade_bin) | umedia-header 0x026382 | \
 	check-size | append-metadata
@@ -1102,7 +1081,6 @@ TARGET_DEVICES += unbranded_wr512-3gn-8m
 
 define Device/unbranded_xdx-rn502j
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := Unbranded
   DEVICE_MODEL := XDX-RN502J
@@ -1113,7 +1091,6 @@ TARGET_DEVICES += unbranded_xdx-rn502j
 
 define Device/upvel_ur-326n4g
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := UPVEL
   DEVICE_MODEL := UR-326N4G
@@ -1196,7 +1173,6 @@ TARGET_DEVICES += zte_mf283plus
 
 define Device/zyxel_keenetic
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 7872k
   DEVICE_VENDOR := ZyXEL
   DEVICE_MODEL := Keenetic
@@ -1237,7 +1213,6 @@ TARGET_DEVICES += zyxel_keenetic-start
 
 define Device/zyxel_nbg-419n
   SOC := rt3052
-  BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   DEVICE_VENDOR := ZyXEL
   DEVICE_MODEL := NBG-419N

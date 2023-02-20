@@ -177,6 +177,7 @@ define Device/Default
   SOC := $(DEFAULT_SOC)
   DEVICE_DTS_DIR := ../dts
   DEVICE_DTS = $$(SOC)_$(1)
+  BLOCKSIZE := 64k
   IMAGES := sysupgrade.bin
   COMPILE :=
   sysupgrade_bin := append-kernel | append-rootfs | pad-rootfs
@@ -184,7 +185,6 @@ define Device/Default
 endef
 
 define Device/netgear_sercomm_nor
-  BLOCKSIZE := 64k
   DEVICE_VENDOR := NETGEAR
   IMAGES += factory.img
   IMAGE/default := append-kernel | pad-to $$$$(BLOCKSIZE) | append-rootfs | \
@@ -196,7 +196,6 @@ define Device/netgear_sercomm_nor
 endef
 
 define Device/seama
-  BLOCKSIZE := 64k
   SEAMA_MTDBLOCK := 2
   IMAGES += factory.bin
 
