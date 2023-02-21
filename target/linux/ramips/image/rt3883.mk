@@ -15,10 +15,9 @@ define Device/asus_rt-n56u
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2
   SUPPORTED_DEVICES += rt-n56u
 endef
-TARGET_DEVICES += asus_rt-n56u
 
 define Device/belkin_f9k1109v1
-  $(Device/uimage-lzma-loader)
+  $(Device/Common/uimage-lzma-loader)
   SOC := rt3883
   BLOCKSIZE := 64k
   DEVICE_VENDOR := Belkin
@@ -29,10 +28,9 @@ define Device/belkin_f9k1109v1
   # Stock firmware checks for this uImage image name during upload.
   UIMAGE_NAME := N750F9K1103VB
 endef
-TARGET_DEVICES += belkin_f9k1109v1
 
 define Device/dlink_dir-645
-  $(Device/seama-lzma-loader)
+  $(Device/Common/seama-lzma-loader)
   SOC := rt3662
   BLOCKSIZE := 4k
   IMAGE_SIZE := 7872k
@@ -42,7 +40,6 @@ define Device/dlink_dir-645
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2
   SUPPORTED_DEVICES += dir-645
 endef
-TARGET_DEVICES += dlink_dir-645
 
 define Device/edimax_br-6475nd
   SOC := rt3662
@@ -55,10 +52,9 @@ define Device/edimax_br-6475nd
   DEVICE_MODEL := BR-6475nD
   SUPPORTED_DEVICES += br-6475nd
 endef
-TARGET_DEVICES += edimax_br-6475nd
 
 define Device/engenius_esr600h
-  $(Device/uimage-lzma-loader)
+  $(Device/Common/uimage-lzma-loader)
   SOC := rt3662
   BLOCKSIZE := 4k
   IMAGE_SIZE := 7872k
@@ -69,7 +65,6 @@ define Device/engenius_esr600h
   DEVICE_MODEL := ESR600H
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 uboot-envtools
 endef
-TARGET_DEVICES += engenius_esr600h
 
 define Device/loewe_wmdr-143n
   SOC := rt3662
@@ -79,7 +74,6 @@ define Device/loewe_wmdr-143n
   DEVICE_MODEL := WMDR-143N
   SUPPORTED_DEVICES += wmdr-143n
 endef
-TARGET_DEVICES += loewe_wmdr-143n
 
 define Device/omnima_hpm
   SOC := rt3662
@@ -90,10 +84,9 @@ define Device/omnima_hpm
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2
   SUPPORTED_DEVICES += hpm
 endef
-TARGET_DEVICES += omnima_hpm
 
 define Device/samsung_cy-swr1100
-  $(Device/seama)
+  $(Device/Common/seama)
   SOC := rt3662
   IMAGE_SIZE := 7872k
   KERNEL := $(KERNEL_DTB)
@@ -103,10 +96,9 @@ define Device/samsung_cy-swr1100
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += cy-swr1100
 endef
-TARGET_DEVICES += samsung_cy-swr1100
 
 define Device/sitecom_wlr-6000
-  $(Device/uimage-lzma-loader)
+  $(Device/Common/uimage-lzma-loader)
   SOC := rt3883
   BLOCKSIZE := 4k
   IMAGE_SIZE := 7244k
@@ -118,7 +110,6 @@ define Device/sitecom_wlr-6000
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2
   SUPPORTED_DEVICES += wlr-6000
 endef
-TARGET_DEVICES += sitecom_wlr-6000
 
 define Device/trendnet_tew-691gr
   SOC := rt3883
@@ -130,7 +121,6 @@ define Device/trendnet_tew-691gr
   DEVICE_MODEL := TEW-691GR
   SUPPORTED_DEVICES += tew-691gr
 endef
-TARGET_DEVICES += trendnet_tew-691gr
 
 define Device/trendnet_tew-692gr
   SOC := rt3883
@@ -142,4 +132,3 @@ define Device/trendnet_tew-692gr
   DEVICE_MODEL := TEW-692GR
   SUPPORTED_DEVICES += tew-692gr
 endef
-TARGET_DEVICES += trendnet_tew-692gr

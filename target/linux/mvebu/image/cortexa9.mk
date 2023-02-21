@@ -3,19 +3,19 @@
 # Copyright (C) 2012-2016 OpenWrt.org
 # Copyright (C) 2016 LEDE-project.org
 
-define Device/dsa-migration
+define Device/Common/dsa-migration
   DEVICE_COMPAT_VERSION := 1.1
   DEVICE_COMPAT_MESSAGE := Config cannot be migrated from swconfig to DSA
 endef
 
-define Device/kernel-size-migration
+define Device/Common/kernel-size-migration
   DEVICE_COMPAT_VERSION := 2.0
   DEVICE_COMPAT_MESSAGE := Partition design has changed compared to older versions (up to 19.07) due to kernel size restrictions. \
 	Upgrade via sysupgrade mechanism is not possible, so new installation via factory style image is required.
 endef
 
 define Device/buffalo_ls421de
-  $(Device/NAND-128K)
+  $(Device/Common/NAND-128K)
   DEVICE_VENDOR := Buffalo
   DEVICE_MODEL := LinkStation LS421DE
   SUBPAGESIZE :=
@@ -29,7 +29,6 @@ define Device/buffalo_ls421de
     kmod-linkstation-poweroff kmod-md-raid0 kmod-md-raid1 kmod-md-mod \
     kmod-fs-xfs mkf2fs e2fsprogs partx-utils
 endef
-TARGET_DEVICES += buffalo_ls421de
 
 define Device/ctera_c200-v2
   PAGESIZE := 2048
@@ -47,7 +46,6 @@ define Device/ctera_c200-v2
     kmod-rtc-s35390a kmod-usb3 kmod-usb-ledtrig-usbport
   IMAGES := sysupgrade.bin
 endef
-TARGET_DEVICES += ctera_c200-v2
 
 define Device/cznic_turris-omnia
   DEVICE_VENDOR := CZ.NIC
@@ -67,16 +65,14 @@ define Device/cznic_turris-omnia
   SUPPORTED_DEVICES += armada-385-turris-omnia
   BOOT_SCRIPT := turris-omnia
 endef
-TARGET_DEVICES += cznic_turris-omnia
 
 define Device/globalscale_mirabox
-  $(Device/NAND-512K)
+  $(Device/Common/NAND-512K)
   DEVICE_VENDOR := Globalscale
   DEVICE_MODEL := Mirabox
   SOC := armada-370
   SUPPORTED_DEVICES += mirabox
 endef
-TARGET_DEVICES += globalscale_mirabox
 
 define Device/iptime_nas1dual
   DEVICE_VENDOR := ipTIME
@@ -90,7 +86,6 @@ define Device/iptime_nas1dual
   IMAGE/sysupgrade.bin := append-kernel | pad-to $$(KERNEL_SIZE) | \
 	append-rootfs | pad-rootfs | check-size | append-metadata
 endef
-TARGET_DEVICES += iptime_nas1dual
 
 define Device/kobol_helios4
   DEVICE_VENDOR := Kobol
@@ -104,10 +99,9 @@ define Device/kobol_helios4
   UBOOT := helios4-u-boot-with-spl.kwb
   BOOT_SCRIPT := clearfog
 endef
-TARGET_DEVICES += kobol_helios4
 
-define Device/linksys
-  $(Device/NAND-128K)
+define Device/Common/linksys
+  $(Device/Common/NAND-128K)
   DEVICE_VENDOR := Linksys
   DEVICE_PACKAGES := kmod-mwlwifi wpad-basic-mbedtls
   IMAGES += factory.img
@@ -117,8 +111,8 @@ define Device/linksys
 endef
 
 define Device/linksys_wrt1200ac
-  $(call Device/linksys)
-  $(Device/dsa-migration)
+  $(call Device/Common/linksys)
+  $(Device/Common/dsa-migration)
   DEVICE_MODEL := WRT1200AC
   DEVICE_ALT0_VENDOR := Linksys
   DEVICE_ALT0_MODEL := Caiman
@@ -126,11 +120,10 @@ define Device/linksys_wrt1200ac
   DEVICE_PACKAGES += mwlwifi-firmware-88w8864
   SUPPORTED_DEVICES += armada-385-linksys-caiman linksys,caiman
 endef
-TARGET_DEVICES += linksys_wrt1200ac
 
 define Device/linksys_wrt1900acs
-  $(call Device/linksys)
-  $(Device/dsa-migration)
+  $(call Device/Common/linksys)
+  $(Device/Common/dsa-migration)
   DEVICE_MODEL := WRT1900ACS
   DEVICE_VARIANT := v1
   DEVICE_ALT0_VENDOR := Linksys
@@ -142,11 +135,10 @@ define Device/linksys_wrt1900acs
   DEVICE_PACKAGES += mwlwifi-firmware-88w8864
   SUPPORTED_DEVICES += armada-385-linksys-shelby linksys,shelby
 endef
-TARGET_DEVICES += linksys_wrt1900acs
 
 define Device/linksys_wrt1900ac-v1
-  $(call Device/linksys)
-  $(Device/kernel-size-migration)
+  $(call Device/Common/linksys)
+  $(Device/Common/kernel-size-migration)
   DEVICE_MODEL := WRT1900AC
   DEVICE_VARIANT := v1
   DEVICE_ALT0_VENDOR := Linksys
@@ -156,11 +148,10 @@ define Device/linksys_wrt1900ac-v1
   KERNEL_SIZE := 4096k
   SUPPORTED_DEVICES += armada-xp-linksys-mamba linksys,mamba
 endef
-TARGET_DEVICES += linksys_wrt1900ac-v1
 
 define Device/linksys_wrt1900ac-v2
-  $(call Device/linksys)
-  $(Device/dsa-migration)
+  $(call Device/Common/linksys)
+  $(Device/Common/dsa-migration)
   DEVICE_MODEL := WRT1900AC
   DEVICE_VARIANT := v2
   DEVICE_ALT0_VENDOR := Linksys
@@ -169,11 +160,10 @@ define Device/linksys_wrt1900ac-v2
   DEVICE_PACKAGES += mwlwifi-firmware-88w8864
   SUPPORTED_DEVICES += armada-385-linksys-cobra linksys,cobra
 endef
-TARGET_DEVICES += linksys_wrt1900ac-v2
 
 define Device/linksys_wrt3200acm
-  $(call Device/linksys)
-  $(Device/dsa-migration)
+  $(call Device/Common/linksys)
+  $(Device/Common/dsa-migration)
   DEVICE_MODEL := WRT3200ACM
   DEVICE_ALT0_VENDOR := Linksys
   DEVICE_ALT0_MODEL := Rango
@@ -181,11 +171,10 @@ define Device/linksys_wrt3200acm
   DEVICE_PACKAGES += kmod-btmrvl kmod-mwifiex-sdio mwlwifi-firmware-88w8964
   SUPPORTED_DEVICES += armada-385-linksys-rango linksys,rango
 endef
-TARGET_DEVICES += linksys_wrt3200acm
 
 define Device/linksys_wrt32x
-  $(call Device/linksys)
-  $(Device/kernel-size-migration)
+  $(call Device/Common/linksys)
+  $(Device/Common/kernel-size-migration)
   DEVICE_MODEL := WRT32X
   DEVICE_ALT0_VENDOR := Linksys
   DEVICE_ALT0_MODEL := Venom
@@ -195,28 +184,25 @@ define Device/linksys_wrt32x
   KERNEL := kernel-bin | append-dtb
   SUPPORTED_DEVICES += armada-385-linksys-venom linksys,venom
 endef
-TARGET_DEVICES += linksys_wrt32x
 
 define Device/marvell_a370-db
-  $(Device/NAND-512K)
+  $(Device/Common/NAND-512K)
   DEVICE_VENDOR := Marvell
   DEVICE_MODEL := Armada 370 Development Board (DB-88F6710-BP-DDR3)
   DEVICE_DTS := armada-370-db
   SUPPORTED_DEVICES += armada-370-db
 endef
-TARGET_DEVICES += marvell_a370-db
 
 define Device/marvell_a370-rd
-  $(Device/NAND-512K)
+  $(Device/Common/NAND-512K)
   DEVICE_VENDOR := Marvell
   DEVICE_MODEL := Armada 370 RD (RD-88F6710-A1)
   DEVICE_DTS := armada-370-rd
   SUPPORTED_DEVICES += armada-370-rd
 endef
-TARGET_DEVICES += marvell_a370-rd
 
 define Device/marvell_a385-db-ap
-  $(Device/NAND-256K)
+  $(Device/Common/NAND-256K)
   DEVICE_VENDOR := Marvell
   DEVICE_MODEL := Armada 385 Development Board AP (DB-88F6820-AP)
   DEVICE_DTS := armada-385-db-ap
@@ -226,7 +212,6 @@ define Device/marvell_a385-db-ap
   KERNEL_SIZE := 8192k
   SUPPORTED_DEVICES += armada-385-db-ap
 endef
-TARGET_DEVICES += marvell_a385-db-ap
 
 define Device/marvell_a388-rd
   DEVICE_VENDOR := Marvell
@@ -236,25 +221,22 @@ define Device/marvell_a388-rd
   IMAGE/firmware.bin := append-kernel | pad-to 256k | append-rootfs | pad-rootfs
   SUPPORTED_DEVICES := armada-388-rd marvell,a385-rd
 endef
-TARGET_DEVICES += marvell_a388-rd
 
 define Device/marvell_axp-db
-  $(Device/NAND-512K)
+  $(Device/Common/NAND-512K)
   DEVICE_VENDOR := Marvell
   DEVICE_MODEL := Armada XP Development Board (DB-78460-BP)
   DEVICE_DTS := armada-xp-db
   SUPPORTED_DEVICES += armada-xp-db
 endef
-TARGET_DEVICES += marvell_axp-db
 
 define Device/marvell_axp-gp
-  $(Device/NAND-512K)
+  $(Device/Common/NAND-512K)
   DEVICE_VENDOR := Marvell
   DEVICE_MODEL := Armada Armada XP GP (DB-MV784MP-GP)
   DEVICE_DTS := armada-xp-gp
   SUPPORTED_DEVICES += armada-xp-gp
 endef
-TARGET_DEVICES += marvell_axp-gp
 
 define Device/plathome_openblocks-ax3-4
   DEVICE_VENDOR := Plat'Home
@@ -267,7 +249,6 @@ define Device/plathome_openblocks-ax3-4
   IMAGES += factory.img
   IMAGE/factory.img := append-kernel | pad-to $$(BLOCKSIZE) | append-ubi
 endef
-TARGET_DEVICES += plathome_openblocks-ax3-4
 
 define Device/solidrun_clearfog-base-a1
   DEVICE_VENDOR := SolidRun
@@ -284,10 +265,9 @@ define Device/solidrun_clearfog-base-a1
   DEVICE_COMPAT_VERSION := 1.1
   DEVICE_COMPAT_MESSAGE := Ethernet interface rename has been dropped
 endef
-TARGET_DEVICES += solidrun_clearfog-base-a1
 
 define Device/solidrun_clearfog-pro-a1
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := SolidRun
   DEVICE_MODEL := ClearFog Pro
   KERNEL_INSTALL := 1
@@ -300,4 +280,3 @@ define Device/solidrun_clearfog-pro-a1
   BOOT_SCRIPT := clearfog
   SUPPORTED_DEVICES += armada-388-clearfog armada-388-clearfog-pro
 endef
-TARGET_DEVICES += solidrun_clearfog-pro-a1

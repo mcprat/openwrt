@@ -36,7 +36,7 @@ define Device/Default
 	IMAGE/sdcard.img.gz := zynq-sdcard | gzip
 endef
 
-define Device/FitImageGzip
+define Device/Common/FitImageGzip
 	KERNEL_SUFFIX := -fit-uImage.itb
 	KERNEL = kernel-bin | gzip | fit gzip $$(DTS_DIR)/$$(DEVICE_DTS).dtb
 	KERNEL_NAME := Image
@@ -47,32 +47,28 @@ endef
 #################################################
 
 define Device/avnet_zynq-zed
-	$(call Device/FitImageGzip)
+	$(call Device/Common/FitImageGzip)
 	DEVICE_VENDOR := Avnet
 	DEVICE_MODEL := ZedBoard
 endef
-TARGET_DEVICES += avnet_zynq-zed
 
 define Device/digilent_zynq-zybo
-	$(call Device/FitImageGzip)
+	$(call Device/Common/FitImageGzip)
 	DEVICE_VENDOR := Digilent
 	DEVICE_MODEL := Zybo
 endef
-TARGET_DEVICES += digilent_zynq-zybo
 
 define Device/digilent_zynq-zybo-z7
-	$(call Device/FitImageGzip)
+	$(call Device/Common/FitImageGzip)
 	DEVICE_VENDOR := Digilent
 	DEVICE_MODEL := Zybo Z7
 endef
-TARGET_DEVICES += digilent_zynq-zybo-z7
 
 define Device/xlnx_zynq-zc702
-	$(call Device/FitImageGzip)
+	$(call Device/Common/FitImageGzip)
 	DEVICE_VENDOR := Xilinx
 	DEVICE_MODEL := ZC702
 	DEVICE_PACKAGES:=kmod-can kmod-can-xilinx-can
 endef
-TARGET_DEVICES += xlnx_zynq-zc702
 
 $(eval $(call BuildImage))

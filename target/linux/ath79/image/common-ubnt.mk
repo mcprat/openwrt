@@ -37,7 +37,7 @@ endef
 # UBNT_TYPE e.g. one of (BZ, XM, XW)
 # UBNT_CHIP e.g. one of (ar7240, ar933x, ar934x)
 # UBNT_VERSION e.g. one of (6.0.0, 8.5.3)
-define Device/ubnt
+define Device/Common/ubnt
   DEVICE_VENDOR := Ubiquiti
   DEVICE_PACKAGES := kmod-usb2
   IMAGES += factory.bin
@@ -45,8 +45,8 @@ define Device/ubnt
 	append-rootfs | pad-rootfs | check-size | mkubntimage-split
 endef
 
-define Device/ubnt-bz
-  $(Device/ubnt)
+define Device/Common/ubnt-bz
+  $(Device/Common/ubnt)
   SOC := ar7241
   IMAGE_SIZE := 7448k
   UBNT_BOARD := XM
@@ -55,8 +55,8 @@ define Device/ubnt-bz
   UBNT_VERSION := 6.0.0
 endef
 
-define Device/ubnt-sw
-  $(Device/ubnt)
+define Device/Common/ubnt-sw
+  $(Device/Common/ubnt)
   SOC := ar7242
   DEVICE_PACKAGES += kmod-usb-ohci
   IMAGE_SIZE := 7552k
@@ -67,8 +67,8 @@ define Device/ubnt-sw
   KERNEL := kernel-bin | append-dtb | relocate-kernel | lzma | uImage lzma
 endef
 
-define Device/ubnt-2wa
-  $(Device/ubnt)
+define Device/Common/ubnt-2wa
+  $(Device/Common/ubnt)
   SOC := ar9342
   IMAGE_SIZE := 15744k
   UBNT_BOARD := WA
@@ -77,8 +77,8 @@ define Device/ubnt-2wa
   UBNT_VERSION := 8.5.3
 endef
 
-define Device/ubnt-wa
-  $(Device/ubnt)
+define Device/Common/ubnt-wa
+  $(Device/Common/ubnt)
   SOC := ar9342
   IMAGE_SIZE := 15744k
   UBNT_BOARD := WA
@@ -87,8 +87,8 @@ define Device/ubnt-wa
   UBNT_VERSION := 8.5.3
 endef
 
-define Device/ubnt-xc
-  $(Device/ubnt)
+define Device/Common/ubnt-xc
+  $(Device/Common/ubnt)
   IMAGE_SIZE := 15744k
   UBNT_BOARD := XC
   UBNT_CHIP := qca955x
@@ -96,8 +96,8 @@ define Device/ubnt-xc
   UBNT_VERSION := 8.5.3
 endef
 
-define Device/ubnt-xm
-  $(Device/ubnt)
+define Device/Common/ubnt-xm
+  $(Device/Common/ubnt)
   DEVICE_VARIANT := XM
   DEVICE_PACKAGES += kmod-usb-ohci
   IMAGE_SIZE := 7448k
@@ -109,8 +109,8 @@ define Device/ubnt-xm
   KERNEL := kernel-bin | append-dtb | relocate-kernel | lzma | uImage lzma
 endef
 
-define Device/ubnt-xw
-  $(Device/ubnt)
+define Device/Common/ubnt-xw
+  $(Device/Common/ubnt)
   SOC := ar9342
   DEVICE_VARIANT := XW
   IMAGE_SIZE := 7552k
@@ -121,8 +121,8 @@ define Device/ubnt-xw
   UBNT_VERSION := 6.0.4
 endef
 
-define Device/ubnt-unifi-jffs2
-  $(Device/ubnt)
+define Device/Common/ubnt-unifi-jffs2
+  $(Device/Common/ubnt)
   KERNEL_SIZE := 3072k
   IMAGE_SIZE := 15744k
   UBNT_TYPE := BZ
@@ -133,8 +133,8 @@ define Device/ubnt-unifi-jffs2
   IMAGE/factory.bin := $$(IMAGE/sysupgrade.bin) | mkubntimage2
 endef
 
-define Device/ubnt-acb
-  $(Device/ubnt)
+define Device/Common/ubnt-acb
+  $(Device/Common/ubnt)
   IMAGE_SIZE := 15744k
   UBNT_BOARD := ACB
   UBNT_TYPE := ACB

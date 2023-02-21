@@ -164,25 +164,25 @@ define Device/standard-noloader-nodictionarylzma
   IMAGE/trx := append-rootfs | trx-without-loader
 endef
 
-define Device/asus
+define Device/Common/asus
 	DEVICE_VENDOR := ASUS
 	IMAGES := trx
 	IMAGE/trx := append-rootfs | trx-with-loader | asus-trx
 endef
 
-define Device/linksys
+define Device/Common/linksys
 	DEVICE_VENDOR := Linksys
 	IMAGES := bin
 	IMAGE/bin := append-rootfs | trx-with-loader | linksys-bin
 endef
 
-define Device/motorola
+define Device/Common/motorola
 	DEVICE_VENDOR := Motorola
 	IMAGES := bin
 	IMAGE/bin := append-rootfs | trx-with-loader | motorola-bin
 endef
 
-define Device/netgear
+define Device/Common/netgear
 	DEVICE_VENDOR := NETGEAR
 	IMAGES := chk
 	IMAGE/chk := append-rootfs | trx-with-loader | netgear-chk

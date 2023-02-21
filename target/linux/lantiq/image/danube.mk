@@ -13,7 +13,6 @@ define Device/arcadyan_arv4510pw
 	kmod-rt2800-pci kmod-ath5k wpad-basic-mbedtls
   SUPPORTED_DEVICES += ARV4510PW
 endef
-TARGET_DEVICES += arcadyan_arv4510pw
 
 define Device/arcadyan_arv4519pw
   DEVICE_VENDOR := Arcadyan
@@ -31,7 +30,6 @@ define Device/arcadyan_arv4519pw
   SUPPORTED_DEVICES += ARV4519PW
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv4519pw
 
 define Device/arcadyan_arv7506pw11
   DEVICE_VENDOR := Arcadyan
@@ -46,7 +44,6 @@ define Device/arcadyan_arv7506pw11
 	kmod-rt2800-pci wpad-basic-mbedtls
   SUPPORTED_DEVICES += ARV7506PW11
 endef
-TARGET_DEVICES += arcadyan_arv7506pw11
 
 define Device/arcadyan_arv7510pw22
   DEVICE_VENDOR := Arcadyan
@@ -64,7 +61,6 @@ define Device/arcadyan_arv7510pw22
 	kmod-usb-uhci kmod-usb2 kmod-usb2-pci
   SUPPORTED_DEVICES += ARV7510PW22
 endef
-TARGET_DEVICES += arcadyan_arv7510pw22
 
 define Device/arcadyan_arv7518pw
   DEVICE_VENDOR := Arcadyan
@@ -80,7 +76,6 @@ define Device/arcadyan_arv7518pw
 	kmod-ath9k kmod-owl-loader wpad-basic-mbedtls
   SUPPORTED_DEVICES += ARV7518PW
 endef
-TARGET_DEVICES += arcadyan_arv7518pw
 
 define Device/arcadyan_arv7519pw
   DEVICE_VENDOR := Arcadyan
@@ -96,7 +91,6 @@ define Device/arcadyan_arv7519pw
 	kmod-rt2800-pci wpad-basic-mbedtls
   SUPPORTED_DEVICES += ARV7519PW
 endef
-TARGET_DEVICES += arcadyan_arv7519pw
 
 define Device/arcadyan_arv7525pw
   DEVICE_VENDOR := Arcadyan
@@ -113,7 +107,6 @@ define Device/arcadyan_arv7525pw
   SUPPORTED_DEVICES += ARV4510PW
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv7525pw
 
 define Device/arcadyan_arv752dpw
   DEVICE_VENDOR := Arcadyan
@@ -130,7 +123,6 @@ define Device/arcadyan_arv752dpw
 	kmod-rt2800-pci wpad-basic-mbedtls
   SUPPORTED_DEVICES += ARV752DPW
 endef
-TARGET_DEVICES += arcadyan_arv752dpw
 
 define Device/arcadyan_arv752dpw22
   DEVICE_VENDOR := Arcadyan
@@ -147,7 +139,6 @@ define Device/arcadyan_arv752dpw22
 	kmod-rt2800-pci wpad-basic-mbedtls
   SUPPORTED_DEVICES += ARV752DPW22
 endef
-TARGET_DEVICES += arcadyan_arv752dpw22
 
 define Device/arcadyan_arv8539pw22
   DEVICE_VENDOR := Arcadyan
@@ -163,7 +154,6 @@ define Device/arcadyan_arv8539pw22
 	kmod-ath9k kmod-owl-loader wpad-basic-mbedtls
   SUPPORTED_DEVICES += ARV8539PW22
 endef
-TARGET_DEVICES += arcadyan_arv8539pw22
 
 define Device/audiocodes_mp-252
   DEVICE_VENDOR := AudioCodes
@@ -179,10 +169,9 @@ define Device/audiocodes_mp-252
 	wpad-basic-mbedtls
   SUPPORTED_DEVICES += ACMP252
 endef
-TARGET_DEVICES += audiocodes_mp-252
 
 define Device/bt_homehub-v2b
-  $(Device/NAND)
+  $(Device/Common/NAND)
   DEVICE_VENDOR := British Telecom (BT)
   DEVICE_MODEL := Home Hub 2
   DEVICE_VARIANT := Type B
@@ -197,7 +186,6 @@ define Device/bt_homehub-v2b
   SUPPORTED_DEVICES += BTHOMEHUBV2B
   DEFAULT := n
 endef
-TARGET_DEVICES += bt_homehub-v2b
 
 define Device/lantiq_easy50712
   DEVICE_VENDOR := Lantiq
@@ -206,7 +194,6 @@ define Device/lantiq_easy50712
   IMAGE_SIZE := 3776k
   DEFAULT := n
 endef
-TARGET_DEVICES += lantiq_easy50712
 
 define Device/siemens_gigaset-sx76x
   DEVICE_VENDOR := Siemens
@@ -220,4 +207,3 @@ define Device/siemens_gigaset-sx76x
 	kmod-ath5k wpad-basic-mbedtls
   SUPPORTED_DEVICES += GIGASX76X
 endef
-TARGET_DEVICES += siemens_gigaset-sx76x

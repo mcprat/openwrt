@@ -19,7 +19,7 @@ FAT32_BLOCKS:=$(shell echo \
   $$(($(AT91_SD_BOOT_PARTSIZE)*1024*1024/$(FAT32_BLOCK_SIZE))))
 
 define Device/Default
-  $(Device/default-nand)
+  $(Device/Common/default-nand)
   PROFILES := Default
   FILESYSTEMS := squashfs ubifs ext4
   DEVICE_DTS = $(lastword $(subst _, ,$(1)))
@@ -29,49 +29,49 @@ define Device/Default
   DTB_SIZE := 128k
 endef
 
-define Device/dtb
+define Device/Common/dtb
   KERNEL := kernel-bin | lzma | uImage lzma
 endef
 
-define Device/evaluation-sdimage
+define Device/Common/evaluation-sdimage
   IMAGES += sdcard.img.gz
   IMAGE/sdcard.img.gz := at91-sdcard
 endef
 
-define Device/evaluation
+define Device/Common/evaluation
   KERNEL_INSTALL := 1
   KERNEL_SUFFIX := -uImage
   IMAGES := root.ubi
   IMAGE/root.ubi := append-ubi
 endef
 
-define Device/evaluation-zImage
+define Device/Common/evaluation-zImage
   IMAGES += zImage
   IMAGE/zImage := at91-install-zImage
 endef
 
-define Device/evaluation-dtb
-  $(Device/evaluation)
-  $(Device/dtb)
+define Device/Common/evaluation-dtb
+  $(Device/Common/evaluation)
+  $(Device/Common/dtb)
   KERNEL_SUFFIX := -fit-zImage.itb
   KERNEL = kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
 endef
 
-define Device/evaluation-fit
-  $(Device/evaluation)
+define Device/Common/evaluation-fit
+  $(Device/Common/evaluation)
   KERNEL_SUFFIX := -fit-uImage.itb
   KERNEL = kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(DEVICE_DTS).dtb
 endef
 
-define Device/production
+define Device/Common/production
   UBINIZE_OPTS := -E 5
   IMAGES := factory.bin
   IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi
 endef
 
-define Device/production-dtb
-  $(Device/production)
-  $(Device/dtb)
+define Device/Common/production-dtb
+  $(Device/Common/production)
+  $(Device/Common/dtb)
   IMAGE/factory.bin := append-dtb | pad-to $$$$(DTB_SIZE) | \
 	append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi
 endef

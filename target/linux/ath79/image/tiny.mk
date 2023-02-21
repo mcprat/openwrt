@@ -2,7 +2,7 @@ include ./common-buffalo.mk
 include ./common-senao.mk
 
 define Device/buffalo_whr-g301n
-  $(Device/buffalo_common)
+  $(Device/Common/buffalo)
   SOC := ar7240
   DEVICE_MODEL := WHR-G301N
   BUFFALO_PRODUCT := WHR-G301N
@@ -10,7 +10,6 @@ define Device/buffalo_whr-g301n
   SUPPORTED_DEVICES += whr-g301n
   DEFAULT := n
 endef
-TARGET_DEVICES += buffalo_whr-g301n
 
 define Device/dlink_dir-615-e4
   SOC := ar7240
@@ -28,10 +27,9 @@ define Device/dlink_dir-615-e4
   SUPPORTED_DEVICES += dir-615-e4
   DEFAULT := n
 endef
-TARGET_DEVICES += dlink_dir-615-e4
 
 define Device/engenius_eap350-v1
-  $(Device/senao_loader_okli)
+  $(Device/Common/senao_loader_okli)
   BLOCKSIZE := 4k
   SOC := ar7242
   DEVICE_VENDOR := EnGenius
@@ -41,10 +39,9 @@ define Device/engenius_eap350-v1
   LOADER_FLASH_OFFS := 0x1a0000
   SENAO_IMGNAME := senao-eap350
 endef
-TARGET_DEVICES += engenius_eap350-v1
 
 define Device/engenius_ecb350-v1
-  $(Device/senao_loader_okli)
+  $(Device/Common/senao_loader_okli)
   BLOCKSIZE := 4k
   SOC := ar7242
   DEVICE_VENDOR := EnGenius
@@ -54,10 +51,9 @@ define Device/engenius_ecb350-v1
   LOADER_FLASH_OFFS := 0x1a0000
   SENAO_IMGNAME := senao-ecb350
 endef
-TARGET_DEVICES += engenius_ecb350-v1
 
 define Device/engenius_enh202-v1
-  $(Device/senao_loader_okli)
+  $(Device/Common/senao_loader_okli)
   SOC := ar7240
   DEVICE_VENDOR := EnGenius
   DEVICE_MODEL := ENH202
@@ -67,7 +63,6 @@ define Device/engenius_enh202-v1
   LOADER_FLASH_OFFS := 0x1a0000
   SENAO_IMGNAME := senao-enh202
 endef
-TARGET_DEVICES += engenius_enh202-v1
 
 define Device/pqi_air-pen
   SOC := ar9330
@@ -77,4 +72,3 @@ define Device/pqi_air-pen
   IMAGE_SIZE := 7680k
   SUPPORTED_DEVICES += pqi-air-pen
 endef
-TARGET_DEVICES += pqi_air-pen

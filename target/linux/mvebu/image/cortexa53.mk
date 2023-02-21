@@ -4,7 +4,6 @@ define Device/glinet_gl-mv1000
   DEVICE_MODEL := GL-MV1000
   SOC := armada-3720
 endef
-TARGET_DEVICES += glinet_gl-mv1000
 
 define Device/globalscale_espressobin
   $(call Device/Default-arm64)
@@ -17,7 +16,6 @@ define Device/globalscale_espressobin
   SOC := armada-3720
   BOOT_SCRIPT := espressobin
 endef
-TARGET_DEVICES += globalscale_espressobin
 
 define Device/globalscale_espressobin-emmc
   $(call Device/Default-arm64)
@@ -30,7 +28,6 @@ define Device/globalscale_espressobin-emmc
   SOC := armada-3720
   BOOT_SCRIPT := espressobin
 endef
-TARGET_DEVICES += globalscale_espressobin-emmc
 
 define Device/globalscale_espressobin-ultra
   $(call Device/Default-arm64)
@@ -41,7 +38,6 @@ define Device/globalscale_espressobin-ultra
   SOC := armada-3720
   BOOT_SCRIPT := espressobin
 endef
-TARGET_DEVICES += globalscale_espressobin-ultra
 
 define Device/globalscale_espressobin-v7
   $(call Device/Default-arm64)
@@ -54,7 +50,6 @@ define Device/globalscale_espressobin-v7
   SOC := armada-3720
   BOOT_SCRIPT := espressobin
 endef
-TARGET_DEVICES += globalscale_espressobin-v7
 
 define Device/globalscale_espressobin-v7-emmc
   $(call Device/Default-arm64)
@@ -67,7 +62,6 @@ define Device/globalscale_espressobin-v7-emmc
   SOC := armada-3720
   BOOT_SCRIPT := espressobin
 endef
-TARGET_DEVICES += globalscale_espressobin-v7-emmc
 
 define Device/marvell_armada-3720-db
   $(call Device/Default-arm64)
@@ -75,7 +69,6 @@ define Device/marvell_armada-3720-db
   DEVICE_MODEL := Armada 3720 Development Board (DB-88F3720-DDR3)
   DEVICE_DTS := armada-3720-db
 endef
-TARGET_DEVICES += marvell_armada-3720-db
 
 define Device/methode_udpu
   $(call Device/Default-arm64)
@@ -91,7 +84,6 @@ define Device/methode_udpu
   IMAGE/firmware.tgz := boot-scr | boot-img-ext4 | uDPU-firmware | append-metadata
   BOOT_SCRIPT := udpu
 endef
-TARGET_DEVICES += methode_udpu
 
 define Device/methode_edpu
   $(call Device/methode_udpu)
@@ -99,4 +91,3 @@ define Device/methode_edpu
   DEVICE_DTS := armada-3720-eDPU
   KERNEL_INITRAMFS := kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
 endef
-TARGET_DEVICES += methode_edpu

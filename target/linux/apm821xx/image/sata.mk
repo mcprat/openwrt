@@ -23,4 +23,3 @@ define Device/wd_mybooklive
   ARTIFACT/apollo3g.dtb := export-dtb
 endef
 
-TARGET_DEVICES += wd_mybooklive

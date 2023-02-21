@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
-define Device/cameo-fw
+define Device/Common/cameo-fw
   CAMEO_BOARD_MODEL = $$(DEVICE_MODEL)
   KERNEL := \
 	kernel-bin | \
@@ -20,8 +20,8 @@ define Device/cameo-fw
 	cameo-headers
 endef
 
-define Device/d-link_dgs-1210
-  $(Device/cameo-fw)
+define Device/Common/d-link_dgs-1210
+  $(Device/Common/cameo-fw)
   IMAGE_SIZE := 13824k
   DEVICE_VENDOR := D-Link
   CAMEO_KERNEL_PART_SIZE := 1572864
@@ -31,7 +31,7 @@ define Device/d-link_dgs-1210
   CAMEO_BOARD_VERSION := 32
 endef
 
-define Device/hpe_1920
+define Device/Common/hpe_1920
   DEVICE_VENDOR := HPE
   IMAGE_SIZE := 29632k
   BLOCKSIZE := 64k
@@ -56,7 +56,7 @@ define Device/hpe_1920
 	append-metadata
 endef
 
-define Device/zyxel_gs1900
+define Device/Common/zyxel_gs1900
   DEVICE_VENDOR := ZyXEL
   IMAGE_SIZE := 6976k
   UIMAGE_MAGIC := 0x83800000

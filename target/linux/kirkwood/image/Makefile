@@ -64,7 +64,7 @@ define Build/ctera-firmware
 	rm -rf $@.tmp
 endef
 
-define Device/kernel-size-migration
+define Device/Common/kernel-size-migration
   DEVICE_COMPAT_VERSION := 2.0
   DEVICE_COMPAT_MESSAGE := Partition design has changed compared to \
 	older versions (up to 21.02) due to kernel size restrictions. \
@@ -96,7 +96,6 @@ define Device/checkpoint_l-50
 	kmod-rtc-s35390a kmod-usb-ledtrig-usbport wpad-basic-mbedtls
   IMAGES := sysupgrade.bin
 endef
-TARGET_DEVICES += checkpoint_l-50
 
 define Device/cisco_on100
   DEVICE_VENDOR := Cisco Systems
@@ -108,7 +107,6 @@ define Device/cisco_on100
   DEVICE_PACKAGES := kmod-mvsdio
   SUPPORTED_DEVICES += on100
 endef
-TARGET_DEVICES += cisco_on100
 
 define Device/cloudengines_pogoe02
   DEVICE_VENDOR := Cloud Engines
@@ -116,7 +114,6 @@ define Device/cloudengines_pogoe02
   DEVICE_DTS := kirkwood-pogo_e02
   SUPPORTED_DEVICES += pogo_e02
 endef
-TARGET_DEVICES += cloudengines_pogoe02
 
 define Device/cloudengines_pogoplugv4
   DEVICE_VENDOR := Cloud Engines
@@ -125,7 +122,6 @@ define Device/cloudengines_pogoplugv4
   DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4 kmod-mvsdio kmod-usb3 \
 	kmod-gpio-button-hotplug
 endef
-TARGET_DEVICES += cloudengines_pogoplugv4
 
 define Device/ctera_c200-v1
   DEVICE_VENDOR := Ctera
@@ -138,7 +134,6 @@ define Device/ctera_c200-v1
   KERNEL_SUFFIX := -factory.firm
   IMAGES := sysupgrade.bin
 endef
-TARGET_DEVICES += ctera_c200-v1
 
 define Device/endian_4i-edge-200
   DEVICE_VENDOR := Endian
@@ -149,14 +144,12 @@ define Device/endian_4i-edge-200
   KERNEL_SIZE := 4096k
   IMAGES := sysupgrade.bin
 endef
-TARGET_DEVICES += endian_4i-edge-200
 
 define Device/globalscale_sheevaplug
   DEVICE_VENDOR := Globalscale
   DEVICE_MODEL := Sheevaplug
   DEVICE_PACKAGES := kmod-mvsdio
 endef
-TARGET_DEVICES += globalscale_sheevaplug
 
 define Device/iom_iconnect-1.1
   DEVICE_VENDOR := Iomega
@@ -164,7 +157,6 @@ define Device/iom_iconnect-1.1
   DEVICE_DTS := kirkwood-iconnect
   SUPPORTED_DEVICES += iconnect
 endef
-TARGET_DEVICES += iom_iconnect-1.1
 
 define Device/iom_ix2-200
   DEVICE_VENDOR := Iomega
@@ -182,7 +174,6 @@ define Device/iom_ix2-200
   IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | \
 	check-size
 endef
-TARGET_DEVICES += iom_ix2-200
 
 define Device/iptime_nas1
   DEVICE_VENDOR := ipTIME
@@ -197,9 +188,8 @@ define Device/iptime_nas1
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | \
 	check-size | append-metadata
 endef
-TARGET_DEVICES += iptime_nas1
 
-define Device/linksys
+define Device/Common/linksys
   DEVICE_VENDOR := Linksys
   DEVICE_PACKAGES := kmod-mwl8k wpad-basic-mbedtls kmod-gpio-button-hotplug
   KERNEL_IN_UBI :=
@@ -208,18 +198,17 @@ define Device/linksys
 endef
 
 define Device/linksys_e4200-v2
-  $(Device/linksys)
-  $(Device/kernel-size-migration)
+  $(Device/Common/linksys)
+  $(Device/Common/kernel-size-migration)
   DEVICE_MODEL := E4200
   DEVICE_VARIANT := v2
   KERNEL_SIZE := 3072k
   SUPPORTED_DEVICES += linksys,viper linksys-viper
 endef
-TARGET_DEVICES += linksys_e4200-v2
 
 define Device/linksys_ea3500
-  $(Device/linksys)
-  $(Device/kernel-size-migration)
+  $(Device/Common/linksys)
+  $(Device/Common/kernel-size-migration)
   DEVICE_MODEL := EA3500
   PAGESIZE := 512
   SUBPAGESIZE := 256
@@ -227,16 +216,14 @@ define Device/linksys_ea3500
   KERNEL_SIZE := 3072k
   SUPPORTED_DEVICES += linksys,audi linksys-audi
 endef
-TARGET_DEVICES += linksys_ea3500
 
 define Device/linksys_ea4500
-  $(Device/linksys)
-  $(Device/kernel-size-migration)
+  $(Device/Common/linksys)
+  $(Device/Common/kernel-size-migration)
   DEVICE_MODEL := EA4500
   KERNEL_SIZE := 3072k
   SUPPORTED_DEVICES += linksys,viper linksys-viper
 endef
-TARGET_DEVICES += linksys_ea4500
 
 define Device/netgear_readynas-duo-v2
   DEVICE_VENDOR := NETGEAR
@@ -248,7 +235,6 @@ define Device/netgear_readynas-duo-v2
   DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4 \
 	kmod-gpio-button-hotplug kmod-hwmon-g762 kmod-rtc-rs5c372a kmod-usb3
 endef
-TARGET_DEVICES += netgear_readynas-duo-v2
 
 define Device/raidsonic_ib-nas62x0
   DEVICE_VENDOR := RaidSonic
@@ -257,7 +243,6 @@ define Device/raidsonic_ib-nas62x0
   DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4
   SUPPORTED_DEVICES += ib62x0
 endef
-TARGET_DEVICES += raidsonic_ib-nas62x0
 
 define Device/seagate_blackarmor-nas220
   DEVICE_VENDOR := Seagate
@@ -269,14 +254,12 @@ define Device/seagate_blackarmor-nas220
   BLOCKSIZE := 16k
   UBINIZE_OPTS := -e 1
 endef
-TARGET_DEVICES += seagate_blackarmor-nas220
 
 define Device/seagate_dockstar
   DEVICE_VENDOR := Seagate
   DEVICE_MODEL := FreeAgent Dockstar
   SUPPORTED_DEVICES += dockstar
 endef
-TARGET_DEVICES += seagate_dockstar
 
 define Device/seagate_goflexnet
   DEVICE_VENDOR := Seagate
@@ -284,7 +267,6 @@ define Device/seagate_goflexnet
   DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4
   SUPPORTED_DEVICES += goflexnet
 endef
-TARGET_DEVICES += seagate_goflexnet
 
 define Device/seagate_goflexhome
   DEVICE_VENDOR := Seagate
@@ -292,7 +274,6 @@ define Device/seagate_goflexhome
   DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4
   SUPPORTED_DEVICES += goflexhome
 endef
-TARGET_DEVICES += seagate_goflexhome
 
 define Device/zyxel_nsa310b
   DEVICE_VENDOR := ZyXEL
@@ -301,14 +282,12 @@ define Device/zyxel_nsa310b
 	kmod-gpio-button-hotplug kmod-hwmon-lm85
   SUPPORTED_DEVICES += nsa310b
 endef
-TARGET_DEVICES += zyxel_nsa310b
 
 define Device/zyxel_nsa310s
   DEVICE_VENDOR := ZyXEL
   DEVICE_MODEL := NSA310S
   DEVICE_PACKAGES := kmod-ata-marvell-sata kmod-fs-ext4 kmod-gpio-button-hotplug
 endef
-TARGET_DEVICES += zyxel_nsa310s
 
 define Device/zyxel_nsa325
   DEVICE_VENDOR := ZyXEL
@@ -318,6 +297,5 @@ define Device/zyxel_nsa325
 	kmod-gpio-button-hotplug kmod-rtc-pcf8563 kmod-usb3
   SUPPORTED_DEVICES += nsa325
 endef
-TARGET_DEVICES += zyxel_nsa325
 
 $(eval $(call BuildImage))

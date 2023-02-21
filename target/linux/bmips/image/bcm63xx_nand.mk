@@ -13,7 +13,7 @@ DEVICE_VARS += SERCOMM_PID SERCOMM_VERSION
 # cfe-jffs2-cferam and cfe-jffs2-kernel).
 # Separate JFFS2 partitions allow upgrading openwrt without reflashing cferam
 # JFFS2 partition, which is much safer in case anything goes wrong.
-define Device/bcm63xx-nand
+define Device/Common/bcm63xx-nand
   FILESYSTEMS := squashfs ubifs
   KERNEL := kernel-bin | append-dtb | relocate-kernel | lzma | cfe-jffs2-kernel
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | loader-lzma elf
@@ -36,8 +36,8 @@ define Device/bcm63xx-nand
   DEVICE_PACKAGES += nand-utils
 endef
 
-define Device/sercomm-nand
-  $(Device/bcm63xx-nand)
+define Device/Common/sercomm-nand
+  $(Device/Common/bcm63xx-nand)
   IMAGES := factory.img sysupgrade.bin
   IMAGE/factory.img := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi |\
     cfe-sercomm-part | gzip | cfe-sercomm-load | cfe-sercomm-crypto
@@ -46,7 +46,7 @@ define Device/sercomm-nand
 endef
 
 define Device/comtrend_vr-3032u
-  $(Device/bcm63xx-nand)
+  $(Device/Common/bcm63xx-nand)
   DEVICE_VENDOR := Comtrend
   DEVICE_MODEL := VR-3032u
   CHIP_ID := 63268
@@ -61,10 +61,9 @@ define Device/comtrend_vr-3032u
   CFE_WFI_FLASH_TYPE := 3
   CFE_WFI_VERSION := 0x5732
 endef
-TARGET_DEVICES += comtrend_vr-3032u
 
 define Device/netgear_dgnd3700-v2
-  $(Device/bcm63xx-nand)
+  $(Device/Common/bcm63xx-nand)
   DEVICE_VENDOR := NETGEAR
   DEVICE_MODEL := DGND3700
   DEVICE_VARIANT := v2
@@ -78,4 +77,3 @@ define Device/netgear_dgnd3700-v2
   CFE_WFI_FLASH_TYPE := 2
   CFE_WFI_VERSION := 0x5731
 endef
-TARGET_DEVICES += netgear_dgnd3700-v2

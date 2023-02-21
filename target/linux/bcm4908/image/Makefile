@@ -85,7 +85,6 @@ define Device/asus_gt-ac5300
   ASUS_FW_REV := 3.0.0.4
   ASUS_EXT_NO := 21140
 endef
-TARGET_DEVICES += asus_gt-ac5300
 
 define Device/asus_gt-ax6000
   DEVICE_VENDOR := ASUS
@@ -95,7 +94,6 @@ define Device/asus_gt-ax6000
   IMAGE/pkgtb := append-rootfs | pkgtb
   SOC := bcm4912
 endef
-# TARGET_DEVICES += asus_gt-ax6000
 
 define Device/netgear_r8000p
   DEVICE_VENDOR := Netgear
@@ -106,7 +104,6 @@ define Device/netgear_r8000p
   NETGEAR_BOARD_ID := U12H359T00_NETGEAR
   NETGEAR_REGION := 1
 endef
-TARGET_DEVICES += netgear_r8000p
 
 define Device/tplink_archer-c2300-v1
   DEVICE_VENDOR := TP-Link
@@ -117,9 +114,8 @@ define Device/tplink_archer-c2300-v1
   IMAGE/bin := append-ubi | bcm4908img
   BROKEN := y
 endef
-TARGET_DEVICES += tplink_archer-c2300-v1
 
-define Device/netgear
+define Device/Common/netgear
   DEVICE_VENDOR := NETGEAR
   KERNEL := kernel-bin | bootfs
   IMAGES := chk
@@ -129,10 +125,9 @@ endef
 
 define Device/netgear_raxe500
   DEVICE_MODEL := RAXE500
-  $(Device/netgear)
+  $(Device/Common/netgear)
   SOC := bcm4908
   NETGEAR_BOARD_ID := U12H449T00_NETGEAR
 endef
-# TARGET_DEVICES += netgear_raxe500
 
 $(eval $(call BuildImage))

@@ -51,7 +51,6 @@ define Device/8dev_rambutan
   IMAGE/sysupgrade.tar := sysupgrade-tar | append-metadata
   IMAGE/factory.bin := append-ubi
 endef
-TARGET_DEVICES += 8dev_rambutan
 
 define Device/aerohive_hiveap-121
   SOC := ar9344
@@ -69,7 +68,6 @@ define Device/aerohive_hiveap-121
 	check-size
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += aerohive_hiveap-121
 
 define Device/domywifi_dw33d
   SOC := qca9558
@@ -87,9 +85,8 @@ define Device/domywifi_dw33d
   IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | \
 	check-size
 endef
-TARGET_DEVICES += domywifi_dw33d
 
-define Device/dongwon_dw02-412h
+define Device/Common/dongwon_dw02-412h
   SOC := qca9557
   DEVICE_VENDOR := Dongwon T&I
   DEVICE_MODEL := DW02-412H
@@ -109,22 +106,20 @@ define Device/dongwon_dw02-412h
 endef
 
 define Device/dongwon_dw02-412h-64m
-  $(Device/dongwon_dw02-412h)
+  $(Device/Common/dongwon_dw02-412h)
   DEVICE_VARIANT := (64M)
   DEVICE_ALT0_VARIANT := (64M)
   IMAGE_SIZE := 49152k
 endef
-TARGET_DEVICES += dongwon_dw02-412h-64m
 
 define Device/dongwon_dw02-412h-128m
-  $(Device/dongwon_dw02-412h)
+  $(Device/Common/dongwon_dw02-412h)
   DEVICE_VARIANT := (128M)
   DEVICE_ALT0_VARIANT := (128M)
   IMAGE_SIZE := 114688k
 endef
-TARGET_DEVICES += dongwon_dw02-412h-128m
 
-define Device/glinet_gl-ar300m-common-nand
+define Device/Common/glinet_gl-ar300m-nand
   SOC := qca9531
   DEVICE_VENDOR := GL.iNet
   DEVICE_MODEL := GL-AR300M
@@ -136,7 +131,7 @@ define Device/glinet_gl-ar300m-common-nand
 endef
 
 define Device/glinet_gl-ar300m-nand
-  $(Device/glinet_gl-ar300m-common-nand)
+  $(Device/Common/glinet_gl-ar300m-nand)
   DEVICE_VARIANT := NAND
   BLOCKSIZE := 128k
   IMAGES += factory.img
@@ -144,16 +139,14 @@ define Device/glinet_gl-ar300m-nand
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
   SUPPORTED_DEVICES += glinet,gl-ar300m-nor
 endef
-TARGET_DEVICES += glinet_gl-ar300m-nand
 
 define Device/glinet_gl-ar300m-nor
-  $(Device/glinet_gl-ar300m-common-nand)
+  $(Device/Common/glinet_gl-ar300m-nand)
   DEVICE_VARIANT := NOR
   SUPPORTED_DEVICES += glinet,gl-ar300m-nand gl-ar300m
 endef
-TARGET_DEVICES += glinet_gl-ar300m-nor
 
-define Device/glinet_gl-ar750s-common
+define Device/Common/glinet_gl-ar750s
   SOC := qca9563
   DEVICE_VENDOR := GL.iNet
   DEVICE_MODEL := GL-AR750S
@@ -163,20 +156,18 @@ define Device/glinet_gl-ar750s-common
 endef
 
 define Device/glinet_gl-ar750s-nor-nand
-  $(Device/glinet_gl-ar750s-common)
+  $(Device/Common/glinet_gl-ar750s)
   DEVICE_VARIANT := NOR/NAND
   KERNEL_SIZE := 4096k
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
   SUPPORTED_DEVICES += glinet,gl-ar750s-nor
 endef
-TARGET_DEVICES += glinet_gl-ar750s-nor-nand
 
 define Device/glinet_gl-ar750s-nor
-  $(Device/glinet_gl-ar750s-common)
+  $(Device/Common/glinet_gl-ar750s)
   DEVICE_VARIANT := NOR
   SUPPORTED_DEVICES += gl-ar750s glinet,gl-ar750s glinet,gl-ar750s-nor-nand
 endef
-TARGET_DEVICES += glinet_gl-ar750s-nor
 
 define Device/glinet_gl-e750
   SOC := qca9531
@@ -193,7 +184,6 @@ define Device/glinet_gl-e750
   IMAGE/factory.img := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += glinet_gl-e750
 
 define Device/glinet_gl-xe300
   SOC := qca9531
@@ -210,7 +200,6 @@ define Device/glinet_gl-xe300
   IMAGE/factory.img := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += glinet_gl-xe300
 
 define Device/linksys_ea4500-v3
   SOC := qca9558
@@ -229,10 +218,9 @@ define Device/linksys_ea4500-v3
 	append-ubi | check-size | linksys-image type=$$$$(LINKSYS_HWNAME)
   UBINIZE_OPTS := -E 5
 endef
-TARGET_DEVICES += linksys_ea4500-v3
 
 # fake rootfs is mandatory, pad-offset 64 equals (1 * uimage_header)
-define Device/netgear_ath79_nand
+define Device/Common/netgear_ath79_nand
   DEVICE_VENDOR := NETGEAR
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ledtrig-usbport
   KERNEL_SIZE := 4096k
@@ -262,7 +250,6 @@ define Device/netgear_pgzng1
   BLOCKSIZE := 128k
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += netgear_pgzng1
 
 define Device/netgear_r6100
   SOC := ar9344
@@ -270,10 +257,9 @@ define Device/netgear_r6100
   UIMAGE_MAGIC := 0x36303030
   NETGEAR_BOARD_ID := R6100
   NETGEAR_HW_ID := 29764434+0+128+128+2x2+2x2
-  $(Device/netgear_ath79_nand)
+  $(Device/Common/netgear_ath79_nand)
   DEVICE_PACKAGES += kmod-ath10k-ct ath10k-firmware-qca988x-ct
 endef
-TARGET_DEVICES += netgear_r6100
 
 define Device/netgear_wndr3700-v4
   SOC := ar9344
@@ -282,9 +268,8 @@ define Device/netgear_wndr3700-v4
   UIMAGE_MAGIC := 0x33373033
   NETGEAR_BOARD_ID := WNDR3700v4
   NETGEAR_HW_ID := 29763948+128+128
-  $(Device/netgear_ath79_nand)
+  $(Device/Common/netgear_ath79_nand)
 endef
-TARGET_DEVICES += netgear_wndr3700-v4
 
 define Device/netgear_wndr4300
   SOC := ar9344
@@ -292,9 +277,8 @@ define Device/netgear_wndr4300
   UIMAGE_MAGIC := 0x33373033
   NETGEAR_BOARD_ID := WNDR4300
   NETGEAR_HW_ID := 29763948+0+128+128+2x2+3x3
-  $(Device/netgear_ath79_nand)
+  $(Device/Common/netgear_ath79_nand)
 endef
-TARGET_DEVICES += netgear_wndr4300
 
 define Device/netgear_wndr4300sw
   SOC := ar9344
@@ -302,9 +286,8 @@ define Device/netgear_wndr4300sw
   UIMAGE_MAGIC := 0x33373033
   NETGEAR_BOARD_ID := WNDR4300SW
   NETGEAR_HW_ID := 29763948+0+128+128+2x2+3x3
-  $(Device/netgear_ath79_nand)
+  $(Device/Common/netgear_ath79_nand)
 endef
-TARGET_DEVICES += netgear_wndr4300sw
 
 define Device/netgear_wndr4300tn
   SOC := ar9344
@@ -312,9 +295,8 @@ define Device/netgear_wndr4300tn
   UIMAGE_MAGIC := 0x33373033
   NETGEAR_BOARD_ID := WNDR4300TN
   NETGEAR_HW_ID := 29763948+0+128+128+2x2+3x3
-  $(Device/netgear_ath79_nand)
+  $(Device/Common/netgear_ath79_nand)
 endef
-TARGET_DEVICES += netgear_wndr4300tn
 
 define Device/netgear_wndr4300-v2
   SOC := qca9563
@@ -323,9 +305,8 @@ define Device/netgear_wndr4300-v2
   UIMAGE_MAGIC := 0x27051956
   NETGEAR_BOARD_ID := WNDR4500series
   NETGEAR_HW_ID := 29764821+2+128+128+3x3+3x3+5508012175
-  $(Device/netgear_ath79_nand)
+  $(Device/Common/netgear_ath79_nand)
 endef
-TARGET_DEVICES += netgear_wndr4300-v2
 
 define Device/netgear_wndr4500-v3
   SOC := qca9563
@@ -334,11 +315,10 @@ define Device/netgear_wndr4500-v3
   UIMAGE_MAGIC := 0x27051956
   NETGEAR_BOARD_ID := WNDR4500series
   NETGEAR_HW_ID := 29764821+2+128+128+3x3+3x3+5508012173
-  $(Device/netgear_ath79_nand)
+  $(Device/Common/netgear_ath79_nand)
 endef
-TARGET_DEVICES += netgear_wndr4500-v3
 
-define Device/zte_mf28x_common
+define Device/Common/zte_mf28x
   SOC := qca9563
   DEVICE_VENDOR := ZTE
   DEVICE_PACKAGES := kmod-usb2 kmod-ath10k-ct
@@ -349,7 +329,7 @@ define Device/zte_mf28x_common
 endef
 
 define Device/zte_mf281
-  $(Device/zte_mf28x_common)
+  $(Device/Common/zte_mf28x)
   DEVICE_MODEL := MF281
   KERNEL_SIZE := 6144k
   IMAGE_SIZE := 29696k
@@ -359,31 +339,27 @@ define Device/zte_mf281
   DEVICE_PACKAGES += ath10k-firmware-qca9888-ct kmod-usb-net-rndis \
 	kmod-usb-acm comgt-ncm
 endef
-TARGET_DEVICES += zte_mf281
 
 define Device/zte_mf286
-  $(Device/zte_mf28x_common)
+  $(Device/Common/zte_mf28x)
   DEVICE_MODEL := MF286
   DEVICE_PACKAGES += ath10k-firmware-qca988x-ct kmod-usb-net-qmi-wwan \
 	kmod-usb-serial-option uqmi
 endef
-TARGET_DEVICES += zte_mf286
 
 define Device/zte_mf286a
-  $(Device/zte_mf28x_common)
+  $(Device/Common/zte_mf28x)
   DEVICE_MODEL := MF286A
   DEVICE_PACKAGES += ath10k-firmware-qca9888-ct kmod-usb-net-qmi-wwan \
 	kmod-usb-serial-option uqmi
 endef
-TARGET_DEVICES += zte_mf286a
 
 define Device/zte_mf286r
-  $(Device/zte_mf28x_common)
+  $(Device/Common/zte_mf28x)
   DEVICE_MODEL := MF286R
   DEVICE_PACKAGES += ath10k-firmware-qca9888-ct kmod-usb-net-rndis kmod-usb-acm \
 	comgt-ncm
 endef
-TARGET_DEVICES += zte_mf286r
 
 define Device/zyxel_nbg6716
   SOC := qca9558
@@ -409,11 +385,9 @@ define Device/zyxel_nbg6716
 	zyxel-factory
   UBINIZE_OPTS := -E 5
 endef
-TARGET_DEVICES += zyxel_nbg6716
 
 define Device/zyxel_emg2926_q10a
   $(Device/zyxel_nbg6716)
   DEVICE_MODEL := EMG2926-Q10A
   RAS_BOARD := AAVK-EMG2926Q10A
 endef
-TARGET_DEVICES += zyxel_emg2926_q10a

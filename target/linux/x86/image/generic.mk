@@ -6,4 +6,3 @@ define Device/generic
 	kmod-via-rhine kmod-via-velocity kmod-forcedeth kmod-fs-vfat
   GRUB2_VARIANT := generic
 endef
-TARGET_DEVICES += generic

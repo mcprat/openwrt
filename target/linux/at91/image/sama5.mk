@@ -1,5 +1,5 @@
 
-define Device/default-nand
+define Device/Common/default-nand
   BLOCKSIZE := 128k
   PAGESIZE := 2048
   SUBPAGESIZE := 2048
@@ -49,75 +49,69 @@ define Build/at91-sdcard
 endef
 
 define Device/microchip_sama5d2-icp
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA5D2 ICP
   DEVICE_DTS := at91-sama5d2_icp
   SUPPORTED_DEVICES := microchip,sama5d2-icp
   KERNEL_SIZE := 6144k
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama5d2-icp
 
 define Device/microchip_sama5d2-xplained
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA5D2 Xplained
   DEVICE_DTS := at91-sama5d2_xplained
   SUPPORTED_DEVICES := atmel,sama5d2-xplained
   KERNEL_SIZE := 6144k
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama5d2-xplained
 
 define Device/microchip_sama5d27-som1-ek
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA5D27 SOM1 Ek
   DEVICE_DTS := at91-sama5d27_som1_ek
   SUPPORTED_DEVICES := atmel,sama5d27-som1-ek
   KERNEL_SIZE := 6144k
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama5d27-som1-ek
 
 define Device/microchip_sama5d27-wlsom1-ek
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA5D27 WSOM1 Ek
   DEVICE_DTS := at91-sama5d27_wlsom1_ek
   SUPPORTED_DEVICES := microchip,sama5d27-wlsom1-ek
   KERNEL_SIZE := 6144k
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama5d27-wlsom1-ek
 
 define Device/microchip_sama5d2-ptc-ek
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA5D2 PTC Ek
   DEVICE_DTS := at91-sama5d2_ptc_ek
   SUPPORTED_DEVICES := atmel,sama5d2-ptc_ek
   KERNEL_SIZE := 6144k
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama5d2-ptc-ek
 
 define Device/microchip_sama5d3-xplained
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA5D3 Xplained
   DEVICE_DTS := at91-sama5d3_xplained
   SUPPORTED_DEVICES := atmel,sama5d3-xplained
   KERNEL_SIZE := 6144k
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama5d3-xplained
 
 ifeq ($(strip $(CONFIG_EXTERNAL_KERNEL_TREE)),"")
  ifeq ($(strip $(CONFIG_KERNEL_GIT_CLONE_URI)),"")
   define Device/laird_wb50n
-    $(Device/evaluation-fit)
+    $(Device/Common/evaluation-fit)
     DEVICE_VENDOR := Laird
     DEVICE_MODEL := WB50N
     DEVICE_DTS := at91-wb50n
@@ -130,12 +124,11 @@ ifeq ($(strip $(CONFIG_EXTERNAL_KERNEL_TREE)),"")
     SUBPAGESIZE := 2048
     MKUBIFS_OPTS := -m $$(PAGESIZE) -e 124KiB -c 955
   endef
-  TARGET_DEVICES += laird_wb50n
  endif
 endif
 
 define Device/microchip_sama5d4-xplained
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA5D4 Xplained
   DEVICE_DTS := at91-sama5d4_xplained
@@ -145,6 +138,5 @@ define Device/microchip_sama5d4-xplained
   PAGESIZE := 4096
   SUBPAGESIZE := 2048
   MKUBIFS_OPTS := -m $$(PAGESIZE) -e 248KiB -c 2082
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama5d4-xplained

@@ -7,4 +7,3 @@ define Device/generic
 	kmod-tg3
   GRUB2_VARIANT := generic
 endef
-TARGET_DEVICES += generic

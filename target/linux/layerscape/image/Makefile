@@ -64,14 +64,14 @@ define Build/traverse-fit
 	@mv -f $@.new $@
 endef
 
-define Device/fix-sysupgrade
+define Device/Common/fix-sysupgrade
   DEVICE_COMPAT_VERSION := 2.0
   DEVICE_COMPAT_MESSAGE := DTB was added to sysupgrade. Image format is different. \
 	To use sysupgrade You need to change firmware partition in bootargs to "49m@0xf00000(firmware)" and saveenv. \
 	After that, You can use "sysupgrade -F".
 endef
 
-define Device/rework-sdcard-images
+define Device/Common/rework-sdcard-images
   DEVICE_COMPAT_VERSION := 2.0
   DEVICE_COMPAT_MESSAGE := SD-card images were changed to squashfs + ext4 overlay combined images. \
 	It is required to flash the entire sd-card again and manually copy config.

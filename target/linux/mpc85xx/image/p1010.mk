@@ -38,7 +38,6 @@ define Device/tplink_tl-wdr4900-v1
   IMAGE/sysupgrade.bin := tplink-v1-image sysupgrade | append-metadata
   IMAGE/factory.bin := tplink-v1-image factory
 endef
-TARGET_DEVICES += tplink_tl-wdr4900-v1
 
 define Device/sophos_red-15w-rev1
   DEVICE_VENDOR := Sophos
@@ -50,4 +49,3 @@ define Device/sophos_red-15w-rev1
   IMAGES := sysupgrade.bin
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += sophos_red-15w-rev1

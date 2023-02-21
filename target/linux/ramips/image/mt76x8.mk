@@ -36,7 +36,6 @@ define Device/alfa-network_awusfree1
   DEVICE_PACKAGES := uboot-envtools
   SUPPORTED_DEVICES += awusfree1
 endef
-TARGET_DEVICES += alfa-network_awusfree1
 
 define Device/asus_rt-ac1200
   IMAGE_SIZE := 16064k
@@ -47,7 +46,6 @@ define Device/asus_rt-ac1200
   DEVICE_PACKAGES := kmod-mt76x2 kmod-usb2 kmod-usb-ohci \
 	kmod-usb-ledtrig-usbport
 endef
-TARGET_DEVICES += asus_rt-ac1200
 
 define Device/asus_rt-ac1200-v2
   BLOCKSIZE := 64k
@@ -60,7 +58,6 @@ define Device/asus_rt-ac1200-v2
 	append-rootfs | pad-rootfs
   DEVICE_PACKAGES := kmod-mt7615e kmod-mt7663-firmware-ap
 endef
-TARGET_DEVICES += asus_rt-ac1200-v2
 
 define Device/asus_rt-n10p-v3
   IMAGE_SIZE := 7872k
@@ -68,7 +65,6 @@ define Device/asus_rt-n10p-v3
   DEVICE_MODEL := RT-N10P
   DEVICE_VARIANT := V3
 endef
-TARGET_DEVICES += asus_rt-n10p-v3
 
 define Device/asus_rt-n11p-b1
   IMAGE_SIZE := 7872k
@@ -82,7 +78,6 @@ define Device/asus_rt-n11p-b1
   DEVICE_ALT1_MODEL := RT-N300
   DEVICE_ALT1_VARIANT := B1
 endef
-TARGET_DEVICES += asus_rt-n11p-b1
 
 define Device/asus_rt-n12-vp-b1
   IMAGE_SIZE := 7872k
@@ -90,7 +85,6 @@ define Device/asus_rt-n12-vp-b1
   DEVICE_MODEL := RT-N12 VP
   DEVICE_VARIANT := B1
 endef
-TARGET_DEVICES += asus_rt-n12-vp-b1
 
 define Device/buffalo_wcr-1166ds
   IMAGE_SIZE := 7936k
@@ -107,7 +101,6 @@ define Device/buffalo_wcr-1166ds
   DEVICE_PACKAGES := kmod-mt76x2
   SUPPORTED_DEVICES += wcr-1166ds
 endef
-TARGET_DEVICES += buffalo_wcr-1166ds
 
 define Device/comfast_cf-wr617ac
   IMAGE_SIZE := 7872k
@@ -116,9 +109,8 @@ define Device/comfast_cf-wr617ac
   DEVICE_MODEL := CF-WR617AC
   DEVICE_PACKAGES := kmod-mt76x2 kmod-rt2800-pci
 endef
-TARGET_DEVICES += comfast_cf-wr617ac
 
-define Device/comfast_cf-wr758ac
+define Device/Common/comfast_cf-wr758ac
   IMAGE_SIZE := 7872k
   DEVICE_VENDOR := COMFAST
   DEVICE_MODEL := CF-WR758AC
@@ -127,22 +119,20 @@ define Device/comfast_cf-wr758ac
 endef
 
 define Device/comfast_cf-wr758ac-v1
-  $(Device/comfast_cf-wr758ac)
+  $(Device/Common/comfast_cf-wr758ac)
   DEVICE_PACKAGES := kmod-mt76x2
   DEVICE_VARIANT := V1
   DEVICE_ALT0_VARIANT := V1
   SUPPORTED_DEVICES += joowin,jw-wr758ac-v1
 endef
-TARGET_DEVICES += comfast_cf-wr758ac-v1
 
 define Device/comfast_cf-wr758ac-v2
-  $(Device/comfast_cf-wr758ac)
+  $(Device/Common/comfast_cf-wr758ac)
   DEVICE_PACKAGES := kmod-mt7615e kmod-mt7663-firmware-ap
   DEVICE_VARIANT := V2
   DEVICE_ALT0_VARIANT := V2
   SUPPORTED_DEVICES += joowin,jw-wr758ac-v2
 endef
-TARGET_DEVICES += comfast_cf-wr758ac-v2
 
 define Device/cudy_wr1000
   IMAGE_SIZE := 7872k
@@ -154,7 +144,6 @@ define Device/cudy_wr1000
   DEVICE_PACKAGES := kmod-mt76x2
   SUPPORTED_DEVICES += wr1000
 endef
-TARGET_DEVICES += cudy_wr1000
 
 define Device/d-team_pbr-d1
   IMAGE_SIZE := 16064k
@@ -163,14 +152,12 @@ define Device/d-team_pbr-d1
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
   SUPPORTED_DEVICES += pbr-d1
 endef
-TARGET_DEVICES += d-team_pbr-d1
 
 define Device/dlink_dap-1325-a1
   IMAGE_SIZE := 7872k
   DEVICE_VENDOR := D-Link
   DEVICE_MODEL := DAP-1325 A1
 endef
-TARGET_DEVICES += dlink_dap-1325-a1
 
 define Device/duzun_dm06
   IMAGE_SIZE := 7872k
@@ -179,7 +166,6 @@ define Device/duzun_dm06
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += duzun-dm06
 endef
-TARGET_DEVICES += duzun_dm06
 
 define Device/elecom_wrc-1167fs
   IMAGE_SIZE := 7360k
@@ -191,7 +177,6 @@ define Device/elecom_wrc-1167fs
 	elecom-product-header WRC-1167FS
   DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += elecom_wrc-1167fs
 
 define Device/glinet_gl-mt300n-v2
   IMAGE_SIZE := 16064k
@@ -201,7 +186,6 @@ define Device/glinet_gl-mt300n-v2
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
   SUPPORTED_DEVICES += gl-mt300n-v2
 endef
-TARGET_DEVICES += glinet_gl-mt300n-v2
 
 define Device/glinet_microuter-n300
   IMAGE_SIZE := 16064k
@@ -209,7 +193,6 @@ define Device/glinet_microuter-n300
   DEVICE_MODEL := microuter-N300
   SUPPORTED_DEVICES += microuter-n300
 endef
-TARGET_DEVICES += glinet_microuter-n300
 
 define Device/glinet_vixmini
   IMAGE_SIZE := 7872k
@@ -217,7 +200,6 @@ define Device/glinet_vixmini
   DEVICE_MODEL := VIXMINI
   SUPPORTED_DEVICES += vixmini
 endef
-TARGET_DEVICES += glinet_vixmini
 
 define Device/hak5_wifi-pineapple-mk7
   IMAGE_SIZE := 32448k
@@ -226,14 +208,12 @@ define Device/hak5_wifi-pineapple-mk7
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
   SUPPORTED_DEVICES += wifi-pineapple-mk7
 endef
-TARGET_DEVICES += hak5_wifi-pineapple-mk7
 
 define Device/hilink_hlk-7628n
   IMAGE_SIZE := 32448k
   DEVICE_VENDOR := HILINK
   DEVICE_MODEL := HLK-7628N
 endef
-TARGET_DEVICES += hilink_hlk-7628n
 
 define Device/hilink_hlk-7688a
   IMAGE_SIZE := 32448k
@@ -241,7 +221,6 @@ define Device/hilink_hlk-7688a
   DEVICE_MODEL := HLK-7688A
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
 endef
-TARGET_DEVICES += hilink_hlk-7688a
 
 define Device/hiwifi_hc5611
   IMAGE_SIZE := 15808k
@@ -249,7 +228,6 @@ define Device/hiwifi_hc5611
   DEVICE_MODEL := HC5611
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
 endef
-TARGET_DEVICES += hiwifi_hc5611
 
 define Device/hiwifi_hc5661a
   IMAGE_SIZE := 15808k
@@ -257,7 +235,6 @@ define Device/hiwifi_hc5661a
   DEVICE_MODEL := HC5661A
   SUPPORTED_DEVICES += hc5661a
 endef
-TARGET_DEVICES += hiwifi_hc5661a
 
 define Device/hiwifi_hc5761a
   IMAGE_SIZE := 15808k
@@ -265,7 +242,6 @@ define Device/hiwifi_hc5761a
   DEVICE_MODEL := HC5761A
   DEVICE_PACKAGES := kmod-mt76x0e kmod-usb2 kmod-usb-ohci
 endef
-TARGET_DEVICES += hiwifi_hc5761a
 
 define Device/hiwifi_hc5861b
   IMAGE_SIZE := 15808k
@@ -273,7 +249,6 @@ define Device/hiwifi_hc5861b
   DEVICE_MODEL := HC5861B
   DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += hiwifi_hc5861b
 
 define Device/iptime_a3
   IMAGE_SIZE := 7936k
@@ -282,7 +257,6 @@ define Device/iptime_a3
   DEVICE_MODEL := A3
   DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += iptime_a3
 
 define Device/iptime_a604m
   IMAGE_SIZE := 7936k
@@ -291,34 +265,30 @@ define Device/iptime_a604m
   DEVICE_MODEL := A604M
   DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += iptime_a604m
 
-define Device/jotale_js76x8
+define Device/Common/jotale_js76x8
   DEVICE_VENDOR := Jotale
   DEVICE_MODEL := JS76x8
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
 endef
 
 define Device/jotale_js76x8-8m
-  $(Device/jotale_js76x8)
+  $(Device/Common/jotale_js76x8)
   IMAGE_SIZE := 7872k
   DEVICE_VARIANT := 8M
 endef
-TARGET_DEVICES += jotale_js76x8-8m
 
 define Device/jotale_js76x8-16m
-  $(Device/jotale_js76x8)
+  $(Device/Common/jotale_js76x8)
   IMAGE_SIZE := 16064k
   DEVICE_VARIANT := 16M
 endef
-TARGET_DEVICES += jotale_js76x8-16m
 
 define Device/jotale_js76x8-32m
-  $(Device/jotale_js76x8)
+  $(Device/Common/jotale_js76x8)
   IMAGE_SIZE := 32448k
   DEVICE_VARIANT := 32M
 endef
-TARGET_DEVICES += jotale_js76x8-32m
 
 define Device/keenetic_kn-1613
   BLOCKSIZE := 64k
@@ -330,7 +300,6 @@ define Device/keenetic_kn-1613
   IMAGE/factory.bin := $$(sysupgrade_bin) | pad-to $$$$(BLOCKSIZE) | \
 	check-size | zyimage -d 0x801613 -v "KN-1613"
 endef
-TARGET_DEVICES += keenetic_kn-1613
 
 define Device/kroks_kndrt31r16
   IMAGE_SIZE := 16064k
@@ -341,7 +310,6 @@ define Device/kroks_kndrt31r16
   DEVICE_PACKAGES := kmod-usb2
   SUPPORTED_DEVICES += kndrt31r16
 endef
-TARGET_DEVICES += kroks_kndrt31r16
 
 define Device/kroks_kndrt31r19
   IMAGE_SIZE := 16064k
@@ -352,7 +320,6 @@ define Device/kroks_kndrt31r19
   DEVICE_PACKAGES := kmod-usb2 uqmi
   SUPPORTED_DEVICES += kndrt31r19
 endef
-TARGET_DEVICES += kroks_kndrt31r19
 
 define Device/linksys_e5400
   IMAGE_SIZE := 16000k
@@ -367,7 +334,6 @@ define Device/linksys_e5400
   DEVICE_ALT2_MODEL := E5350
   DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += linksys_e5400
 
 define Device/mediatek_linkit-smart-7688
   IMAGE_SIZE := 32448k
@@ -376,7 +342,6 @@ define Device/mediatek_linkit-smart-7688
   DEVICE_PACKAGES:= kmod-usb2 kmod-usb-ohci uboot-envtools kmod-sdhci-mt7620
   SUPPORTED_DEVICES += linkits7688 linkits7688d
 endef
-TARGET_DEVICES += mediatek_linkit-smart-7688
 
 define Device/mediatek_mt7628an-eval-board
   BLOCKSIZE := 64k
@@ -386,7 +351,6 @@ define Device/mediatek_mt7628an-eval-board
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += mt7628
 endef
-TARGET_DEVICES += mediatek_mt7628an-eval-board
 
 define Device/mercury_mac1200r-v2
   IMAGE_SIZE := 7936k
@@ -396,7 +360,6 @@ define Device/mercury_mac1200r-v2
   DEVICE_PACKAGES := kmod-mt76x2
   SUPPORTED_DEVICES += mac1200rv2
 endef
-TARGET_DEVICES += mercury_mac1200r-v2
 
 define Device/minew_g1-c
   IMAGE_SIZE := 15744k
@@ -405,7 +368,6 @@ define Device/minew_g1-c
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport kmod-usb-serial-cp210x
   SUPPORTED_DEVICES += minew-g1c
 endef
-TARGET_DEVICES += minew_g1-c
 
 define Device/motorola_mwr03
   IMAGE_SIZE := 7872k
@@ -413,10 +375,9 @@ define Device/motorola_mwr03
   DEVICE_MODEL := MWR03
   DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += motorola_mwr03
 
 define Device/netgear_r6020
-  $(Device/netgear_sercomm_nor)
+  $(Device/Common/netgear_sercomm_nor)
   IMAGE_SIZE := 7104k
   DEVICE_MODEL := R6020
   DEVICE_PACKAGES := kmod-mt76x2
@@ -426,10 +387,9 @@ define Device/netgear_r6020
   SERCOMM_SWVER := 0x0040
   SERCOMM_PAD := 576k
 endef
-TARGET_DEVICES += netgear_r6020
 
 define Device/netgear_r6080
-  $(Device/netgear_sercomm_nor)
+  $(Device/Common/netgear_sercomm_nor)
   IMAGE_SIZE := 7552k
   DEVICE_MODEL := R6080
   DEVICE_PACKAGES := kmod-mt76x2
@@ -439,10 +399,9 @@ define Device/netgear_r6080
   SERCOMM_SWVER := 0x0040
   SERCOMM_PAD := 576k
 endef
-TARGET_DEVICES += netgear_r6080
 
 define Device/netgear_r6120
-  $(Device/netgear_sercomm_nor)
+  $(Device/Common/netgear_sercomm_nor)
   IMAGE_SIZE := 15744k
   DEVICE_MODEL := R6120
   DEVICE_PACKAGES := kmod-mt76x2 kmod-usb2 kmod-usb-ohci
@@ -452,7 +411,6 @@ define Device/netgear_r6120
   SERCOMM_SWVER := 0x0040
   SERCOMM_PAD := 576k
 endef
-TARGET_DEVICES += netgear_r6120
 
 define Device/onion_omega2
   IMAGE_SIZE := 16064k
@@ -461,7 +419,6 @@ define Device/onion_omega2
   DEVICE_PACKAGES:= kmod-usb2 kmod-usb-ohci uboot-envtools
   SUPPORTED_DEVICES += omega2
 endef
-TARGET_DEVICES += onion_omega2
 
 define Device/onion_omega2p
   IMAGE_SIZE := 32448k
@@ -470,7 +427,6 @@ define Device/onion_omega2p
   DEVICE_PACKAGES:= kmod-usb2 kmod-usb-ohci uboot-envtools kmod-sdhci-mt7620
   SUPPORTED_DEVICES += omega2p
 endef
-TARGET_DEVICES += onion_omega2p
 
 define Device/rakwireless_rak633
   IMAGE_SIZE := 7872k
@@ -478,7 +434,6 @@ define Device/rakwireless_rak633
   DEVICE_MODEL := RAK633
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
 endef
-TARGET_DEVICES += rakwireless_rak633
 
 define Device/ravpower_rp-wd009
   IMAGE_SIZE := 14272k
@@ -490,7 +445,6 @@ define Device/ravpower_rp-wd009
   IMAGES += factory.bin
   IMAGE/factory.bin := $$(sysupgrade_bin) | ravpower-wd009-factory
 endef
-TARGET_DEVICES += ravpower_rp-wd009
 
 define Device/skylab_skw92a
   IMAGE_SIZE := 16064k
@@ -498,7 +452,6 @@ define Device/skylab_skw92a
   DEVICE_MODEL := SKW92A
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
 endef
-TARGET_DEVICES += skylab_skw92a
 
 define Device/tama_w06
   IMAGE_SIZE := 15040k
@@ -506,7 +459,6 @@ define Device/tama_w06
   DEVICE_MODEL := W06
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
 endef
-TARGET_DEVICES += tama_w06
 
 define Device/totolink_a3
   IMAGE_SIZE := 7936k
@@ -515,7 +467,6 @@ define Device/totolink_a3
   DEVICE_MODEL := A3
   DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += totolink_a3
 
 define Device/totolink_lr1200
   IMAGE_SIZE := 7872k
@@ -523,10 +474,9 @@ define Device/totolink_lr1200
   DEVICE_MODEL := LR1200
   DEVICE_PACKAGES := kmod-mt76x2 kmod-usb2 uqmi
 endef
-TARGET_DEVICES += totolink_lr1200
 
 define Device/tplink_archer-c20-v4
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := Archer C20
   DEVICE_VARIANT := v4
@@ -538,10 +488,9 @@ define Device/tplink_archer-c20-v4
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
   SUPPORTED_DEVICES += tplink,c20-v4
 endef
-TARGET_DEVICES += tplink_archer-c20-v4
 
 define Device/tplink_archer-c20-v5
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7616k
   DEVICE_MODEL := Archer C20
   DEVICE_VARIANT := v5
@@ -551,10 +500,9 @@ define Device/tplink_archer-c20-v5
   DEVICE_PACKAGES := kmod-mt76x0e
   IMAGES := sysupgrade.bin
 endef
-TARGET_DEVICES += tplink_archer-c20-v5
 
 define Device/tplink_archer-c50-v3
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := Archer C50
   DEVICE_VARIANT := v3
@@ -567,10 +515,9 @@ define Device/tplink_archer-c50-v3
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
   SUPPORTED_DEVICES += tplink,c50-v3
 endef
-TARGET_DEVICES += tplink_archer-c50-v3
 
 define Device/tplink_archer-c50-v4
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7616k
   DEVICE_MODEL := Archer C50
   DEVICE_VARIANT := v4
@@ -582,70 +529,63 @@ define Device/tplink_archer-c50-v4
   IMAGES := sysupgrade.bin
   SUPPORTED_DEVICES += tplink,c50-v4
 endef
-TARGET_DEVICES += tplink_archer-c50-v4
 
 define Device/tplink_re200-v2
-  $(Device/tplink-safeloader)
+  $(Device/Common/tplink-safeloader)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := RE200
   DEVICE_VARIANT := v2
   DEVICE_PACKAGES := kmod-mt76x0e
   TPLINK_BOARD_ID := RE200-V2
 endef
-TARGET_DEVICES += tplink_re200-v2
 
 define Device/tplink_re200-v3
-  $(Device/tplink-safeloader)
+  $(Device/Common/tplink-safeloader)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := RE200
   DEVICE_VARIANT := v3
   DEVICE_PACKAGES := kmod-mt76x0e
   TPLINK_BOARD_ID := RE200-V3
 endef
-TARGET_DEVICES += tplink_re200-v3
 
 define Device/tplink_re200-v4
-  $(Device/tplink-safeloader)
+  $(Device/Common/tplink-safeloader)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := RE200
   DEVICE_VARIANT := v4
   DEVICE_PACKAGES := kmod-mt76x0e
   TPLINK_BOARD_ID := RE200-V4
 endef
-TARGET_DEVICES += tplink_re200-v4
 
 define Device/tplink_re220-v2
-  $(Device/tplink-safeloader)
+  $(Device/Common/tplink-safeloader)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := RE220
   DEVICE_VARIANT := v2
   DEVICE_PACKAGES := kmod-mt76x0e
   TPLINK_BOARD_ID := RE220-V2
 endef
-TARGET_DEVICES += tplink_re220-v2
 
 define Device/tplink_re305-v1
-  $(Device/tplink-safeloader)
+  $(Device/Common/tplink-safeloader)
   IMAGE_SIZE := 6016k
   DEVICE_MODEL := RE305
   DEVICE_VARIANT := v1
   DEVICE_PACKAGES := kmod-mt76x2
   TPLINK_BOARD_ID := RE305-V1
 endef
-TARGET_DEVICES += tplink_re305-v1
 
 define Device/tplink_re305-v3
-  $(Device/tplink-safeloader)
+  $(Device/Common/tplink-safeloader)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := RE305
   DEVICE_VARIANT := v3
   DEVICE_PACKAGES := kmod-mt76x2
   TPLINK_BOARD_ID := RE305-V3
 endef
-TARGET_DEVICES += tplink_re305-v3
 
 define Device/tplink_tl-mr3020-v3
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-MR3020
   DEVICE_VARIANT := v3
@@ -657,10 +597,9 @@ define Device/tplink_tl-mr3020-v3
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-mr3020-v3
 
 define Device/tplink_tl-mr3420-v5
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-MR3420
   DEVICE_VARIANT := v5
@@ -672,10 +611,9 @@ define Device/tplink_tl-mr3420-v5
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-mr3420-v5
 
 define Device/tplink_tl-mr6400-v4
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-MR6400
   DEVICE_VARIANT := v4
@@ -688,10 +626,9 @@ define Device/tplink_tl-mr6400-v4
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-mr6400-v4
 
 define Device/tplink_tl-mr6400-v5
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-MR6400
   DEVICE_VARIANT := v5
@@ -704,10 +641,9 @@ define Device/tplink_tl-mr6400-v5
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-mr6400-v5
 
 define Device/tplink_tl-wa801nd-v5
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-WA801ND
   DEVICE_VARIANT := v5
@@ -717,10 +653,9 @@ define Device/tplink_tl-wa801nd-v5
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-wa801nd-v5
 
 define Device/tplink_tl-wr802n-v4
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-WR802N
   DEVICE_VARIANT := v4
@@ -730,10 +665,9 @@ define Device/tplink_tl-wr802n-v4
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-wr802n-v4
 
 define Device/tplink_tl-wr840n-v4
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-WR840N
   DEVICE_VARIANT := v4
@@ -744,10 +678,9 @@ define Device/tplink_tl-wr840n-v4
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
   SUPPORTED_DEVICES += tl-wr840n-v4
 endef
-TARGET_DEVICES += tplink_tl-wr840n-v4
 
 define Device/tplink_tl-wr840n-v5
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 3904k
   DEVICE_MODEL := TL-WR840N
   DEVICE_VARIANT := v5
@@ -758,10 +691,9 @@ define Device/tplink_tl-wr840n-v5
   SUPPORTED_DEVICES += tl-wr840n-v5
   DEFAULT := n
 endef
-TARGET_DEVICES += tplink_tl-wr840n-v5
 
 define Device/tplink_tl-wr841n-v13
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-WR841N
   DEVICE_VARIANT := v13
@@ -773,10 +705,9 @@ define Device/tplink_tl-wr841n-v13
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
   SUPPORTED_DEVICES += tl-wr841n-v13
 endef
-TARGET_DEVICES += tplink_tl-wr841n-v13
 
 define Device/tplink_tl-wr841n-v14
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 3968k
   DEVICE_MODEL := TL-WR841N
   DEVICE_VARIANT := v14
@@ -787,10 +718,9 @@ define Device/tplink_tl-wr841n-v14
   IMAGE/tftp-recovery.bin := pad-extra 64k | $$(IMAGE/factory.bin)
   DEFAULT := n
 endef
-TARGET_DEVICES += tplink_tl-wr841n-v14
 
 define Device/tplink_tl-wr842n-v5
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-WR842N
   DEVICE_VARIANT := v5
@@ -802,10 +732,9 @@ define Device/tplink_tl-wr842n-v5
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-wr842n-v5
 
 define Device/tplink_tl-wr850n-v2
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-WR850N
   DEVICE_VARIANT := v2
@@ -815,10 +744,9 @@ define Device/tplink_tl-wr850n-v2
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-wr850n-v2
 
 define Device/tplink_tl-wr902ac-v3
-  $(Device/tplink-v2)
+  $(Device/Common/tplink-v2)
   IMAGE_SIZE := 7808k
   DEVICE_MODEL := TL-WR902AC
   DEVICE_VARIANT := v3
@@ -831,7 +759,6 @@ define Device/tplink_tl-wr902ac-v3
   IMAGES := sysupgrade.bin tftp-recovery.bin
   IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
 endef
-TARGET_DEVICES += tplink_tl-wr902ac-v3
 
 define Device/unielec_u7628-01-16m
   IMAGE_SIZE := 16064k
@@ -841,7 +768,6 @@ define Device/unielec_u7628-01-16m
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += u7628-01-128M-16M unielec,u7628-01-128m-16m
 endef
-TARGET_DEVICES += unielec_u7628-01-16m
 
 define Device/vocore_vocore2
   IMAGE_SIZE := 16064k
@@ -851,7 +777,6 @@ define Device/vocore_vocore2
 	kmod-sdhci-mt7620
   SUPPORTED_DEVICES += vocore2
 endef
-TARGET_DEVICES += vocore_vocore2
 
 define Device/vocore_vocore2-lite
   IMAGE_SIZE := 7872k
@@ -861,7 +786,6 @@ define Device/vocore_vocore2-lite
 	kmod-sdhci-mt7620
   SUPPORTED_DEVICES += vocore2lite
 endef
-TARGET_DEVICES += vocore_vocore2-lite
 
 define Device/wavlink_wl-wn531a3
   IMAGE_SIZE := 7872k
@@ -872,7 +796,6 @@ define Device/wavlink_wl-wn531a3
   DEVICE_PACKAGES := kmod-mt76x2 kmod-usb2 kmod-usb-ohci
   SUPPORTED_DEVICES += wl-wn531a3
 endef
-TARGET_DEVICES += wavlink_wl-wn531a3
 
 define Device/wavlink_wl-wn570ha1
   IMAGE_SIZE := 7872k
@@ -880,7 +803,6 @@ define Device/wavlink_wl-wn570ha1
   DEVICE_MODEL := WL-WN570HA1
   DEVICE_PACKAGES := kmod-mt76x0e
 endef
-TARGET_DEVICES += wavlink_wl-wn570ha1
 
 define Device/wavlink_wl-wn575a3
   IMAGE_SIZE := 7872k
@@ -889,7 +811,6 @@ define Device/wavlink_wl-wn575a3
   DEVICE_PACKAGES := kmod-mt76x2
   SUPPORTED_DEVICES += wl-wn575a3
 endef
-TARGET_DEVICES += wavlink_wl-wn575a3
 
 define Device/wavlink_wl-wn576a2
   IMAGE_SIZE := 7872k
@@ -899,7 +820,6 @@ define Device/wavlink_wl-wn576a2
   DEVICE_ALT0_MODEL := SWV 733 B1
   DEVICE_PACKAGES := kmod-mt76x0e
 endef
-TARGET_DEVICES += wavlink_wl-wn576a2
 
 define Device/wavlink_wl-wn577a2
   IMAGE_SIZE := 7872k
@@ -909,7 +829,6 @@ define Device/wavlink_wl-wn577a2
   DEVICE_ALT0_MODEL := WLR-755
   DEVICE_PACKAGES := kmod-mt76x0e
 endef
-TARGET_DEVICES += wavlink_wl-wn577a2
 
 define Device/wavlink_wl-wn578a2
   IMAGE_SIZE := 7872k
@@ -919,7 +838,6 @@ define Device/wavlink_wl-wn578a2
   DEVICE_ALT0_MODEL := SWV 733 A2
   DEVICE_PACKAGES := kmod-mt76x0e
 endef
-TARGET_DEVICES += wavlink_wl-wn578a2
 
 define Device/widora_neo-16m
   IMAGE_SIZE := 16064k
@@ -929,7 +847,6 @@ define Device/widora_neo-16m
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
   SUPPORTED_DEVICES += widora-neo
 endef
-TARGET_DEVICES += widora_neo-16m
 
 define Device/widora_neo-32m
   IMAGE_SIZE := 32448k
@@ -938,7 +855,6 @@ define Device/widora_neo-32m
   DEVICE_VARIANT := 32M
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
 endef
-TARGET_DEVICES += widora_neo-32m
 
 define Device/wiznet_wizfi630s
   IMAGE_SIZE := 32448k
@@ -946,7 +862,6 @@ define Device/wiznet_wizfi630s
   DEVICE_MODEL := WizFi630S
   SUPPORTED_DEVICES += wizfi630s
 endef
-TARGET_DEVICES += wiznet_wizfi630s
 
 define Device/wrtnode_wrtnode2p
   IMAGE_SIZE := 32448k
@@ -955,7 +870,6 @@ define Device/wrtnode_wrtnode2p
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += wrtnode2p
 endef
-TARGET_DEVICES += wrtnode_wrtnode2p
 
 define Device/wrtnode_wrtnode2r
   IMAGE_SIZE := 32448k
@@ -964,7 +878,6 @@ define Device/wrtnode_wrtnode2r
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
   SUPPORTED_DEVICES += wrtnode2r
 endef
-TARGET_DEVICES += wrtnode_wrtnode2r
 
 define Device/xiaomi_mi-router-4a-100m
   IMAGE_SIZE := 14976k
@@ -974,7 +887,6 @@ define Device/xiaomi_mi-router-4a-100m
   DEVICE_PACKAGES := kmod-mt76x2
   SUPPORTED_DEVICES += xiaomi,mir4a-100m
 endef
-TARGET_DEVICES += xiaomi_mi-router-4a-100m
 
 define Device/xiaomi_mi-router-4a-100m-intl
   IMAGE_SIZE := 14976k
@@ -984,7 +896,6 @@ define Device/xiaomi_mi-router-4a-100m-intl
   DEVICE_PACKAGES := kmod-mt76x2
   SUPPORTED_DEVICES += xiaomi,mir4a-100m-intl
 endef
-TARGET_DEVICES += xiaomi_mi-router-4a-100m-intl
 
 define Device/xiaomi_mi-router-4c
   IMAGE_SIZE := 14976k
@@ -992,7 +903,6 @@ define Device/xiaomi_mi-router-4c
   DEVICE_MODEL := Mi Router 4C
   DEVICE_PACKAGES := uboot-envtools
 endef
-TARGET_DEVICES += xiaomi_mi-router-4c
 
 define Device/xiaomi_miwifi-3c
   IMAGE_SIZE := 15104k
@@ -1000,7 +910,6 @@ define Device/xiaomi_miwifi-3c
   DEVICE_MODEL := MiWiFi 3C
   DEVICE_PACKAGES := uboot-envtools
 endef
-TARGET_DEVICES += xiaomi_miwifi-3c
 
 define Device/xiaomi_miwifi-nano
   IMAGE_SIZE := 16064k
@@ -1009,7 +918,6 @@ define Device/xiaomi_miwifi-nano
   DEVICE_PACKAGES := uboot-envtools
   SUPPORTED_DEVICES += miwifi-nano
 endef
-TARGET_DEVICES += xiaomi_miwifi-nano
 
 define Device/xiaomi_mi-ra75
   IMAGE_SIZE := 14976k
@@ -1019,14 +927,12 @@ define Device/xiaomi_mi-ra75
   DEVICE_PACKAGES := kmod-mt76x2
   SUPPORTED_DEVICES += xiaomi,mira75
 endef
-TARGET_DEVICES += xiaomi_mi-ra75
 
 define Device/zbtlink_zbt-we1226
   IMAGE_SIZE := 7872k
   DEVICE_VENDOR := Zbtlink
   DEVICE_MODEL := ZBT-WE1226
 endef
-TARGET_DEVICES += zbtlink_zbt-we1226
 
 define Device/zyxel_keenetic-extra-ii
   IMAGE_SIZE := 29824k
@@ -1039,4 +945,3 @@ define Device/zyxel_keenetic-extra-ii
   IMAGE/factory.bin := $$(sysupgrade_bin) | pad-to $$$$(BLOCKSIZE) | \
 	check-size | zyimage -d 6162 -v "ZyXEL Keenetic Extra II"
 endef
-TARGET_DEVICES += zyxel_keenetic-extra-ii

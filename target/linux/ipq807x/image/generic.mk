@@ -1,16 +1,16 @@
-define Device/FitImage
+define Device/Common/FitImage
 	KERNEL_SUFFIX := -uImage.itb
 	KERNEL = kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
 	KERNEL_NAME := Image
 endef
 
-define Device/FitImageLzma
+define Device/Common/FitImageLzma
 	KERNEL_SUFFIX := -uImage.itb
 	KERNEL = kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(DEVICE_DTS).dtb
 	KERNEL_NAME := Image
 endef
 
-define Device/UbiFit
+define Device/Common/UbiFit
 	KERNEL_IN_UBI := 1
 	IMAGES := factory.ubi sysupgrade.bin
 	IMAGE/factory.ubi := append-ubi
@@ -18,8 +18,8 @@ define Device/UbiFit
 endef
 
 define Device/buffalo_wxr-5950ax12
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
+	$(call Device/Common/FitImage)
+	$(call Device/Common/UbiFit)
 	DEVICE_VENDOR := Buffalo
 	DEVICE_MODEL := WXR-5950AX12
 	BLOCKSIZE := 128k
@@ -28,11 +28,10 @@ define Device/buffalo_wxr-5950ax12
 	SOC := ipq8074
 	DEVICE_PACKAGES := ipq-wifi-buffalo_wxr-5950ax12
 endef
-TARGET_DEVICES += buffalo_wxr-5950ax12
 
 define Device/dynalink_dl-wrx36
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
+	$(call Device/Common/FitImage)
+	$(call Device/Common/UbiFit)
 	DEVICE_VENDOR := Dynalink
 	DEVICE_MODEL := DL-WRX36
 	BLOCKSIZE := 128k
@@ -41,11 +40,10 @@ define Device/dynalink_dl-wrx36
 	SOC := ipq8072
 	DEVICE_PACKAGES := ipq-wifi-dynalink_dl-wrx36
 endef
-TARGET_DEVICES += dynalink_dl-wrx36
 
 define Device/edgecore_eap102
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
+	$(call Device/Common/FitImage)
+	$(call Device/Common/UbiFit)
 	DEVICE_VENDOR := Edgecore
 	DEVICE_MODEL := EAP102
 	BLOCKSIZE := 128k
@@ -55,11 +53,10 @@ define Device/edgecore_eap102
 	DEVICE_PACKAGES := ipq-wifi-edgecore_eap102
 	IMAGE/factory.ubi := append-ubi | qsdk-ipq-factory-nand
 endef
-TARGET_DEVICES += edgecore_eap102
 
 define Device/edimax_cax1800
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
+	$(call Device/Common/FitImage)
+	$(call Device/Common/UbiFit)
 	DEVICE_VENDOR := Edimax
 	DEVICE_MODEL := CAX1800
 	BLOCKSIZE := 128k
@@ -68,10 +65,9 @@ define Device/edimax_cax1800
 	SOC := ipq8070
 	DEVICE_PACKAGES := ipq-wifi-edimax_cax1800
 endef
-TARGET_DEVICES += edimax_cax1800
 
 define Device/qnap_301w
-	$(call Device/FitImage)
+	$(call Device/Common/FitImage)
 	DEVICE_VENDOR := QNAP
 	DEVICE_MODEL := 301w
 	DEVICE_DTS_CONFIG := config@hk01
@@ -83,7 +79,6 @@ define Device/qnap_301w
 	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to 64k | sysupgrade-tar rootfs=$$$$@ | append-metadata
 	DEVICE_PACKAGES := ipq-wifi-qnap_301w e2fsprogs kmod-fs-ext4 losetup
 endef
-TARGET_DEVICES += qnap_301w
 
 define Device/redmi_ax6
 	$(call Device/xiaomi_ax3600)
@@ -91,11 +86,10 @@ define Device/redmi_ax6
 	DEVICE_MODEL := AX6
 	DEVICE_PACKAGES := ipq-wifi-redmi_ax6
 endef
-TARGET_DEVICES += redmi_ax6
 
 define Device/xiaomi_ax3600
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
+	$(call Device/Common/FitImage)
+	$(call Device/Common/UbiFit)
 	DEVICE_VENDOR := Xiaomi
 	DEVICE_MODEL := AX3600
 	BLOCKSIZE := 128k
@@ -109,11 +103,10 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 	ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-uImage.itb | ubinize-kernel
 endif
 endef
-TARGET_DEVICES += xiaomi_ax3600
 
 define Device/xiaomi_ax9000
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
+	$(call Device/Common/FitImage)
+	$(call Device/Common/UbiFit)
 	DEVICE_VENDOR := Xiaomi
 	DEVICE_MODEL := AX9000
 	BLOCKSIZE := 128k
@@ -128,10 +121,9 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 	ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-uImage.itb | ubinize-kernel
 endif
 endef
-TARGET_DEVICES += xiaomi_ax9000
 
 define Device/zyxel_nbg7815
-	$(call Device/FitImage)
+	$(call Device/Common/FitImage)
 	DEVICE_VENDOR := ZYXEL
 	DEVICE_MODEL := NBG7815
 	DEVICE_DTS_CONFIG := config@nbg7815
@@ -144,4 +136,3 @@ define Device/zyxel_nbg7815
 	DEVICE_PACKAGES := ipq-wifi-zyxel_nbg7815 kmod-ath11k-pci e2fsprogs kmod-fs-ext4 losetup \
 	kmod-hwmon-tmp103 kmod-bluetooth
 endef
-TARGET_DEVICES += zyxel_nbg7815

@@ -19,14 +19,14 @@ define Device/Default
     check-size $(LS_SYSUPGRADE_IMAGE_SIZE) | append-metadata
 endef
 
-define Device/fsl-sdboot
+define Device/Common/fsl-sdboot
   KERNEL = kernel-bin | gzip | fit gzip $$(DTS_DIR)/$$(DEVICE_DTS).dtb
   IMAGES := sdcard.img.gz sysupgrade.bin
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 
 define Device/fsl_ls1021a-twr
-  $(Device/fix-sysupgrade)
+  $(Device/Common/fix-sysupgrade)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := TWR-LS1021A
   DEVICE_VARIANT := Default
@@ -40,11 +40,10 @@ define Device/fsl_ls1021a-twr
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_ls1021a-twr
 
 define Device/fsl_ls1021a-twr-sdboot
-  $(Device/rework-sdcard-images)
-  $(Device/fsl-sdboot)
+  $(Device/Common/rework-sdcard-images)
+  $(Device/Common/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := TWR-LS1021A
   DEVICE_VARIANT := SD Card Boot
@@ -57,11 +56,10 @@ define Device/fsl_ls1021a-twr-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_ls1021a-twr-sdboot
 
 define Device/fsl_ls1021a-iot-sdboot
-  $(Device/rework-sdcard-images)
-  $(Device/fsl-sdboot)
+  $(Device/Common/rework-sdcard-images)
+  $(Device/Common/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1021A-IoT
   DEVICE_VARIANT := SD Card Boot
@@ -75,4 +73,3 @@ define Device/fsl_ls1021a-iot-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_ls1021a-iot-sdboot

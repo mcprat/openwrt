@@ -811,7 +811,17 @@ define BuildImage
 	$(call Image/InstallKernel)
 
   $(foreach device, \
-    $(TARGET_DEVICES), \
+    $(subst Device/,, \
+    $(filter-out Device/Build%, \
+    $(filter-out Device/Check%, \
+    $(filter-out Device/Common%, \
+    $(filter-out Device/Default%, \
+    $(filter-out Device/Dump%, \
+    $(filter-out Device/Export%, \
+    $(filter-out Device/Init%, \
+    $(filter Device/%, \
+      $(.VARIABLES) \
+    ))))))))), \
       $(call Device,$(device)) \
   )
 

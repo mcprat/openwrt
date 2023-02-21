@@ -37,4 +37,3 @@ define Device/google_wifi
 			   kmod-fs-ext4 kmod-fs-f2fs kmod-google-firmware \
 			   kmod-ramoops
 endef
-TARGET_DEVICES += google_wifi

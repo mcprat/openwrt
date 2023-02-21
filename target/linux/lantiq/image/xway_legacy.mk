@@ -10,7 +10,6 @@ define Device/arcadyan_arv4518pwr01
   SUPPORTED_DEVICES += ARV4518PWR01
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv4518pwr01
 
 define Device/arcadyan_arv4518pwr01a
   DEVICE_VENDOR := Arcadyan
@@ -24,7 +23,6 @@ define Device/arcadyan_arv4518pwr01a
   SUPPORTED_DEVICES += ARV4518PWR01A
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv4518pwr01a
 
 define Device/arcadyan_arv4520pw
   DEVICE_VENDOR := Arcadyan
@@ -42,7 +40,6 @@ define Device/arcadyan_arv4520pw
   SUPPORTED_DEVICES += ARV4520PW
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv4520pw
 
 define Device/arcadyan_arv4525pw
   DEVICE_VENDOR := Arcadyan
@@ -58,7 +55,6 @@ define Device/arcadyan_arv4525pw
   SUPPORTED_DEVICES += ARV4525PW
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv4525pw
 
 define Device/arcadyan_arv452cqw
   DEVICE_VENDOR := Arcadyan
@@ -74,4 +70,3 @@ define Device/arcadyan_arv452cqw
   SUPPORTED_DEVICES += ARV452CQW
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv452cqw

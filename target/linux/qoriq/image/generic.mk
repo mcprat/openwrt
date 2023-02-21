@@ -14,4 +14,3 @@ define Device/watchguard_firebox-m300
   IMAGE/sysupgrade.img.gz :=  sdcard-img | gzip | append-metadata
   IMAGE/sdcard.img.gz := sdcard-img | gzip
 endef
-TARGET_DEVICES += watchguard_firebox-m300

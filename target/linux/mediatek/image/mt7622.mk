@@ -102,7 +102,6 @@ define Device/bananapi_bpi-r64
   KERNEL_INITRAMFS		:= kernel-bin | lzma | fit lzma $$(DTS_DIR)/$$(DEVICE_DTS).dtb with-initrd | pad-to 128k
   IMAGE/sysupgrade.itb		:= append-kernel | fit gzip $$(DTS_DIR)/$$(DEVICE_DTS).dtb external-static-with-rootfs | append-metadata
 endef
-TARGET_DEVICES += bananapi_bpi-r64
 
 define Device/buffalo_wsr-2533dhp2
   DEVICE_VENDOR := Buffalo
@@ -131,7 +130,6 @@ define Device/buffalo_wsr-2533dhp2
 	sysupgrade-tar kernel=$$$$@ | append-metadata
   DEVICE_PACKAGES := kmod-mt7615-firmware swconfig
 endef
-TARGET_DEVICES += buffalo_wsr-2533dhp2
 
 define Device/elecom_wrc-2533gent
   DEVICE_VENDOR := Elecom
@@ -140,7 +138,6 @@ define Device/elecom_wrc-2533gent
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := kmod-btmtkuart kmod-mt7615-firmware kmod-usb3 swconfig
 endef
-TARGET_DEVICES += elecom_wrc-2533gent
 
 define Device/elecom_wrc-x3200gst3
   DEVICE_VENDOR := ELECOM
@@ -160,7 +157,6 @@ define Device/elecom_wrc-x3200gst3
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
   DEVICE_PACKAGES := kmod-mt7915-firmware
 endef
-TARGET_DEVICES += elecom_wrc-x3200gst3
 
 define Device/linksys_e8450
   DEVICE_VENDOR := Linksys
@@ -171,7 +167,6 @@ define Device/linksys_e8450
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := kmod-mt7915-firmware kmod-usb3
 endef
-TARGET_DEVICES += linksys_e8450
 
 define Device/linksys_e8450-ubi
   DEVICE_VENDOR := Linksys
@@ -199,7 +194,6 @@ define Device/linksys_e8450-ubi
   ARTIFACT/preloader.bin := bl2 snand-1ddr
   ARTIFACT/bl31-uboot.fip := bl31-uboot linksys_e8450
 endef
-TARGET_DEVICES += linksys_e8450-ubi
 
 define Device/mediatek_mt7622-rfb1
   DEVICE_VENDOR := MediaTek
@@ -207,7 +201,6 @@ define Device/mediatek_mt7622-rfb1
   DEVICE_DTS := mt7622-rfb1
   DEVICE_PACKAGES := kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3
 endef
-TARGET_DEVICES += mediatek_mt7622-rfb1
 
 define Device/mediatek_mt7622-rfb1-ubi
   DEVICE_VENDOR := MediaTek
@@ -226,10 +219,9 @@ define Device/mediatek_mt7622-rfb1-ubi
                 check-size $$$$(IMAGE_SIZE)
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += mediatek_mt7622-rfb1-ubi
 
 define Device/netgear_wax206
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := NETGEAR
   DEVICE_MODEL := WAX206
   DEVICE_DTS := mt7622-netgear-wax206
@@ -253,7 +245,6 @@ define Device/netgear_wax206
 	append-ubi | check-size | netgear-encrypted-factory
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += netgear_wax206
 
 define Device/ruijie_rg-ew3200gx-pro
   DEVICE_VENDOR := Ruijie
@@ -262,7 +253,6 @@ define Device/ruijie_rg-ew3200gx-pro
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := kmod-mt7915-firmware
 endef
-TARGET_DEVICES += ruijie_rg-ew3200gx-pro
 
 define Device/reyee_ax3200-e5
   DEVICE_VENDOR := reyee
@@ -271,7 +261,6 @@ define Device/reyee_ax3200-e5
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := kmod-mt7915-firmware
 endef
-TARGET_DEVICES += reyee_ax3200-e5
 
 define Device/totolink_a8000ru
   DEVICE_VENDOR := TOTOLINK
@@ -281,7 +270,6 @@ define Device/totolink_a8000ru
   DEVICE_PACKAGES := kmod-mt7615-firmware swconfig
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += totolink_a8000ru
 
 define Device/ubnt_unifi-6-lr-v1
   DEVICE_VENDOR := Ubiquiti
@@ -293,7 +281,6 @@ define Device/ubnt_unifi-6-lr-v1
   DEVICE_PACKAGES := kmod-mt7915-firmware kmod-leds-ubnt-ledbar
   SUPPORTED_DEVICES += ubnt,unifi-6-lr
 endef
-TARGET_DEVICES += ubnt_unifi-6-lr-v1
 
 define Device/ubnt_unifi-6-lr-v1-ubootmod
   DEVICE_VENDOR := Ubiquiti
@@ -312,7 +299,6 @@ define Device/ubnt_unifi-6-lr-v1-ubootmod
   ARTIFACT/bl31-uboot.fip := bl31-uboot ubnt_unifi-6-lr
   SUPPORTED_DEVICES += ubnt,unifi-6-lr-ubootmod
 endef
-TARGET_DEVICES += ubnt_unifi-6-lr-v1-ubootmod
 
 define Device/ubnt_unifi-6-lr-v2
   DEVICE_VENDOR := Ubiquiti
@@ -323,7 +309,6 @@ define Device/ubnt_unifi-6-lr-v2
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := kmod-mt7915-firmware
 endef
-TARGET_DEVICES += ubnt_unifi-6-lr-v2
 
 define Device/ubnt_unifi-6-lr-v2-ubootmod
   DEVICE_VENDOR := Ubiquiti
@@ -341,7 +326,6 @@ define Device/ubnt_unifi-6-lr-v2-ubootmod
   ARTIFACT/preloader.bin := bl2 nor-2ddr
   ARTIFACT/bl31-uboot.fip := bl31-uboot ubnt_unifi-6-lr
 endef
-TARGET_DEVICES += ubnt_unifi-6-lr-v2-ubootmod
 
 define Device/xiaomi_redmi-router-ax6s
   DEVICE_VENDOR := Xiaomi
@@ -361,4 +345,3 @@ define Device/xiaomi_redmi-router-ax6s
   IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-ubi
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += xiaomi_redmi-router-ax6s

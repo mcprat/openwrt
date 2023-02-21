@@ -1,11 +1,11 @@
 DEVICE_VARS += TPLINK_FLASHLAYOUT TPLINK_HWID TPLINK_HWREV TPLINK_HWREVADD TPLINK_HVERSION
 
-define Device/dsa-migration
+define Device/Common/dsa-migration
   DEVICE_COMPAT_VERSION := 1.1
   DEVICE_COMPAT_MESSAGE := Config cannot be migrated from swconfig to DSA
 endef
 
-define Device/lantiqTpLink
+define Device/Common/lantiqTpLink
   DEVICE_VENDOR := TP-Link
   TPLINK_HWREVADD := 0
   TPLINK_HVERSION := 2
@@ -18,8 +18,8 @@ define Device/lantiqTpLink
 endef
 
 define Device/tplink_tdw8970
-  $(Device/dsa-migration)
-  $(Device/lantiqTpLink)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/lantiqTpLink)
   DEVICE_MODEL := TD-W8970
   DEVICE_VARIANT := v1
   TPLINK_FLASHLAYOUT := 8Mltq
@@ -29,11 +29,10 @@ define Device/tplink_tdw8970
   DEVICE_PACKAGES:= kmod-ath9k wpad-basic-mbedtls kmod-usb-dwc2 kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += TDW8970
 endef
-TARGET_DEVICES += tplink_tdw8970
 
 define Device/tplink_tdw8980
-  $(Device/dsa-migration)
-  $(Device/lantiqTpLink)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/lantiqTpLink)
   DEVICE_MODEL := TD-W8980
   DEVICE_VARIANT := v1
   TPLINK_FLASHLAYOUT := 8Mltq
@@ -43,11 +42,10 @@ define Device/tplink_tdw8980
   DEVICE_PACKAGES:= kmod-ath9k kmod-owl-loader wpad-basic-mbedtls kmod-usb-dwc2 kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += TDW8980
 endef
-TARGET_DEVICES += tplink_tdw8980
 
 define Device/tplink_vr200
-  $(Device/dsa-migration)
-  $(Device/lantiqTpLink)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/lantiqTpLink)
   DEVICE_MODEL := Archer VR200
   DEVICE_VARIANT := v1
   TPLINK_FLASHLAYOUT := 16Mltq
@@ -57,11 +55,10 @@ define Device/tplink_vr200
   DEVICE_PACKAGES:= kmod-mt76x0e wpad-basic-mbedtls kmod-usb-dwc2 kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += VR200
 endef
-TARGET_DEVICES += tplink_vr200
 
 define Device/tplink_vr200v
-  $(Device/dsa-migration)
-  $(Device/lantiqTpLink)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/lantiqTpLink)
   DEVICE_MODEL := Archer VR200v
   DEVICE_VARIANT := v1
   TPLINK_FLASHLAYOUT := 16Mltq
@@ -71,4 +68,3 @@ define Device/tplink_vr200v
   DEVICE_PACKAGES:= kmod-mt76x0e wpad-basic-mbedtls kmod-usb-dwc2 kmod-usb-ledtrig-usbport kmod-ltq-tapi kmod-ltq-vmmc
   SUPPORTED_DEVICES += VR200v
 endef
-TARGET_DEVICES += tplink_vr200v

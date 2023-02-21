@@ -64,8 +64,8 @@ define Build/sercomm-prepend-tagged-kernel
 	mv $(IMAGE_KERNEL).tagged $@
 endef
 
-define Device/sercomm_dxx
-  $(Device/dsa-migration)
+define Device/Common/sercomm_dxx
+  $(Device/Common/dsa-migration)
   BLOCKSIZE := 128k
   PAGESIZE := 2048
   KERNEL_SIZE := 6144k

@@ -14,4 +14,3 @@ define Device/zyxel_xgs1250-12
 	zyxel-vers $$$$(ZYXEL_VERS) | \
 	uImage gzip
 endef
-TARGET_DEVICES += zyxel_xgs1250-12

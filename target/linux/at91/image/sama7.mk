@@ -1,5 +1,5 @@
 
-define Device/default-nand
+define Device/Common/default-nand
   BLOCKSIZE := 128k
   PAGESIZE := 2048
   SUBPAGESIZE := 2048
@@ -45,13 +45,12 @@ define Build/at91-sdcard
 endef
 
 define Device/microchip_sama7g5-ek
-  $(Device/evaluation-dtb)
+  $(Device/Common/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAMA7G5-EK
   DEVICE_DTS := at91-sama7g5ek
   SUPPORTED_DEVICES := microchip,sama7g5ek
   KERNEL_SIZE := 6144k
   KERNEL_LOADADDR := 0x62000000
-  $(Device/evaluation-sdimage)
+  $(Device/Common/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sama7g5-ek

@@ -16,20 +16,19 @@ endef
 
 ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 # Root FS built-in
-define Device/vmlinux
+define Device/Common/vmlinux
 	KERNEL_SUFFIX := .elf
 	KERNEL := kernel-bin | patch-dtb
 	KERNEL_INITRAMFS_NAME = vmlinux-initramfs.elf
 endef
 
 define Device/nsim_hs
-	$(call Device/vmlinux)
+	$(call Device/Common/vmlinux)
 	DEVICE_VENDOR := Synopsys
 	DEVICE_MODEL := nSIM HS
 	DEVICE_PROFILE := nsim_hs
 	DEVICE_DTS := haps_hs
 endef
-TARGET_DEVICES += nsim_hs
 endif
 
 # Root FS on SD-card

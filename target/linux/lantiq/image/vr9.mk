@@ -1,22 +1,21 @@
 DEVICE_VARS += NETGEAR_BOARD_ID NETGEAR_HW_ID
 
-define Device/dsa-migration
+define Device/Common/dsa-migration
   DEVICE_COMPAT_VERSION := 1.1
   DEVICE_COMPAT_MESSAGE := Config cannot be migrated from swconfig to DSA
 endef
 
 define Device/alphanetworks_asl56026
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := Alpha
   DEVICE_MODEL := ASL56026
   DEVICE_ALT0_VENDOR := BT Openreach
   DEVICE_ALT0_MODEL := ECI VDSL Modem V-2FUb/I
   IMAGE_SIZE := 7488k
 endef
-TARGET_DEVICES += alphanetworks_asl56026
 
 define Device/arcadyan_arv7519rw22
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := Arcadyan
   DEVICE_MODEL := ARV7519RW22
   DEVICE_ALT0_VENDOR := Orange
@@ -30,20 +29,18 @@ define Device/arcadyan_arv7519rw22
   SUPPORTED_DEVICES += ARV7519RW22
   DEFAULT := n
 endef
-TARGET_DEVICES += arcadyan_arv7519rw22
 
 define Device/arcadyan_vg3503j
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := BT Openreach
   DEVICE_MODEL := ECI VDSL Modem V-2FUb/R
   IMAGE_SIZE := 8000k
   SUPPORTED_DEVICES += VG3503J
 endef
-TARGET_DEVICES += arcadyan_vg3503j
 
 define Device/arcadyan_vgv7510kw22-brn
-  $(Device/dsa-migration)
-  $(Device/lantiqBrnImage)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/lantiqBrnImage)
   DEVICE_VENDOR := Arcadyan
   DEVICE_MODEL := VGV7510KW22
   DEVICE_VARIANT := BRN
@@ -57,10 +54,9 @@ define Device/arcadyan_vgv7510kw22-brn
   DEVICE_PACKAGES := kmod-rt2800-pci wpad-basic-mbedtls kmod-usb-dwc2 kmod-ltq-tapi kmod-ltq-vmmc
   SUPPORTED_DEVICES += VGV7510KW22BRN
 endef
-TARGET_DEVICES += arcadyan_vgv7510kw22-brn
 
 define Device/arcadyan_vgv7510kw22-nor
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := Arcadyan
   DEVICE_MODEL := VGV7510KW22
   DEVICE_VARIANT := NOR
@@ -71,11 +67,10 @@ define Device/arcadyan_vgv7510kw22-nor
   DEVICE_PACKAGES := kmod-rt2800-pci wpad-basic-mbedtls kmod-usb-dwc2 kmod-ltq-tapi kmod-ltq-vmmc
   SUPPORTED_DEVICES += VGV7510KW22NOR
 endef
-TARGET_DEVICES += arcadyan_vgv7510kw22-nor
 
 define Device/arcadyan_vgv7519-brn
-  $(Device/dsa-migration)
-  $(Device/lantiqBrnImage)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/lantiqBrnImage)
   DEVICE_VENDOR := Arcadyan
   DEVICE_MODEL := VGV7519
   DEVICE_VARIANT := BRN
@@ -89,10 +84,9 @@ define Device/arcadyan_vgv7519-brn
   DEVICE_PACKAGES := kmod-rt2800-pci wpad-basic-mbedtls kmod-usb-dwc2 kmod-ltq-tapi kmod-ltq-vmmc
   SUPPORTED_DEVICES += VGV7519BRN
 endef
-TARGET_DEVICES += arcadyan_vgv7519-brn
 
 define Device/arcadyan_vgv7519-nor
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := Arcadyan
   DEVICE_MODEL := VGV7519
   DEVICE_VARIANT := NOR
@@ -103,12 +97,11 @@ define Device/arcadyan_vgv7519-nor
   DEVICE_PACKAGES := kmod-rt2800-pci wpad-basic-mbedtls kmod-usb-dwc2 kmod-ltq-tapi kmod-ltq-vmmc
   SUPPORTED_DEVICES += VGV7519NOR
 endef
-TARGET_DEVICES += arcadyan_vgv7519-nor
 
-define Device/avm_fritz3370
-  $(Device/dsa-migration)
-  $(Device/AVM)
-  $(Device/NAND)
+define Device/Common/avm_fritz3370
+  $(Device/Common/dsa-migration)
+  $(Device/Common/AVM)
+  $(Device/Common/NAND)
   DEVICE_MODEL := FRITZ!Box 3370
   DEVICE_VARIANT := Rev. 2
   KERNEL_SIZE := 4096k
@@ -120,71 +113,65 @@ define Device/avm_fritz3370
 endef
 
 define Device/avm_fritz3370-rev2-hynix
-  $(Device/dsa-migration)
-  $(Device/avm_fritz3370)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/avm_fritz3370)
   DEVICE_MODEL := FRITZ!Box 3370
   DEVICE_VARIANT := Rev. 2 (Hynix NAND)
 endef
-TARGET_DEVICES += avm_fritz3370-rev2-hynix
 
 define Device/avm_fritz3370-rev2-micron
-  $(Device/dsa-migration)
-  $(Device/avm_fritz3370)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/avm_fritz3370)
   DEVICE_MODEL := FRITZ!Box 3370
   DEVICE_VARIANT := Rev. 2 (Micron NAND)
 endef
-TARGET_DEVICES += avm_fritz3370-rev2-micron
 
 define Device/avm_fritz3390
-  $(Device/dsa-migration)
-  $(Device/AVM)
-  $(Device/NAND)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/AVM)
+  $(Device/Common/NAND)
   DEVICE_MODEL := FRITZ!Box 3390
   KERNEL_SIZE := 4096k
   IMAGE_SIZE := 49152k
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls \
 	kmod-usb-dwc2 fritz-tffs
 endef
-TARGET_DEVICES += avm_fritz3390
 
 define Device/avm_fritz7360sl
-  $(Device/dsa-migration)
-  $(Device/AVM)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/AVM)
   DEVICE_MODEL := FRITZ!Box 7360 SL
   IMAGE_SIZE := 15744k
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls \
 	kmod-usb-dwc2 fritz-tffs
   SUPPORTED_DEVICES += FRITZ7360SL
 endef
-TARGET_DEVICES += avm_fritz7360sl
 
 define Device/avm_fritz7360-v2
-  $(Device/dsa-migration)
-  $(Device/AVM)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/AVM)
   DEVICE_MODEL := FRITZ!Box 7360
   DEVICE_VARIANT := v2
   IMAGE_SIZE := 32128k
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls \
 	kmod-usb-dwc2 fritz-tffs
 endef
-TARGET_DEVICES += avm_fritz7360-v2
 
 define Device/avm_fritz7362sl
-  $(Device/dsa-migration)
-  $(Device/AVM)
-  $(Device/NAND)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/AVM)
+  $(Device/Common/NAND)
   DEVICE_MODEL := FRITZ!Box 7362 SL
   KERNEL_SIZE := 4096k
   IMAGE_SIZE := 49152k
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls \
 	kmod-usb-dwc2 fritz-tffs
 endef
-TARGET_DEVICES += avm_fritz7362sl
 
 define Device/avm_fritz7412
-  $(Device/dsa-migration)
-  $(Device/AVM)
-  $(Device/NAND)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/AVM)
+  $(Device/Common/NAND)
   DEVICE_MODEL := FRITZ!Box 7412
   BOARD_NAME := FRITZ7412
   KERNEL_SIZE := 4096k
@@ -192,23 +179,21 @@ define Device/avm_fritz7412
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls \
 	fritz-tffs-nand fritz-caldata
 endef
-TARGET_DEVICES += avm_fritz7412
 
 define Device/avm_fritz7430
-  $(Device/dsa-migration)
-  $(Device/AVM)
-  $(Device/NAND)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/AVM)
+  $(Device/Common/NAND)
   DEVICE_MODEL := FRITZ!Box 7430
   KERNEL_SIZE := 4096k
   IMAGE_SIZE := 49152k
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls \
 	kmod-usb-dwc2 fritz-tffs-nand fritz-caldata
 endef
-TARGET_DEVICES += avm_fritz7430
 
 define Device/bt_homehub-v5a
-  $(Device/dsa-migration)
-  $(Device/NAND)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/NAND)
   DEVICE_VENDOR := British Telecom (BT)
   DEVICE_MODEL := Home Hub 5
   DEVICE_VARIANT := Type A
@@ -217,41 +202,37 @@ define Device/bt_homehub-v5a
 	kmod-ath10k-ct ath10k-firmware-qca988x-ct wpad-basic-mbedtls kmod-usb-dwc2
   SUPPORTED_DEVICES += BTHOMEHUBV5A
 endef
-TARGET_DEVICES += bt_homehub-v5a
 
 define Device/buffalo_wbmr-300hpd
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := Buffalo
   DEVICE_MODEL := WBMR-300HPD
   IMAGE_SIZE := 15616k
   DEVICE_PACKAGES := kmod-mt7603 wpad-basic-mbedtls kmod-usb-dwc2
   SUPPORTED_DEVICES += WBMR300
 endef
-TARGET_DEVICES += buffalo_wbmr-300hpd
 
 define Device/lantiq_easy80920-nand
-  $(Device/dsa-migration)
-  $(Device/lantiqFullImage)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/lantiqFullImage)
   DEVICE_VENDOR := Lantiq
   DEVICE_MODEL := VR9 EASY80920
   DEVICE_VARIANT := NAND
   IMAGE_SIZE := 64512k
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls kmod-usb-dwc2 kmod-usb-ledtrig-usbport
 endef
-TARGET_DEVICES += lantiq_easy80920-nand
 
 define Device/lantiq_easy80920-nor
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := Lantiq
   DEVICE_MODEL := VR9 EASY80920
   DEVICE_VARIANT := NOR
   IMAGE_SIZE := 7936k
   DEVICE_PACKAGES := kmod-ath9k kmod-owl-loader wpad-basic-mbedtls kmod-usb-dwc2 kmod-usb-ledtrig-usbport
 endef
-TARGET_DEVICES += lantiq_easy80920-nor
 
 define Device/netgear_dm200
-  $(Device/dsa-migration)
+  $(Device/Common/dsa-migration)
   DEVICE_VENDOR := NETGEAR
   DEVICE_MODEL := DM200
   IMAGES := sysupgrade.bin factory.img
@@ -264,11 +245,10 @@ define Device/netgear_dm200
   NETGEAR_BOARD_ID := DM200
   NETGEAR_HW_ID := 29765233+8+0+64+0+0
 endef
-TARGET_DEVICES += netgear_dm200
 
 define Device/zyxel_p-2812hnu-f1
-  $(Device/dsa-migration)
-  $(Device/NAND)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/NAND)
   DEVICE_VENDOR := ZyXEL
   DEVICE_MODEL := P-2812HNU
   DEVICE_VARIANT := F1
@@ -277,11 +257,10 @@ define Device/zyxel_p-2812hnu-f1
   KERNEL_SIZE := 3072k
   SUPPORTED_DEVICES += P2812HNUF1
 endef
-TARGET_DEVICES += zyxel_p-2812hnu-f1
 
 define Device/zyxel_p-2812hnu-f3
-  $(Device/dsa-migration)
-  $(Device/NAND)
+  $(Device/Common/dsa-migration)
+  $(Device/Common/NAND)
   DEVICE_VENDOR := ZyXEL
   DEVICE_MODEL := P-2812HNU
   DEVICE_VARIANT := F3
@@ -291,4 +270,3 @@ define Device/zyxel_p-2812hnu-f3
   SUPPORTED_DEVICES += P2812HNUF3
   DEFAULT := n
 endef
-TARGET_DEVICES += zyxel_p-2812hnu-f3
