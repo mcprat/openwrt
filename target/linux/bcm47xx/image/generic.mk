@@ -64,10 +64,9 @@ define Device/linksys_e3000-v1
 endef
 TARGET_DEVICES += linksys_e3000-v1
 
-# generic has Ethernet drivers as modules so overwrite standard image
-define Device/standard
+define Device/standard-generic-modules
   DEVICE_VENDOR := Generic
   DEVICE_MODEL := Image with LZMA loader and LZMA compressed kernel
   DEVICE_PACKAGES := kmod-b44 kmod-bgmac kmod-tg3
 endef
-TARGET_DEVICES += standard
+TARGET_DEVICES += standard-generic-modules

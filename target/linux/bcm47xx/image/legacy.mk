@@ -280,6 +280,20 @@ define Device/netgear_wnr834b-v2
 endef
 TARGET_DEVICES += netgear_wnr834b-v2
 
+define Device/standard-legacy
+  DEVICE_VENDOR := Generic
+  DEVICE_MODEL := Image with LZMA loader and LZMA compressed kernel
+endef
+TARGET_DEVICES += standard-legacy
+
+define Device/standard-legacy-noloader-gz
+  DEVICE_VENDOR := Generic
+  DEVICE_MODEL := Image with gzipped kernel
+  KERNEL_NAME = vmlinux.gz
+  IMAGE/trx := append-rootfs | trx-without-loader
+endef
+TARGET_DEVICES += standard-legacy-noloader-gz
+
 define Device/usrobotics_usr5461
   DEVICE_VENDOR := US Robotics
   DEVICE_MODEL := USR5461
@@ -288,5 +302,3 @@ define Device/usrobotics_usr5461
   IMAGE/bin := append-rootfs | trx-with-loader | usrobotics-bin
 endef
 TARGET_DEVICES += usrobotics_usr5461
-
-TARGET_DEVICES += standard standard-noloader-gz

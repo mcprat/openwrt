@@ -496,4 +496,16 @@ define Device/netgear_wnr3500-v2-vc
 endef
 TARGET_DEVICES += netgear_wnr3500-v2-vc
 
-TARGET_DEVICES += standard standard-noloader-nodictionarylzma
+define Device/standard-mips74k
+  DEVICE_VENDOR := Generic
+  DEVICE_MODEL := Image with LZMA loader and LZMA compressed kernel
+endef
+TARGET_DEVICES += standard-mips74k
+
+define Device/standard-mips74k-noloader-nodictionarylzma
+  DEVICE_VENDOR := Generic
+  DEVICE_MODEL := Image with LZMA compressed kernel matching CFE decompressor
+  KERNEL_NAME = vmlinux-nodictionary.lzma
+  IMAGE/trx := append-rootfs | trx-without-loader
+endef
+TARGET_DEVICES += standard-mips74k-noloader-nodictionarylzma
