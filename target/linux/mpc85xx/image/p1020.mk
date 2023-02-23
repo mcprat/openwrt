@@ -56,7 +56,6 @@ define Device/aerohive_hiveap-330
     minutes to reformat flash."
 
 endef
-TARGET_DEVICES += aerohive_hiveap-330
 
 define Device/enterasys_ws-ap3710i
   DEVICE_VENDOR := Enterasys
@@ -66,7 +65,6 @@ define Device/enterasys_ws-ap3710i
   IMAGES := sysupgrade.bin
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata
 endef
-TARGET_DEVICES += enterasys_ws-ap3710i
 
 define Device/extreme-networks_ws-ap3825i
   DEVICE_VENDOR := Extreme Networks
@@ -78,7 +76,6 @@ define Device/extreme-networks_ws-ap3825i
   IMAGES := sysupgrade.bin
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata
 endef
-TARGET_DEVICES += extreme-networks_ws-ap3825i
 
 define Device/ocedo_panda
   DEVICE_VENDOR := OCEDO
@@ -92,5 +89,4 @@ define Device/ocedo_panda
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
   IMAGE/fdt.bin := append-dtb
 endef
-TARGET_DEVICES += ocedo_panda
 

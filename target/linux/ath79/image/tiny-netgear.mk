@@ -1,7 +1,7 @@
 include ./common-netgear.mk
 
 define Device/netgear_wnr612-v2
-  $(Device/netgear_generic)
+  $(DeviceCommon/netgear_generic)
   SOC := ar7240
   DEVICE_MODEL := WNR612
   DEVICE_VARIANT := v2
@@ -12,10 +12,9 @@ define Device/netgear_wnr612-v2
   SUPPORTED_DEVICES += wnr612-v2
   DEFAULT := n
 endef
-TARGET_DEVICES += netgear_wnr612-v2
 
 define Device/on_n150r
-  $(Device/netgear_generic)
+  $(DeviceCommon/netgear_generic)
   SOC := ar7240
   DEVICE_VENDOR := On Networks
   DEVICE_MODEL := N150R
@@ -25,10 +24,9 @@ define Device/on_n150r
   SUPPORTED_DEVICES += n150r
   DEFAULT := n
 endef
-TARGET_DEVICES += on_n150r
 
 define Device/netgear_wnr1000-v2
-  $(Device/netgear_generic)
+  $(DeviceCommon/netgear_generic)
   SOC := ar7240
   DEVICE_MODEL := WNR1000
   DEVICE_VARIANT := v2
@@ -39,10 +37,9 @@ define Device/netgear_wnr1000-v2
   SUPPORTED_DEVICES += wnr1000-v2
   DEFAULT := n
 endef
-TARGET_DEVICES += netgear_wnr1000-v2
 
 define Device/netgear_wnr2000-v3
-  $(Device/netgear_generic)
+  $(DeviceCommon/netgear_generic)
   SOC := ar7241
   DEVICE_MODEL := WNR2000
   DEVICE_VARIANT := v3
@@ -56,4 +53,3 @@ define Device/netgear_wnr2000-v3
   SUPPORTED_DEVICES += wnr2000-v3
   DEFAULT := n
 endef
-TARGET_DEVICES += netgear_wnr2000-v3

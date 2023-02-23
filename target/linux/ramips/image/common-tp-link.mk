@@ -14,7 +14,7 @@ define Build/uImage-tplink-c9
 	mv $@.new $@
 endef
 
-define Device/tplink-v1
+define DeviceCommon/tplink-v1
   DEVICE_VENDOR := TP-Link
   TPLINK_FLASHLAYOUT :=
   TPLINK_HWID :=
@@ -28,7 +28,7 @@ define Device/tplink-v1
 	append-metadata
 endef
 
-define Device/tplink-v2
+define DeviceCommon/tplink-v2
   DEVICE_VENDOR := TP-Link
   TPLINK_FLASHLAYOUT :=
   TPLINK_HWID :=
@@ -43,7 +43,7 @@ define Device/tplink-v2
 	append-metadata
 endef
 
-define Device/tplink-safeloader
+define DeviceCommon/tplink-safeloader
   DEVICE_VENDOR := TP-Link
   TPLINK_BOARD_ID :=
   TPLINK_HWID := 0x0

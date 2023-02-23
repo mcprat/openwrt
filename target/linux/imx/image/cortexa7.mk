@@ -27,4 +27,3 @@ define Device/technexion_imx7d-pico-pi
   IMAGE/combined.bin := append-rootfs | pad-extra 128k | imx-sdcard-raw-uboot
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += technexion_imx7d-pico-pi

@@ -27,7 +27,7 @@ define Build/netgear-squashfs
 	rm -rf $@.squashfs $@.fs
 endef
 
-define Device/netgear_generic
+define DeviceCommon/netgear_generic
   DEVICE_VENDOR := NETGEAR
   KERNEL := kernel-bin | append-dtb | lzma -d20 | uImage lzma
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma -d20 | uImage lzma

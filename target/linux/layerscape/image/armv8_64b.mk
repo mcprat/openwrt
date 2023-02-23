@@ -18,7 +18,7 @@ define Device/Default
     check-size $(LS_SYSUPGRADE_IMAGE_SIZE) | append-metadata
 endef
 
-define Device/fsl-sdboot
+define DeviceCommon/fsl-sdboot
   KERNEL = kernel-bin | gzip | fit gzip $$(DTS_DIR)/$$(DEVICE_DTS).dtb
   IMAGES := sdcard.img.gz sysupgrade.bin
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
@@ -47,10 +47,9 @@ define Device/fsl_ls1012a-frdm
     check-size $(LS_SYSUPGRADE_IMAGE_SIZE) | append-metadata
   KERNEL := kernel-bin | gzip | fit gzip $$(DTS_DIR)/$$(DEVICE_DTS).dtb
 endef
-TARGET_DEVICES += fsl_ls1012a-frdm
 
 define Device/fsl_ls1012a-rdb
-  $(Device/fix-sysupgrade)
+  $(DeviceCommon/fix-sysupgrade)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1012A-RDB
   DEVICE_PACKAGES += \
@@ -70,11 +69,10 @@ define Device/fsl_ls1012a-rdb
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_ls1012a-rdb
 
 define Device/fsl_ls1012a-frwy-sdboot
-  $(Device/rework-sdcard-images)
-  $(Device/fsl-sdboot)
+  $(DeviceCommon/rework-sdcard-images)
+  $(DeviceCommon/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := FRWY-LS1012A
   DEVICE_PACKAGES += \
@@ -96,10 +94,9 @@ define Device/fsl_ls1012a-frwy-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_ls1012a-frwy-sdboot
 
 define Device/fsl_ls1043a-rdb
-  $(Device/fix-sysupgrade)
+  $(DeviceCommon/fix-sysupgrade)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1043A-RDB
   DEVICE_VARIANT := Default
@@ -121,11 +118,10 @@ define Device/fsl_ls1043a-rdb
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_ls1043a-rdb
 
 define Device/fsl_ls1043a-rdb-sdboot
-  $(Device/rework-sdcard-images)
-  $(Device/fsl-sdboot)
+  $(DeviceCommon/rework-sdcard-images)
+  $(DeviceCommon/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1043A-RDB
   DEVICE_VARIANT := SD Card Boot
@@ -147,7 +143,6 @@ define Device/fsl_ls1043a-rdb-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_ls1043a-rdb-sdboot
 
 define Device/fsl_ls1046a-frwy
   DEVICE_VENDOR := NXP
@@ -167,10 +162,9 @@ define Device/fsl_ls1046a-frwy
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_ls1046a-frwy
 
 define Device/fsl_ls1046a-frwy-sdboot
-  $(Device/fsl-sdboot)
+  $(DeviceCommon/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := FRWY-LS1046A
   DEVICE_VARIANT := SD Card Boot
@@ -188,10 +182,9 @@ define Device/fsl_ls1046a-frwy-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_ls1046a-frwy-sdboot
 
 define Device/fsl_ls1046a-rdb
-  $(Device/fix-sysupgrade)
+  $(DeviceCommon/fix-sysupgrade)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1046A-RDB
   DEVICE_VARIANT := Default
@@ -213,11 +206,10 @@ define Device/fsl_ls1046a-rdb
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_ls1046a-rdb
 
 define Device/fsl_ls1046a-rdb-sdboot
-  $(Device/rework-sdcard-images)
-  $(Device/fsl-sdboot)
+  $(DeviceCommon/rework-sdcard-images)
+  $(DeviceCommon/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1046A-RDB
   DEVICE_VARIANT := SD Card Boot
@@ -239,10 +231,9 @@ define Device/fsl_ls1046a-rdb-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_ls1046a-rdb-sdboot
 
 define Device/fsl_ls1088a-rdb
-  $(Device/fix-sysupgrade)
+  $(DeviceCommon/fix-sysupgrade)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1088A-RDB
   DEVICE_VARIANT := Default
@@ -266,11 +257,10 @@ define Device/fsl_ls1088a-rdb
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_ls1088a-rdb
 
 define Device/fsl_ls1088a-rdb-sdboot
-  $(Device/rework-sdcard-images)
-  $(Device/fsl-sdboot)
+  $(DeviceCommon/rework-sdcard-images)
+  $(DeviceCommon/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS1088A-RDB
   DEVICE_VARIANT := SD Card Boot
@@ -295,10 +285,9 @@ define Device/fsl_ls1088a-rdb-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_ls1088a-rdb-sdboot
 
 define Device/fsl_ls2088a-rdb
-  $(Device/fix-sysupgrade)
+  $(DeviceCommon/fix-sysupgrade)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LS2088ARDB
   DEVICE_PACKAGES += \
@@ -319,7 +308,6 @@ define Device/fsl_ls2088a-rdb
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_ls2088a-rdb
 
 define Device/fsl_lx2160a-rdb
   DEVICE_VENDOR := NXP
@@ -344,10 +332,9 @@ define Device/fsl_lx2160a-rdb
     append-kernel | pad-to 32M | \
     append-rootfs | pad-rootfs | check-size
 endef
-TARGET_DEVICES += fsl_lx2160a-rdb
 
 define Device/fsl_lx2160a-rdb-sdboot
-  $(Device/fsl-sdboot)
+  $(DeviceCommon/fsl-sdboot)
   DEVICE_VENDOR := NXP
   DEVICE_MODEL := LX2160A-RDB
   DEVICE_VARIANT := Rev2.0 silicon SD Card Boot
@@ -371,7 +358,6 @@ define Device/fsl_lx2160a-rdb-sdboot
     ls-append-kernel | pad-to $(LS_SD_ROOTFSPART_OFFSET)M | \
     append-rootfs | pad-to $(LS_SD_IMAGE_SIZE)M | gzip
 endef
-TARGET_DEVICES += fsl_lx2160a-rdb-sdboot
 
 define Device/traverse_ls1043
   DEVICE_VENDOR := Traverse
@@ -403,4 +389,3 @@ define Device/traverse_ls1043
   MKUBIFS_OPTS := -m 2048 -e 124KiB -c 4096
   SUPPORTED_DEVICES := traverse,ls1043s traverse,ls1043v
 endef
-TARGET_DEVICES += traverse_ls1043

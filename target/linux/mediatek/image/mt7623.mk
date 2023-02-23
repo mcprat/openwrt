@@ -111,7 +111,6 @@ define Device/bananapi_bpi-r2
   ARTIFACTS := u-boot.bin preloader.bin sdcard.img.gz
   SUPPORTED_DEVICES := bananapi,bpi-r2
 endef
-TARGET_DEVICES += bananapi_bpi-r2
 
 define Device/unielec_u7623-02
   DEVICE_VENDOR := UniElec
@@ -143,7 +142,6 @@ define Device/unielec_u7623-02
   ARTIFACTS := u-boot.bin scatter.txt emmc.img.gz
   SUPPORTED_DEVICES += unielec,u7623-02-emmc-512m
 endef
-TARGET_DEVICES += unielec_u7623-02
 
 
 # Legacy helper for U7623 board
@@ -174,4 +172,3 @@ define Device/unielec_u7623-02-emmc-512m-legacy
 				gzip | append-metadata
   SUPPORTED_DEVICES := unielec,u7623-02-emmc-512m
 endef
-TARGET_DEVICES += unielec_u7623-02-emmc-512m-legacy

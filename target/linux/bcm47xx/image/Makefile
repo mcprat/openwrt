@@ -145,25 +145,25 @@ define Device/Default
 	IMAGE/trx := append-rootfs | trx-with-loader
 endef
 
-define Device/asus
+define DeviceCommon/asus
 	DEVICE_VENDOR := ASUS
 	IMAGES := trx
 	IMAGE/trx := append-rootfs | trx-with-loader | asus-trx
 endef
 
-define Device/linksys
+define DeviceCommon/linksys
 	DEVICE_VENDOR := Linksys
 	IMAGES := bin
 	IMAGE/bin := append-rootfs | trx-with-loader | linksys-bin
 endef
 
-define Device/motorola
+define DeviceCommon/motorola
 	DEVICE_VENDOR := Motorola
 	IMAGES := bin
 	IMAGE/bin := append-rootfs | trx-with-loader | motorola-bin
 endef
 
-define Device/netgear
+define DeviceCommon/netgear
 	DEVICE_VENDOR := NETGEAR
 	IMAGES := chk
 	IMAGE/chk := append-rootfs | trx-with-loader | netgear-chk

@@ -15,7 +15,7 @@ DEVICE_VARS += SERCOMM_PID SERCOMM_VERSION
 # cfe-jffs2-cferam and cfe-jffs2-kernel).
 # Separate JFFS2 partitions allow upgrading openwrt without reflashing cferam
 # JFFS2 partition, which is much safer in case anything goes wrong.
-define Device/bcm63xx-nand
+define DeviceCommon/bcm63xx-nand
   FILESYSTEMS := squashfs ubifs
   KERNEL := kernel-bin | append-dtb | relocate-kernel | lzma | cfe-jffs2-kernel
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | loader-lzma elf
@@ -36,8 +36,8 @@ define Device/bcm63xx-nand
   DEVICE_PACKAGES += nand-utils
 endef
 
-define Device/sercomm-nand
-  $(Device/bcm63xx-nand)
+define DeviceCommon/sercomm-nand
+  $(DeviceCommon/bcm63xx-nand)
   IMAGES := factory.img sysupgrade.bin
   IMAGE/factory.img := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | cfe-sercomm-part | gzip | cfe-sercomm-load | cfe-sercomm-crypto
   SERCOM_PID :=
@@ -46,7 +46,7 @@ endef
 
 ### Comtrend ###
 define Device/comtrend_vg-8050
-  $(Device/bcm63xx-nand)
+  $(DeviceCommon/bcm63xx-nand)
   DEVICE_VENDOR := Comtrend
   DEVICE_MODEL := VG-8050
   CHIP_ID := 63268
@@ -61,10 +61,9 @@ define Device/comtrend_vg-8050
   CFE_WFI_VERSION := 0x5732
   CFE_WFI_FLASH_TYPE := 3
 endef
-TARGET_DEVICES += comtrend_vg-8050
 
 define Device/comtrend_vr-3032u
-  $(Device/bcm63xx-nand)
+  $(DeviceCommon/bcm63xx-nand)
   DEVICE_VENDOR := Comtrend
   DEVICE_MODEL := VR-3032u
   CHIP_ID := 63268
@@ -79,11 +78,10 @@ define Device/comtrend_vr-3032u
   CFE_WFI_VERSION := 0x5732
   CFE_WFI_FLASH_TYPE := 3
 endef
-TARGET_DEVICES += comtrend_vr-3032u
 
 ### Huawei ###
 define Device/huawei_hg253s-v2
-  $(Device/bcm63xx-nand)
+  $(DeviceCommon/bcm63xx-nand)
   IMAGES := flash.bin sysupgrade.bin
   IMAGE/flash.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | cfe-jffs2-cferam | append-ubi
   DEVICE_VENDOR := Huawei
@@ -101,11 +99,10 @@ define Device/huawei_hg253s-v2
   DEVICE_PACKAGES += $(USB2_PACKAGES)
   CFE_WFI_FLASH_TYPE := 3
 endef
-TARGET_DEVICES += huawei_hg253s-v2
 
 ### Netgear ###
 define Device/netgear_dgnd3700-v2
-  $(Device/bcm63xx-nand)
+  $(DeviceCommon/bcm63xx-nand)
   DEVICE_VENDOR := NETGEAR
   DEVICE_MODEL := DGND3700
   DEVICE_VARIANT := v2
@@ -119,11 +116,10 @@ define Device/netgear_dgnd3700-v2
   CFE_WFI_VERSION := 0x5731
   CFE_WFI_FLASH_TYPE := 2
 endef
-TARGET_DEVICES += netgear_dgnd3700-v2
 
 ### Sercomm ###
 define Device/sercomm_ad1018
-  $(Device/sercomm-nand)
+  $(DeviceCommon/sercomm-nand)
   DEVICE_VENDOR := Sercomm
   DEVICE_MODEL := AD1018
   CHIP_ID := 6328
@@ -147,10 +143,9 @@ define Device/sercomm_ad1018
     0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00
   SERCOMM_VERSION := 1001
 endef
-TARGET_DEVICES += sercomm_ad1018
 
 define Device/sercomm_h500-s-lowi
-  $(Device/sercomm-nand)
+  $(DeviceCommon/sercomm-nand)
   DEVICE_VENDOR := Sercomm
   DEVICE_MODEL := H500-s
   DEVICE_VARIANT := lowi
@@ -174,10 +169,9 @@ define Device/sercomm_h500-s-lowi
     0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00
   SERCOMM_VERSION := 1001
 endef
-TARGET_DEVICES += sercomm_h500-s-lowi
 
 define Device/sercomm_h500-s-vfes
-  $(Device/sercomm-nand)
+  $(DeviceCommon/sercomm-nand)
   DEVICE_VENDOR := Sercomm
   DEVICE_MODEL := H500-s
   DEVICE_VARIANT := vfes
@@ -201,4 +195,3 @@ define Device/sercomm_h500-s-vfes
     0D 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00
   SERCOMM_VERSION := 1001
 endef
-TARGET_DEVICES += sercomm_h500-s-vfes

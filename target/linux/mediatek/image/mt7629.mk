@@ -6,7 +6,6 @@ define Device/mediatek_mt7629-rfb
   DEVICE_DTS := mt7629-rfb
   DEVICE_PACKAGES := swconfig
 endef
-TARGET_DEVICES += mediatek_mt7629-rfb
 
 define Device/iptime_a6004mx
   DEVICE_VENDOR := ipTIME
@@ -23,4 +22,3 @@ define Device/iptime_a6004mx
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
   IMAGE/recovery.bin := append-kernel | pad-to 128k | append-ubi | append-metadata
 endef
-TARGET_DEVICES += iptime_a6004mx

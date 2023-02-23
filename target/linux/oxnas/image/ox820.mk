@@ -43,7 +43,6 @@ define Device/akitio_mycloud
   DEVICE_PACKAGES := kmod-ata-oxnas-sata kmod-i2c-gpio kmod-rtc-ds1307 \
 	kmod-usb2-oxnas kmod-usb-ledtrig-usbport
 endef
-TARGET_DEVICES += akitio_mycloud
 
 define Device/cloudengines_pogoplugpro
   DEVICE_VENDOR := Cloud Engines
@@ -52,7 +51,6 @@ define Device/cloudengines_pogoplugpro
   DEVICE_PACKAGES := kmod-usb2-oxnas kmod-usb-ledtrig-usbport \
 	kmod-ata-oxnas-sata kmod-rt2800-pci wpad-basic-mbedtls
 endef
-TARGET_DEVICES += cloudengines_pogoplugpro
 
 define Device/cloudengines_pogoplug-series-3
   DEVICE_VENDOR := Cloud Engines
@@ -61,7 +59,6 @@ define Device/cloudengines_pogoplug-series-3
   DEVICE_PACKAGES := kmod-usb2-oxnas kmod-usb-ledtrig-usbport \
 	kmod-ata-oxnas-sata
 endef
-TARGET_DEVICES += cloudengines_pogoplug-series-3
 
 define Device/shuttle_kd20
   DEVICE_VENDOR := Shuttle
@@ -72,7 +69,6 @@ define Device/shuttle_kd20
 	kmod-hwmon-gpiofan kmod-ata-oxnas-sata kmod-md-mod kmod-md-raid0 \
 	kmod-md-raid1 kmod-fs-ext4 kmod-fs-xfs
 endef
-TARGET_DEVICES += shuttle_kd20
 
 define Device/mitrastar_stg-212
   DEVICE_VENDOR := MitraStar
@@ -81,4 +77,3 @@ define Device/mitrastar_stg-212
   DEVICE_PACKAGES := kmod-ata-oxnas-sata kmod-fs-ext4 kmod-fs-xfs \
 	kmod-usb2-oxnas kmod-usb-ledtrig-usbport
 endef
-TARGET_DEVICES += mitrastar_stg-212

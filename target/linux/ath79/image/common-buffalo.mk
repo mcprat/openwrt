@@ -21,7 +21,7 @@ define Build/buffalo-tftp-header
 endef
 
 
-define Device/buffalo_common
+define DeviceCommon/buffalo
   DEVICE_VENDOR := Buffalo
   BUFFALO_PRODUCT :=
   BUFFALO_HWVER := 3

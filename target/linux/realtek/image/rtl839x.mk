@@ -3,11 +3,10 @@
 include ./common.mk
 
 define Device/d-link_dgs-1210-52
-  $(Device/d-link_dgs-1210)
+  $(DeviceCommon/d-link_dgs-1210)
   SOC := rtl8393
   DEVICE_MODEL := DGS-1210-52
 endef
-TARGET_DEVICES += d-link_dgs-1210-52
 
 # When the factory image won't fit anymore, it can be removed.
 # New installation will be performed booting the initramfs image from
@@ -27,7 +26,6 @@ define Device/netgear_gs750e
     pad-rootfs | \
     check-size $$$$(FACTORY_SIZE)
 endef
-TARGET_DEVICES += netgear_gs750e
 
 define Device/panasonic_m48eg-pn28480k
   SOC := rtl8393
@@ -41,7 +39,6 @@ define Device/panasonic_m48eg-pn28480k
 	kmod-i2c-mux-pca954x \
 	kmod-thermal
 endef
-TARGET_DEVICES += panasonic_m48eg-pn28480k
 
 define Device/tplink_sg2452p-v4
   SOC := rtl8393
@@ -54,12 +51,10 @@ define Device/tplink_sg2452p-v4
 	  kmod-hwmon-gpiofan \
 	  kmod-hwmon-tps23861
 endef
-TARGET_DEVICES += tplink_sg2452p-v4
 
 define Device/zyxel_gs1900-48
-  $(Device/zyxel_gs1900)
+  $(DeviceCommon/zyxel_gs1900)
   SOC := rtl8393
   DEVICE_MODEL := GS1900-48
   ZYXEL_VERS := AAHN
 endef
-TARGET_DEVICES += zyxel_gs1900-48

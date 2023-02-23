@@ -45,7 +45,6 @@ define Device/ti_am335x-evm
   DEVICE_MODEL := AM335x EVM
 endef
 
-TARGET_DEVICES += ti_am335x-evm
 
 define Device/ti_am335x-bone-black
   DEVICE_VENDOR := Texas Instruments
@@ -53,7 +52,6 @@ define Device/ti_am335x-bone-black
   DEVICE_DTS := am335x-boneblack
 endef
 
-TARGET_DEVICES += ti_am335x-bone-black
 
 define Device/ti_omap4-panda
   DEVICE_VENDOR := PandaBoard.org
@@ -61,7 +59,6 @@ define Device/ti_omap4-panda
   DEVICE_PACKAGES := kmod-usb-net-smsc95xx
 endef
 
-TARGET_DEVICES += ti_omap4-panda
 
 define Device/ti_omap3-beagle
   DEVICE_VENDOR := BeagleBoard.org
@@ -73,6 +70,5 @@ define Device/ti_omap3-beagle
 	kmod-usb-net-smsc95xx kmod-usb-net-dm9601-ether
 endef
 
-TARGET_DEVICES += ti_omap3-beagle
 
 $(eval $(call BuildImage))

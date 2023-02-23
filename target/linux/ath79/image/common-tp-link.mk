@@ -1,7 +1,7 @@
 DEVICE_VARS += TPLINK_HWID TPLINK_HWREV TPLINK_FLASHLAYOUT TPLINK_HEADER_VERSION
 DEVICE_VARS += TPLINK_BOARD_ID TPLINK_HWREVADD TPLINK_HVERSION
 
-define Device/tplink-v1
+define DeviceCommon/tplink-v1
   DEVICE_VENDOR := TP-Link
   TPLINK_HWID := 0x0
   TPLINK_HWREV := 0x1
@@ -14,7 +14,7 @@ define Device/tplink-v1
   IMAGE/factory.bin := tplink-v1-image factory
 endef
 
-define Device/tplink-v2
+define DeviceCommon/tplink-v2
   DEVICE_VENDOR := TP-Link
   TPLINK_HWID := 0x0
   TPLINK_HWREV := 0x1
@@ -25,8 +25,8 @@ define Device/tplink-v2
   IMAGE/sysupgrade.bin := tplink-v2-image -s | check-size | append-metadata
 endef
 
-define Device/tplink-nolzma
-  $(Device/tplink-v1)
+define DeviceCommon/tplink-nolzma
+  $(DeviceCommon/tplink-v1)
   LOADER_FLASH_OFFS := 0x22000
   COMPILE := loader-$(1).gz
   COMPILE/loader-$(1).gz := loader-okli-compile
@@ -35,40 +35,40 @@ define Device/tplink-nolzma
   KERNEL_INITRAMFS := kernel-bin | append-dtb | gzip | tplink-v1-header
 endef
 
-define Device/tplink-4m
-  $(Device/tplink-nolzma)
+define DeviceCommon/tplink-4m
+  $(DeviceCommon/tplink-nolzma)
   TPLINK_FLASHLAYOUT := 4M
   IMAGE_SIZE := 3904k
   DEFAULT := n
 endef
 
-define Device/tplink-4mlzma
-  $(Device/tplink-v1)
+define DeviceCommon/tplink-4mlzma
+  $(DeviceCommon/tplink-v1)
   TPLINK_FLASHLAYOUT := 4Mlzma
   IMAGE_SIZE := 3904k
   DEFAULT := n
 endef
 
-define Device/tplink-8m
-  $(Device/tplink-nolzma)
+define DeviceCommon/tplink-8m
+  $(DeviceCommon/tplink-nolzma)
   TPLINK_FLASHLAYOUT := 8M
   IMAGE_SIZE := 8000k
 endef
 
-define Device/tplink-8mlzma
-  $(Device/tplink-v1)
+define DeviceCommon/tplink-8mlzma
+  $(DeviceCommon/tplink-v1)
   TPLINK_FLASHLAYOUT := 8Mlzma
   IMAGE_SIZE := 8000k
 endef
 
-define Device/tplink-16mlzma
-  $(Device/tplink-v1)
+define DeviceCommon/tplink-16mlzma
+  $(DeviceCommon/tplink-v1)
   TPLINK_FLASHLAYOUT := 16Mlzma
   IMAGE_SIZE := 16192k
 endef
 
-define Device/tplink-safeloader
-  $(Device/tplink-v1)
+define DeviceCommon/tplink-safeloader
+  $(DeviceCommon/tplink-v1)
   TPLINK_HWREV := 0x0
   KERNEL := kernel-bin | append-dtb | lzma | tplink-v1-header -O
   KERNEL_INITRAMFS := $$(KERNEL)
@@ -77,14 +77,14 @@ define Device/tplink-safeloader
   IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
 endef
 
-define Device/tplink-safeloader-uimage
-  $(Device/tplink-safeloader)
+define DeviceCommon/tplink-safeloader-uimage
+  $(DeviceCommon/tplink-safeloader)
   KERNEL := kernel-bin | append-dtb | lzma | uImage lzma
   KERNEL_INITRAMFS := $$(KERNEL)
 endef
 
-define Device/tplink-safeloader-okli
-  $(Device/tplink-safeloader)
+define DeviceCommon/tplink-safeloader-okli
+  $(DeviceCommon/tplink-safeloader)
   LOADER_TYPE := elf
   LOADER_FLASH_OFFS := 0x43000
   COMPILE := loader-$(1).elf

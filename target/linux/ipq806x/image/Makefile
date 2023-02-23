@@ -13,25 +13,25 @@ define Device/Default
 	IMAGE/sysupgrade.bin/squashfs :=
 endef
 
-define Device/LegacyImage
+define DeviceCommon/LegacyImage
 	KERNEL_SUFFIX := -uImage
 	KERNEL = kernel-bin | append-dtb | uImage none
 	KERNEL_NAME := zImage
 endef
 
-define Device/FitImage
+define DeviceCommon/FitImage
 	KERNEL_SUFFIX := -fit-uImage.itb
 	KERNEL = kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
 	KERNEL_NAME := Image
 endef
 
-define Device/FitImageLzma
+define DeviceCommon/FitImageLzma
 	KERNEL_SUFFIX := -fit-uImage.itb
 	KERNEL = kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(DEVICE_DTS).dtb
 	KERNEL_NAME := Image
 endef
 
-define Device/UbiFit
+define DeviceCommon/UbiFit
 	KERNEL_IN_UBI := 1
 	IMAGES := nand-factory.bin nand-sysupgrade.bin
 	IMAGE/nand-factory.bin := append-ubi

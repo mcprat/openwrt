@@ -89,38 +89,38 @@ define Device/Default
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | check-size | append-metadata
 endef
 
-define Device/NAND/xway
+define DeviceCommon/NAND/xway
   BLOCKSIZE := 16k
   PAGESIZE := 512
   SUBPAGESIZE := 256
   FILESYSTEMS += ubifs
 endef
 
-define Device/NAND/xrx200
+define DeviceCommon/NAND/xrx200
   BLOCKSIZE := 128k
   PAGESIZE := 2048
   SUBPAGESIZE := 512
   FILESYSTEMS += ubifs
 endef
 
-define Device/NAND
-  $(Device/NAND/$(SUBTARGET))
+define DeviceCommon/NAND
+  $(DeviceCommon/NAND/$(SUBTARGET))
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 
-define Device/lantiqBrnImage
+define DeviceCommon/lantiqBrnImage
   KERNEL := kernel-bin | append-dtb | mkbrncmdline | lzma-no-dict
   IMAGES := factory.bin
   IMAGE/factory.bin := mkbrnimg | check-size
 endef
 
-define Device/lantiqFullImage
+define DeviceCommon/lantiqFullImage
   KERNEL := kernel-bin | append-dtb | lzma | uImage lzma | pad-offset 4 0
   IMAGES := sysupgrade.bin fullimage.bin
   IMAGE/fullimage.bin := fullimage | check-size
 endef
 
-define Device/AVM
+define DeviceCommon/AVM
   DEVICE_VENDOR := AVM
   KERNEL := kernel-bin | append-dtb | lzma | eva-image
   KERNEL_INITRAMFS := $$(KERNEL)
@@ -128,7 +128,7 @@ define Device/AVM
 	append-rootfs | pad-rootfs | check-size | append-metadata
 endef
 
-define Device/AVM_preloader
+define DeviceCommon/AVM_preloader
   DEVICE_VENDOR := AVM
   COMPILE := loader-$(1).bin
   COMPILE/loader-$(1).bin := loader-okli-compile | lzma | eva-image | \

@@ -82,7 +82,6 @@ define Device/bananapi_bpi-r3
   IMAGE/sysupgrade.itb := append-kernel | fit gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb external-static-with-rootfs | pad-rootfs | append-metadata
   DTC_FLAGS += -@ --space 32768
 endef
-TARGET_DEVICES += bananapi_bpi-r3
 
 define Device/mediatek_mt7986a-rfb-nand
   DEVICE_VENDOR := MediaTek
@@ -105,7 +104,6 @@ define Device/mediatek_mt7986a-rfb-nand
 	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd
   DTC_FLAGS += -@ --space 32768
 endef
-TARGET_DEVICES += mediatek_mt7986a-rfb-nand
 
 define Device/mediatek_mt7986b-rfb
   DEVICE_VENDOR := MediaTek
@@ -123,7 +121,6 @@ define Device/mediatek_mt7986b-rfb
   IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += mediatek_mt7986b-rfb
 
 define Device/xiaomi_redmi-router-ax6000-stock
   DEVICE_VENDOR := Xiaomi
@@ -141,7 +138,6 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 endif
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += xiaomi_redmi-router-ax6000-stock
 
 define Device/xiaomi_redmi-router-ax6000-ubootmod
   DEVICE_VENDOR := Xiaomi
@@ -170,4 +166,3 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
   ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-recovery.itb | ubinize-kernel
 endif
 endef
-TARGET_DEVICES += xiaomi_redmi-router-ax6000-ubootmod

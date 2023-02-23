@@ -38,7 +38,6 @@ define Device/meraki_mr24
   UBINIZE_OPTS := -E 5
   SUPPORTED_DEVICES += mr24
 endef
-TARGET_DEVICES += meraki_mr24
 
 define Device/meraki_mx60
   DEVICE_VENDOR := Cisco Meraki
@@ -58,9 +57,8 @@ define Device/meraki_mx60
   DEVICE_COMPAT_MESSAGE := uboot's bootcmd has to be updated to support standard multi-image uImages. \
        Upgrade via sysupgrade mechanism is not possible.
 endef
-TARGET_DEVICES += meraki_mx60
 
-define Device/netgear_wndap6x0
+define DeviceCommon/netgear_wndap6x0
   DEVICE_VENDOR := NETGEAR
   DEVICE_PACKAGES := kmod-eeprom-at24
   SUBPAGESIZE := 256
@@ -80,16 +78,14 @@ define Device/netgear_wndap6x0
 endef
 
 define Device/netgear_wndap620
-  $(Device/netgear_wndap6x0)
+  $(DeviceCommon/netgear_wndap6x0)
   DEVICE_MODEL := WNDAP620 (Premium Wireless-N)
 endef
-TARGET_DEVICES += netgear_wndap620
 
 define Device/netgear_wndap660
-  $(Device/netgear_wndap6x0)
+  $(DeviceCommon/netgear_wndap6x0)
   DEVICE_MODEL := WNDAP660 (Dual Radio Dual Band Wireless-N)
 endef
-TARGET_DEVICES += netgear_wndap660
 
 define Device/netgear_wndr4700
   DEVICE_VENDOR := NETGEAR
@@ -124,4 +120,3 @@ define Device/netgear_wndr4700
   UBINIZE_OPTS := -E 5
   SUPPORTED_DEVICES += wndr4700
 endef
-TARGET_DEVICES += netgear_wndr4700

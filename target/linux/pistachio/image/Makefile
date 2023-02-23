@@ -37,7 +37,6 @@ define Device/img_creator-ci40
   DEVICE_PACKAGES := kmod-tpm-i2c-infineon kmod-ca8210 wpan-tools
 endef
 
-TARGET_DEVICES += img_creator-ci40
 
 
 $(eval $(call BuildImage))

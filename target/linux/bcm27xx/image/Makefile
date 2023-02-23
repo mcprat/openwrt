@@ -80,7 +80,6 @@ define Device/rpi
 	kmod-brcmfmac wpad-basic-mbedtls
 endef
 ifeq ($(SUBTARGET),bcm2708)
-  TARGET_DEVICES += rpi
 endif
 
 define Device/rpi-2
@@ -115,7 +114,6 @@ define Device/rpi-2
   IMAGE/factory.img.gz := boot-common | boot-2708 | boot-2711 | sdcard-img | gzip
 endef
 ifeq ($(SUBTARGET),bcm2709)
-  TARGET_DEVICES += rpi-2
 endif
 
 define Device/rpi-3
@@ -144,7 +142,6 @@ define Device/rpi-3
 	kmod-brcmfmac wpad-basic-mbedtls
 endef
 ifeq ($(SUBTARGET),bcm2710)
-  TARGET_DEVICES += rpi-3
 endif
 
 define Device/rpi-4
@@ -169,7 +166,6 @@ define Device/rpi-4
   IMAGE/factory.img.gz := boot-common | boot-2711 | sdcard-img | gzip
 endef
 ifeq ($(SUBTARGET),bcm2711)
-  TARGET_DEVICES += rpi-4
 endif
 
 $(eval $(call BuildImage))

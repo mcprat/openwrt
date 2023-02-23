@@ -5,7 +5,6 @@ define Device/generic
 	kmod-ledtrig-gpio
   GRUB2_VARIANT := legacy
 endef
-TARGET_DEVICES += generic
 
 define Device/geos
   $(call Device/generic)
@@ -14,4 +13,3 @@ define Device/geos
   DEVICE_PACKAGES += br2684ctl flashrom kmod-hwmon-lm90 kmod-mppe kmod-pppoa \
 	kmod-usb-ohci-pci linux-atm ppp-mod-pppoa pppdump pppstats soloscli tc
 endef
-TARGET_DEVICES += geos

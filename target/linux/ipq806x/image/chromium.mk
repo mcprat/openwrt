@@ -26,7 +26,7 @@ define Build/cros-vboot
 	@mv $@.new $@
 endef
 
-define Device/OnhubImage
+define DeviceCommon/OnhubImage
 	KERNEL_LOADADDR = 0x44208000
 	SOC := qcom-ipq8064
 	KERNEL_SUFFIX := -fit-zImage.itb.vboot
@@ -46,19 +46,17 @@ define Device/OnhubImage
 endef
 
 define Device/asus_onhub
-	$(call Device/OnhubImage)
+	$(call DeviceCommon/OnhubImage)
 	DEVICE_VENDOR := ASUS
 	DEVICE_MODEL := OnHub SRT-AC1900
 	DEVICE_DTS := $$(SOC)-asus-onhub
 	BOARD_NAME := asus-onhub
 endef
-TARGET_DEVICES += asus_onhub
 
 define Device/tplink_onhub
-	$(call Device/OnhubImage)
+	$(call DeviceCommon/OnhubImage)
 	DEVICE_VENDOR := TP-Link
 	DEVICE_MODEL := OnHub AC1900 Cloud Router
 	DEVICE_DTS := $$(SOC)-tplink-onhub
 	BOARD_NAME := tplink-onhub
 endef
-TARGET_DEVICES += tplink_onhub
