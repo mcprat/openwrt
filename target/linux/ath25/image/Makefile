@@ -72,14 +72,12 @@ define Device/generic
   IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | pad-to 128k | combined-image
   DEVICE_IMG_NAME = $$(DEVICE_IMG_PREFIX)-$$(if $$(findstring kernel,$$(2)),,$$(1)-)$$(2)
 endef
-TARGET_DEVICES += generic
 
 define Device/ubnt_picostation-2
   DEVICE_VENDOR := Ubiquiti
   DEVICE_MODEL := Picostation 2 (XS2-8)
   IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | pad-to 128k | mkfwimage XS2-8 -v XS2.ar2316
 endef
-TARGET_DEVICES += ubnt_picostation-2
 
 define Device/ubnt_nanostation-2
   DEVICE_VENDOR := Ubiquiti
@@ -87,7 +85,6 @@ define Device/ubnt_nanostation-2
   IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | pad-to 128k | mkfwimage XS2 -v XS2.ar2316
   DEFAULT := n
 endef
-TARGET_DEVICES += ubnt_nanostation-2
 
 define Device/ubnt_nanostation-5
   DEVICE_VENDOR := Ubiquiti
@@ -95,7 +92,6 @@ define Device/ubnt_nanostation-5
   IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | pad-to 128k | mkfwimage XS5 -v XS5.ar2313
   DEFAULT := n
 endef
-TARGET_DEVICES += ubnt_nanostation-5
 
 define Device/compex_np25g
   DEVICE_VENDOR := Compex
@@ -104,7 +100,6 @@ define Device/compex_np25g
   IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | pad-to 128k | mkmylofw np25g
   BROKEN := y
 endef
-TARGET_DEVICES += compex_np25g
 
 define Device/compex_wpe53g
   DEVICE_VENDOR := Compex
@@ -113,6 +108,5 @@ define Device/compex_wpe53g
   IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | pad-to 128k | mkmylofw wpe53g
   BROKEN := y
 endef
-TARGET_DEVICES += compex_wpe53g
 
 $(eval $(call BuildImage))

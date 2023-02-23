@@ -12,4 +12,3 @@ define Device/freescale_p2020rdb
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | \
 	pad-rootfs $$(BLOCKSIZE) | append-metadata
 endef
-TARGET_DEVICES += freescale_p2020rdb

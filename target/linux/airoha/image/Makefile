@@ -32,6 +32,5 @@ define Device/airoha_en7523-evb
   DEVICE_DTS := en7523-evb
   DEVICE_DTS_DIR := ../dts
 endef
-TARGET_DEVICES += airoha_en7523-evb
 
 $(eval $(call BuildImage))

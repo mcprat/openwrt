@@ -23,7 +23,6 @@ define Device/airlink101_ar670w
   SUPPORTED_DEVICES += ar670w
   DEFAULT := n
 endef
-TARGET_DEVICES += airlink101_ar670w
 
 define Device/airlink101_ar725w
   IMAGE_SIZE := 3776k
@@ -35,7 +34,6 @@ define Device/airlink101_ar725w
   SUPPORTED_DEVICES += ar725w
   DEFAULT := n
 endef
-TARGET_DEVICES += airlink101_ar725w
 
 define Device/asus_rt-n15
   BLOCKSIZE := 64k
@@ -46,7 +44,6 @@ define Device/asus_rt-n15
   SUPPORTED_DEVICES += rt-n15
   DEFAULT := n
 endef
-TARGET_DEVICES += asus_rt-n15
 
 define Device/belkin_f5d8235-v1
   IMAGE_SIZE := 7872k
@@ -57,7 +54,6 @@ define Device/belkin_f5d8235-v1
 	kmod-usb2 kmod-usb2-pci kmod-usb-ledtrig-usbport
   SUPPORTED_DEVICES += f5d8235-v1
 endef
-TARGET_DEVICES += belkin_f5d8235-v1
 
 define Device/buffalo_wli-tx4-ag300n
   BLOCKSIZE := 64k
@@ -68,7 +64,6 @@ define Device/buffalo_wli-tx4-ag300n
   SUPPORTED_DEVICES += wli-tx4-ag300n
   DEFAULT := n
 endef
-TARGET_DEVICES += buffalo_wli-tx4-ag300n
 
 define Device/buffalo_wzr-agl300nh
   BLOCKSIZE := 64k
@@ -79,7 +74,6 @@ define Device/buffalo_wzr-agl300nh
   SUPPORTED_DEVICES += wzr-agl300nh
   DEFAULT := n
 endef
-TARGET_DEVICES += buffalo_wzr-agl300nh
 
 define Device/dlink_dap-1522-a1
   BLOCKSIZE := 64k
@@ -95,7 +89,6 @@ define Device/dlink_dap-1522-a1
 	check-size
   DEFAULT := n
 endef
-TARGET_DEVICES += dlink_dap-1522-a1
 
 define Device/ralink_v11st-fe
   BLOCKSIZE := 64k
@@ -105,4 +98,3 @@ define Device/ralink_v11st-fe
   SUPPORTED_DEVICES += v11st-fe
   DEFAULT := n
 endef
-TARGET_DEVICES += ralink_v11st-fe

@@ -1,5 +1,5 @@
 define Device/avm_fritz7312
-  $(Device/AVM_preloader)
+  $(DeviceCommon/AVM_preloader)
   DEVICE_MODEL := FRITZ!Box 7312
   SOC := ar9
   IMAGE_SIZE := 15744k
@@ -10,10 +10,9 @@ define Device/avm_fritz7312
 	ltq-adsl-app ppp-mod-pppoa \
 	kmod-ltq-deu-ar9 fritz-tffs -swconfig
 endef
-TARGET_DEVICES += avm_fritz7312
 
 define Device/avm_fritz7320
-  $(Device/AVM_preloader)
+  $(DeviceCommon/AVM_preloader)
   DEVICE_MODEL := FRITZ!Box 7320
   DEVICE_ALT0_VENDOR := 1&1
   DEVICE_ALT0_MODEL := HomeServer
@@ -27,10 +26,9 @@ define Device/avm_fritz7320
 	kmod-ltq-deu-ar9 kmod-usb-dwc2 fritz-tffs -swconfig
   SUPPORTED_DEVICES += FRITZ7320
 endef
-TARGET_DEVICES += avm_fritz7320
 
 define Device/bt_homehub-v3a
-  $(Device/NAND)
+  $(DeviceCommon/NAND)
   DEVICE_VENDOR := British Telecom (BT)
   DEVICE_MODEL := Home Hub 3
   DEVICE_VARIANT := Type A
@@ -47,7 +45,6 @@ define Device/bt_homehub-v3a
   SUPPORTED_DEVICES += BTHOMEHUBV3A
   DEFAULT := n
 endef
-TARGET_DEVICES += bt_homehub-v3a
 
 define Device/buffalo_wbmr-hp-g300h-a
   DEVICE_VENDOR := Buffalo
@@ -63,7 +60,6 @@ define Device/buffalo_wbmr-hp-g300h-a
 	kmod-ath9k kmod-owl-loader wpad-basic-mbedtls
   SUPPORTED_DEVICES := WBMR buffalo,wbmr-hp-g300h
 endef
-TARGET_DEVICES += buffalo_wbmr-hp-g300h-a
 
 define Device/buffalo_wbmr-hp-g300h-b
   DEVICE_VENDOR := Buffalo
@@ -79,7 +75,6 @@ define Device/buffalo_wbmr-hp-g300h-b
 	kmod-ath9k kmod-owl-loader wpad-basic-mbedtls
   SUPPORTED_DEVICES := WBMR buffalo,wbmr-hp-g300h
 endef
-TARGET_DEVICES += buffalo_wbmr-hp-g300h-b
 
 DGN3500_KERNEL_OFFSET_HEX=0x50000
 DGN3500_KERNEL_OFFSET_DEC=327680
@@ -112,7 +107,6 @@ define Device/netgear_dgn3500
 	kmod-ltq-deu-ar9 ltq-adsl-app ppp-mod-pppoa
   SUPPORTED_DEVICES += DGN3500
 endef
-TARGET_DEVICES += netgear_dgn3500
 
 define Device/netgear_dgn3500b
   DEVICE_VENDOR := NETGEAR
@@ -134,7 +128,6 @@ define Device/netgear_dgn3500b
 	kmod-ltq-deu-ar9 ltq-adsl-app ppp-mod-pppoa
   SUPPORTED_DEVICES += DGN3500B
 endef
-TARGET_DEVICES += netgear_dgn3500b
 
 define Device/zte_h201l
   DEVICE_VENDOR := ZTE
@@ -149,7 +142,6 @@ define Device/zte_h201l
 	kmod-ltq-tapi kmod-ltq-vmmc
   SUPPORTED_DEVICES += H201L
 endef
-TARGET_DEVICES += zte_h201l
 
 define Device/zyxel_p-2601hn
   DEVICE_VENDOR := ZyXEL
@@ -164,4 +156,3 @@ define Device/zyxel_p-2601hn
 	kmod-usb-dwc2
   SUPPORTED_DEVICES += P2601HNFX
 endef
-TARGET_DEVICES += zyxel_p-2601hn

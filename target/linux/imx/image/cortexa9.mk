@@ -108,7 +108,6 @@ define Device/gateworks_ventana
   BLOCKSIZE := 128k
   MKUBIFS_OPTS := -m $$(PAGESIZE) -e 124KiB
 endef
-TARGET_DEVICES += gateworks_ventana
 
 define Device/gateworks_ventana-large
   $(Device/gateworks_ventana)
@@ -118,7 +117,6 @@ define Device/gateworks_ventana-large
   BLOCKSIZE := 256k
   MKUBIFS_OPTS := -m $$(PAGESIZE) -e 248KiB
 endef
-TARGET_DEVICES += gateworks_ventana-large
 
 define Device/solidrun_cubox-i
   DEVICE_VENDOR := SolidRun
@@ -137,7 +135,6 @@ define Device/solidrun_cubox-i
   IMAGE/combined.bin := append-rootfs | pad-extra 128k | imx-sdcard
   IMAGE/dtb := install-dtb
 endef
-TARGET_DEVICES += solidrun_cubox-i
 
 define Device/toradex_apalis
   DEVICE_VENDOR := Toradex
@@ -159,11 +156,9 @@ define Device/toradex_apalis
   ARTIFACTS := recovery.scr
   ARTIFACT/recovery.scr := recovery-scr
 endef
-TARGET_DEVICES += toradex_apalis
 
 define Device/wandboard_dual
   DEVICE_VENDOR := Wandboard
   DEVICE_MODEL := Dual
   DEVICE_DTS := imx6dl-wandboard
 endef
-TARGET_DEVICES += wandboard_dual

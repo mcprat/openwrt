@@ -9,7 +9,6 @@ define Device/cubietech_a10-cubieboard
   DEVICE_PACKAGES:=kmod-ata-sunxi kmod-sun4i-emac kmod-rtc-sunxi
   SOC := sun4i
 endef
-TARGET_DEVICES += cubietech_a10-cubieboard
 
 define Device/haoyu_a10-marsboard
   DEVICE_VENDOR := HAOYU Electronics
@@ -19,7 +18,6 @@ define Device/haoyu_a10-marsboard
   SUPPORTED_DEVICES += marsboard,a10-marsboard
   SOC := sun4i
 endef
-TARGET_DEVICES += haoyu_a10-marsboard
 
 define Device/linksprite_a10-pcduino
   DEVICE_VENDOR := LinkSprite
@@ -27,7 +25,6 @@ define Device/linksprite_a10-pcduino
   DEVICE_PACKAGES:=kmod-sun4i-emac kmod-rtc-sunxi kmod-rtl8192cu
   SOC := sun4i
 endef
-TARGET_DEVICES += linksprite_a10-pcduino
 
 define Device/olimex_a10-olinuxino-lime
   DEVICE_VENDOR := Olimex
@@ -35,7 +32,6 @@ define Device/olimex_a10-olinuxino-lime
   DEVICE_PACKAGES:=kmod-ata-sunxi kmod-sun4i-emac kmod-rtc-sunxi
   SOC := sun4i
 endef
-TARGET_DEVICES += olimex_a10-olinuxino-lime
 
 define Device/olimex_a13-olimex-som
   DEVICE_VENDOR := Olimex
@@ -45,7 +41,6 @@ define Device/olimex_a13-olimex-som
   SOC := sun5i-a13
   SUNXI_DTS := sun5i-a13-olinuxino
 endef
-TARGET_DEVICES += olimex_a13-olimex-som
 
 define Device/olimex_a13-olinuxino
   DEVICE_VENDOR := Olimex
@@ -53,4 +48,3 @@ define Device/olimex_a13-olinuxino
   DEVICE_PACKAGES:=kmod-rtl8192cu
   SOC := sun5i
 endef
-TARGET_DEVICES += olimex_a13-olinuxino

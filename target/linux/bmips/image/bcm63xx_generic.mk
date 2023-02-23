@@ -3,7 +3,7 @@
 DEVICE_VARS += CFE_BOARD_ID CFE_EXTRAS
 DEVICE_VARS += FLASH_MB IMAGE_OFFSET
 
-define Device/bcm63xx-cfe
+define DeviceCommon/bcm63xx-cfe
   FILESYSTEMS := squashfs jffs2-64k jffs2-128k
   KERNEL := kernel-bin | append-dtb | relocate-kernel | lzma
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | loader-lzma elf
@@ -21,13 +21,13 @@ define Device/bcm63xx-cfe
 endef
 
 # Legacy CFEs with specific LZMA parameters and no length
-define Device/bcm63xx-cfe-legacy
-  $(Device/bcm63xx-cfe)
+define DeviceCommon/bcm63xx-cfe-legacy
+  $(DeviceCommon/bcm63xx-cfe)
   KERNEL := kernel-bin | append-dtb | relocate-kernel | lzma-cfe
 endef
 
 define Device/comtrend_ar-5315u
-  $(Device/bcm63xx-cfe)
+  $(DeviceCommon/bcm63xx-cfe)
   DEVICE_VENDOR := Comtrend
   DEVICE_MODEL := AR-5315u
   CHIP_ID := 6318
@@ -35,10 +35,9 @@ define Device/comtrend_ar-5315u
   FLASH_MB := 16
   DEVICE_PACKAGES += $(USB2_PACKAGES) $(B43_PACKAGES)
 endef
-TARGET_DEVICES += comtrend_ar-5315u
 
 define Device/comtrend_ar-5387un
-  $(Device/bcm63xx-cfe)
+  $(DeviceCommon/bcm63xx-cfe)
   DEVICE_VENDOR := Comtrend
   DEVICE_MODEL := AR-5387un
   CHIP_ID := 6328
@@ -46,10 +45,9 @@ define Device/comtrend_ar-5387un
   FLASH_MB := 16
   DEVICE_PACKAGES += $(USB2_PACKAGES) $(B43_PACKAGES)
 endef
-TARGET_DEVICES += comtrend_ar-5387un
 
 define Device/comtrend_vr-3025u
-  $(Device/bcm63xx-cfe)
+  $(DeviceCommon/bcm63xx-cfe)
   DEVICE_VENDOR := Comtrend
   DEVICE_MODEL := VR-3025u
   CHIP_ID := 6368
@@ -58,10 +56,9 @@ define Device/comtrend_vr-3025u
   FLASH_MB := 32
   DEVICE_PACKAGES += $(USB2_PACKAGES) $(B43_PACKAGES)
 endef
-TARGET_DEVICES += comtrend_vr-3025u
 
 define Device/huawei_hg556a-b
-  $(Device/bcm63xx-cfe-legacy)
+  $(DeviceCommon/bcm63xx-cfe-legacy)
   DEVICE_VENDOR := Huawei
   DEVICE_MODEL := EchoLife HG556a
   DEVICE_VARIANT := B
@@ -71,4 +68,3 @@ define Device/huawei_hg556a-b
   BLOCKSIZE := 0x20000
   DEVICE_PACKAGES += $(USB2_PACKAGES) $(ATH9K_PACKAGES)
 endef
-TARGET_DEVICES += huawei_hg556a-b

@@ -175,19 +175,19 @@ define Device/Default-arm64
   KERNEL := kernel-bin
 endef
 
-define Device/NAND-128K
+define DeviceCommon/NAND-128K
   BLOCKSIZE := 128k
   PAGESIZE := 2048
   SUBPAGESIZE := 512
   VID_HDR_OFFSET := 2048
 endef
 
-define Device/NAND-256K
+define DeviceCommon/NAND-256K
   BLOCKSIZE := 256k
   PAGESIZE := 4096
 endef
 
-define Device/NAND-512K
+define DeviceCommon/NAND-512K
   BLOCKSIZE := 512k
   PAGESIZE := 4096
 endef

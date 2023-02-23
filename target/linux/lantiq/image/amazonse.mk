@@ -7,7 +7,6 @@ define Device/allnet_all0333cj
 	ltq-adsl-app ppp-mod-pppoe
   DEFAULT := n
 endef
-TARGET_DEVICES += allnet_all0333cj
 
 define Device/netgear_dgn1000b
   DEVICE_VENDOR := NETGEAR
@@ -19,4 +18,3 @@ define Device/netgear_dgn1000b
   SUPPORTED_DEVICES += DGN1000B
   DEFAULT := n
 endef
-TARGET_DEVICES += netgear_dgn1000b

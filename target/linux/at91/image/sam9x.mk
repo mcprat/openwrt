@@ -1,5 +1,5 @@
 
-define Device/default-nand
+define DeviceCommon/default-nand
   BLOCKSIZE := 128k
   PAGESIZE := 2048
   SUBPAGESIZE := 512
@@ -45,152 +45,134 @@ define Build/at91-sdcard
 endef
 
 define Device/atmel_at91sam9263ek
-  $(Device/evaluation-dtb)
+  $(DeviceCommon/evaluation-dtb)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9263-EK
 endef
-TARGET_DEVICES += atmel_at91sam9263ek
 
 define Device/atmel_at91sam9g15ek
-  $(Device/evaluation)
+  $(DeviceCommon/evaluation)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9G15-EK
 endef
-TARGET_DEVICES += atmel_at91sam9g15ek
 
 define Device/atmel_at91sam9g20ek
-  $(Device/evaluation-dtb)
+  $(DeviceCommon/evaluation-dtb)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9G20-EK
 endef
-TARGET_DEVICES += atmel_at91sam9g20ek
 
 define Device/atmel_at91sam9g20ek-2mmc
-  $(Device/evaluation-dtb)
+  $(DeviceCommon/evaluation-dtb)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9G20-EK
   DEVICE_VARIANT := 2MMC
   DEVICE_DTS := at91sam9g20ek_2mmc
   SUPPORTED_DEVICES := atmel,at91sam9g20ek_2mmc
 endef
-TARGET_DEVICES += atmel_at91sam9g20ek-2mmc
 
 define Device/atmel_at91sam9g25ek
-  $(Device/evaluation)
+  $(DeviceCommon/evaluation)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9G25-EK
 endef
-TARGET_DEVICES += atmel_at91sam9g25ek
 
 define Device/atmel_at91sam9g35ek
-  $(Device/evaluation)
+  $(DeviceCommon/evaluation)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9G35-EK
 endef
-TARGET_DEVICES += atmel_at91sam9g35ek
 
 define Device/atmel_at91sam9m10g45ek
-  $(Device/evaluation)
+  $(DeviceCommon/evaluation)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9M10G45-EK
 endef
-TARGET_DEVICES += atmel_at91sam9m10g45ek
 
 define Device/atmel_at91sam9x25ek
-  $(Device/evaluation-dtb)
+  $(DeviceCommon/evaluation-dtb)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9X25-EK
-  $(Device/evaluation-sdimage)
+  $(DeviceCommon/evaluation-sdimage)
 endef
-TARGET_DEVICES += atmel_at91sam9x25ek
 
 define Device/atmel_at91sam9x35ek
-  $(Device/evaluation-dtb)
+  $(DeviceCommon/evaluation-dtb)
   DEVICE_VENDOR := Atmel
   DEVICE_MODEL := AT91SAM9X35-EK
-  $(Device/evaluation-sdimage)
+  $(DeviceCommon/evaluation-sdimage)
 endef
-TARGET_DEVICES += atmel_at91sam9x35ek
 
 define Device/microchip_sam9x60ek
-  $(Device/evaluation-dtb)
+  $(DeviceCommon/evaluation-dtb)
   DEVICE_VENDOR := Microchip
   DEVICE_MODEL := SAM9X60-EK
   DEVICE_DTS := at91-sam9x60ek
-  $(Device/evaluation-sdimage)
+  $(DeviceCommon/evaluation-sdimage)
 endef
-TARGET_DEVICES += microchip_sam9x60ek
 
 define Device/calamp_lmu5000
-  $(Device/production)
+  $(DeviceCommon/production)
   DEVICE_VENDOR := CalAmp
   DEVICE_MODEL := LMU5000
   DEVICE_PACKAGES := kmod-rtc-pcf2123 kmod-usb-acm \
 	kmod-usb-serial-option kmod-usb-serial-sierrawireless \
 	kmod-pinctrl-mcp23s08-spi
 endef
-TARGET_DEVICES += calamp_lmu5000
 
 define Device/calao_tny-a9260
-  $(Device/production-dtb)
+  $(DeviceCommon/production-dtb)
   DEVICE_VENDOR := Calao
   DEVICE_MODEL := TNY A9260
   DEVICE_DTS := tny_a9260
 endef
-TARGET_DEVICES += calao_tny-a9260
 
 define Device/calao_tny-a9263
-  $(Device/production-dtb)
+  $(DeviceCommon/production-dtb)
   DEVICE_VENDOR := Calao
   DEVICE_MODEL := TNY A9263
   DEVICE_DTS := tny_a9263
   SUPPORTED_DEVICES := atmel,tny-a9263
 endef
-TARGET_DEVICES += calao_tny-a9263
 
 define Device/calao_tny-a9g20
-  $(Device/production-dtb)
+  $(DeviceCommon/production-dtb)
   DEVICE_VENDOR := Calao
   DEVICE_MODEL := TNY A9G20
   DEVICE_DTS := tny_a9g20
 endef
-TARGET_DEVICES += calao_tny-a9g20
 
 define Device/calao_usb-a9260
-  $(Device/production-dtb)
+  $(DeviceCommon/production-dtb)
   DEVICE_VENDOR := Calao
   DEVICE_MODEL := USB A9260
   DEVICE_DTS := usb_a9260
 endef
-TARGET_DEVICES += calao_usb-a9260
 
 define Device/calao_usb-a9263
-  $(Device/production-dtb)
+  $(DeviceCommon/production-dtb)
   DEVICE_VENDOR := Calao
   DEVICE_MODEL := USB A9263
   DEVICE_DTS := usb_a9263
   SUPPORTED_DEVICES := atmel,usb-a9263
 endef
-TARGET_DEVICES += calao_usb-a9263
 
 define Device/calao_usb-a9g20
-  $(Device/production-dtb)
+  $(DeviceCommon/production-dtb)
   DEVICE_VENDOR := Calao
   DEVICE_MODEL := USB A9G20
   DEVICE_DTS := usb_a9g20
 endef
-TARGET_DEVICES += calao_usb-a9g20
 
 define Device/egnite_ethernut5
-  $(Device/evaluation)
+  $(DeviceCommon/evaluation)
   DEVICE_VENDOR := egnite
   DEVICE_MODEL := Ethernut 5
   UBINIZE_OPTS := -E 5
 endef
-TARGET_DEVICES += egnite_ethernut5
 
 define Device/exegin_q5xr5
-  $(Device/production-dtb)
+  $(DeviceCommon/production-dtb)
   DEVICE_VENDOR := Exegin
   DEVICE_MODEL := Q5x
   DEVICE_VARIANT := rev5
@@ -198,10 +180,9 @@ define Device/exegin_q5xr5
   KERNEL_SIZE := 2048k
   DEFAULT := n
 endef
-TARGET_DEVICES += exegin_q5xr5
 
 define Device/laird_wb45n
-  $(Device/evaluation-fit)
+  $(DeviceCommon/evaluation-fit)
   DEVICE_VENDOR := Laird
   DEVICE_MODEL := WB45N
   DEVICE_DTS := at91-wb45n
@@ -214,4 +195,3 @@ define Device/laird_wb45n
   SUBPAGESIZE := 2048
   MKUBIFS_OPTS := -m $$(PAGESIZE) -e 124KiB -c 955
 endef
-TARGET_DEVICES += laird_wb45n

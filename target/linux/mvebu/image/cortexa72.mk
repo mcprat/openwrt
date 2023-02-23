@@ -4,7 +4,6 @@ define Device/globalscale_mochabin
   DEVICE_MODEL := MOCHAbin
   SOC := armada-7040
 endef
-TARGET_DEVICES += globalscale_mochabin
 
 define Device/marvell_armada7040-db
   $(call Device/Default-arm64)
@@ -13,7 +12,6 @@ define Device/marvell_armada7040-db
   DEVICE_DTS := armada-7040-db
   IMAGE/sdcard.img.gz := boot-img-ext4 | sdcard-img-ext4 | gzip | append-metadata
 endef
-TARGET_DEVICES += marvell_armada7040-db
 
 define Device/marvell_armada8040-db
   $(call Device/Default-arm64)
@@ -22,7 +20,6 @@ define Device/marvell_armada8040-db
   DEVICE_DTS := armada-8040-db
   IMAGE/sdcard.img.gz := boot-img-ext4 | sdcard-img-ext4 | gzip | append-metadata
 endef
-TARGET_DEVICES += marvell_armada8040-db
 
 define Device/marvell_macchiatobin-doubleshot
   $(call Device/Default-arm64)
@@ -36,7 +33,6 @@ define Device/marvell_macchiatobin-doubleshot
   DEVICE_DTS := armada-8040-mcbin
   SUPPORTED_DEVICES := marvell,armada8040-mcbin-doubleshot marvell,armada8040-mcbin
 endef
-TARGET_DEVICES += marvell_macchiatobin-doubleshot
 
 define Device/marvell_macchiatobin-singleshot
   $(call Device/Default-arm64)
@@ -50,7 +46,6 @@ define Device/marvell_macchiatobin-singleshot
   DEVICE_DTS := armada-8040-mcbin-singleshot
   SUPPORTED_DEVICES := marvell,armada8040-mcbin-singleshot
 endef
-TARGET_DEVICES += marvell_macchiatobin-singleshot
 
 define Device/marvell_clearfog-gt-8k
   $(call Device/Default-arm64)
@@ -61,7 +56,6 @@ define Device/marvell_clearfog-gt-8k
   DEVICE_DTS := armada-8040-clearfog-gt-8k
   SUPPORTED_DEVICES := marvell,armada8040-clearfog-gt-8k
 endef
-TARGET_DEVICES += marvell_clearfog-gt-8k
 
 define Device/iei_puzzle-m901
   $(call Device/Default-arm64)
@@ -69,7 +63,6 @@ define Device/iei_puzzle-m901
   DEVICE_MODEL := Puzzle-M901
   SOC := cn9131
 endef
-TARGET_DEVICES += iei_puzzle-m901
 
 define Device/iei_puzzle-m902
   $(call Device/Default-arm64)
@@ -77,4 +70,3 @@ define Device/iei_puzzle-m902
   DEVICE_MODEL := Puzzle-M902
   SOC := cn9132
 endef
-TARGET_DEVICES += iei_puzzle-m902

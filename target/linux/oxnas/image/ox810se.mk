@@ -17,4 +17,3 @@ define Device/wd_mbwe
   DEVICE_VARIANT := World Edition
   KERNEL := kernel-bin | append-dtb | uImage none
 endef
-TARGET_DEVICES += wd_mbwe

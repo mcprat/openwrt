@@ -183,7 +183,7 @@ define Device/Default
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | check-size | append-metadata
 endef
 
-define Device/netgear_sercomm_nor
+define DeviceCommon/netgear_sercomm_nor
   BLOCKSIZE := 64k
   DEVICE_VENDOR := NETGEAR
   IMAGES += factory.img
@@ -195,7 +195,7 @@ define Device/netgear_sercomm_nor
 	zip $$$$(SERCOMM_HWNAME).bin | sercom-seal
 endef
 
-define Device/seama
+define DeviceCommon/seama
   BLOCKSIZE := 64k
   SEAMA_MTDBLOCK := 2
   IMAGES += factory.bin
@@ -211,15 +211,15 @@ define Device/seama
   SEAMA_SIGNATURE :=
 endef
 
-define Device/uimage-lzma-loader
+define DeviceCommon/uimage-lzma-loader
   LOADER_TYPE := bin
   KERNEL/lzma-loader := kernel-bin | append-dtb | lzma | loader-kernel
   KERNEL := $$(KERNEL/lzma-loader) | uImage none
 endef
 
-define Device/seama-lzma-loader
-  $(Device/seama)
-  $(Device/uimage-lzma-loader)
+define DeviceCommon/seama-lzma-loader
+  $(DeviceCommon/seama)
+  $(DeviceCommon/uimage-lzma-loader)
   KERNEL := $$(KERNEL/lzma-loader) | relocate-kernel | lzma -a0
   KERNEL_INITRAMFS := $$(KERNEL/lzma-loader) | uImage none
 endef

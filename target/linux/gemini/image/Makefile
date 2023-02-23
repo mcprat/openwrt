@@ -162,7 +162,6 @@ define Device/dlink_dir-685
 	IMAGE/factory.bin := append-kernel | pad-offset 128k 160 | append-rootfs | dir685-pad-rootfs | dir685-image
 	IMAGE/sysupgrade.bin := append-kernel | pad-offset 128k 160 | dir685-image | append-rootfs | dir685-pad-rootfs | append-metadata
 endef
-TARGET_DEVICES += dlink_dir-685
 
 define Device/dlink_dns-313
 	DEVICE_VENDOR := D-Link
@@ -174,10 +173,9 @@ define Device/dlink_dns-313
 	IMAGES := factory.bin.gz
 	IMAGE/factory.bin.gz := dns313-images | gzip
 endef
-TARGET_DEVICES += dlink_dns-313
 
 # Default images setup used by the StorLink reference designs
-define Device/storlink-reference
+define DeviceCommon/storlink-reference
 	COMPILE := copy-kernel-$(1).bin
 	COMPILE/copy-kernel-$(1).bin := copy-kernel.bin
 	IMAGES := factory.bin
@@ -188,29 +186,26 @@ define Device/storlink-reference
 endef
 
 define Device/itian_sq201
-	$(Device/storlink-reference)
+	$(DeviceCommon/storlink-reference)
 	DEVICE_VENDOR := ITian
 	DEVICE_MODEL := Square One SQ201
 	DEVICE_DTS := gemini-sq201
 	DEVICE_PACKAGES += kmod-rt61-pci kmod-usb2-pci
 endef
-TARGET_DEVICES += itian_sq201
 
 define Device/raidsonic_ib-4220-b
-	$(Device/storlink-reference)
+	$(DeviceCommon/storlink-reference)
 	DEVICE_VENDOR := Raidsonic
 	DEVICE_MODEL := NAS IB-4220-B
 	DEVICE_DTS := gemini-nas4220b
 endef
-TARGET_DEVICES += raidsonic_ib-4220-b
 
 define Device/storlink_sl93512r
-	$(Device/storlink-reference)
+	$(DeviceCommon/storlink-reference)
 	DEVICE_VENDOR := StorLink
 	DEVICE_MODEL := SL93512r
 	DEVICE_DTS := gemini-sl93512r
 endef
-TARGET_DEVICES += storlink_sl93512r
 
 
 # The wiliboard images need some changes to be functional and buildable.
@@ -221,7 +216,7 @@ TARGET_DEVICES += storlink_sl93512r
 # The mkfwimage2 call need to be adjusted to reflect the real size of kernel
 # and rootfs. It is expected that the OEM firmware adjusts the on flash
 # partition table with the values defined in the image header.
-define Device/wiliboard_wbd111
+define DeviceCommon/wiliboard_wbd111
 	DEVICE_VENDOR := Wiliboard
 	DEVICE_MODEL := WBD-111
 	DEVICE_DTS := gemini-wbd111
@@ -230,7 +225,7 @@ define Device/wiliboard_wbd111
 	IMAGE/factory.bin := append-rootfs | pad-rootfs | wiligear-image "WILI-S.WILIBOARD"
 endef
 
-define Device/wiliboard_wbd222
+define DeviceCommon/wiliboard_wbd222
 	DEVICE_VENDOR := Wiliboard
 	DEVICE_MODEL := WBD-222
 	DEVICE_DTS := gemini-wbd222

@@ -79,7 +79,7 @@ define Device/Default
 	append-rootfs | pad-rootfs | check-size | append-metadata
 endef
 
-define Device/loader-okli-uimage
+define DeviceCommon/loader-okli-uimage
   LOADER_TYPE := bin
   COMPILE := loader-$(1).bin loader-$(1).uImage
   COMPILE/loader-$(1).bin := loader-okli-compile
