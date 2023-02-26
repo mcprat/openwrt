@@ -315,6 +315,7 @@ ath79_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"0@eth0" "1:lan"
 		;;
+	engenius,ens202-v1|\
 	engenius,ens202ext-v1)
 		ucidef_set_interface_lan "eth1"
 		ucidef_add_switch "switch0" \
@@ -578,6 +579,7 @@ ath79_setup_macs()
 	alfa-network,r36a|\
 	alfa-network,tube-2hq|\
 	engenius,eap300-v2|\
+	engenius,ens202-v1|\
 	engenius,ens202ext-v1)
 		label_mac=$(mtd_get_mac_binary art 0x1002)
 		;;
