@@ -1,0 +1,14 @@
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -2849,8 +2849,10 @@ static int spi_nor_init(struct spi_nor *
+ 		 * reboots (e.g., crashes). Warn the user (or hopefully, system
+ 		 * designer) that this is bad.
+ 		 */
+-		WARN_ONCE(nor->flags & SNOR_F_BROKEN_RESET,
++		if (nor->flags & SNOR_F_BROKEN_RESET)
++			dev_warn(nor->dev,
+ 			  "enabling reset hack; may not recover from unexpected reboots\n");
++
+ 		nor->params->set_4byte_addr_mode(nor, true);
+ 	}
+ 
