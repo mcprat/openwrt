@@ -389,7 +389,7 @@ ifneq ($(wildcard $(STAGING_DIR_HOST)/bin/flock),)
 	flock \
 		$(if $(2),$(strip $(2)),$(STAGING_DIR)) \
 		-c '$(subst ','\'',$(1))' \
-	$(if $(2),|| (([ -s "$(2)" ] || [ -d "$(2)" ]) || ($(RM) $(2) && exit 1) && exit 1),&& true || false)
+	$(if $(2),|| (([ -s "$(2)" ] || [ -d "$(2)" ]) || (rm -rf $(2) && exit 1) && exit 1),&& true || false)
   endef
 else
   locked=$(1)
