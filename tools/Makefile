@@ -146,6 +146,7 @@ $(foreach tool, $(tools-y), $(if $(wildcard $(curdir)/$(tool)/patches),$(eval $(
 $(foreach tool, $(filter-out xz,$(tools-y)), $(eval $(curdir)/$(tool)/compile += $(curdir)/xz/compile))
 
 # make any tool depend on the following to ensure that archives can be unpacked and patched properly
+tools-core += gnulib
 tools-core += libdeflate
 tools-core += patch
 tools-core += tar
