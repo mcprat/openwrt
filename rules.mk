@@ -349,6 +349,7 @@ ifeq ($(CONFIG_BUILD_LOG),y)
   BUILD_LOG:=1
 endif
 
+export HOST_GNULIB_SRCDIR:=$(STAGING_DIR_HOST)/share/gnulib
 export BISON_PKGDATADIR:=$(STAGING_DIR_HOST)/share/bison
 export M4:=$(STAGING_DIR_HOST)/bin/m4
 

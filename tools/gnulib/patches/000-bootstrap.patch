@@ -1,0 +1,11 @@
+--- a/build-aux/bootstrap
++++ b/build-aux/bootstrap
+@@ -1135,7 +1135,7 @@ autogen()
+   # two just-pre-run programs.
+ 
+   # Import from gettext.
+-  with_gettext=yes
++  with_gettext=no
+   grep '^[	 ]*AM_GNU_GETTEXT_VERSION(' configure.ac >/dev/null || \
+       with_gettext=no
+ 
