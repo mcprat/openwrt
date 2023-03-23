@@ -1,0 +1,13 @@
+--- a/bootstrap
++++ b/bootstrap
+@@ -923,9 +923,7 @@ version_controlled_file() {
+ # two just-pre-run programs.
+ 
+ # Import from gettext.
+-with_gettext=yes
+-grep '^[	 ]*AM_GNU_GETTEXT_VERSION(' configure.ac >/dev/null || \
+-    with_gettext=no
++with_gettext=no
+ 
+ if test $with_gettext = yes || test $use_libtool = 1; then
+ 
