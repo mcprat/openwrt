@@ -18,17 +18,19 @@ HOST_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/host-build.mk
 
+export GNULIB_SRCDIR:=$(HOST_GNULIB_SRCDIR)
+
 HOST_CONFIGURE_VARS += \
 	lt_cv_sys_dlsearch_path=""
 
 define Host/Prepare
 	$(call Host/Prepare/Default)
 	(cd $(STAGING_DIR_HOST)/share/aclocal/ && rm -f libtool.m4 ltdl.m4 lt~obsolete.m4 ltoptions.m4 ltsugar.m4 ltversion.m4)
-	$(if $(QUILT),,(cd $(HOST_BUILD_DIR); touch README-release; $(AM_TOOL_PATHS) ./bootstrap --skip-git --skip-po --force))
+	$(if $(QUILT),,(cd $(HOST_BUILD_DIR); touch README-release; $(AM_TOOL_PATHS) ./bootstrap --skip-git --skip-po --force --gnulib-srcdir=$(GNULIB_SRCDIR)))
 endef
 
 define Host/Configure
-	$(if $(QUILT),(cd $(HOST_BUILD_DIR); touch README-release; $(AM_TOOL_PATHS) ./bootstrap --skip-git --skip-po --force))
+	$(if $(QUILT),(cd $(HOST_BUILD_DIR); touch README-release; $(AM_TOOL_PATHS) ./bootstrap --skip-git --skip-po --force --gnulib-srcdir=$(GNULIB_SRCDIR)))
 	$(call Host/Configure/Default)
 endef
 
