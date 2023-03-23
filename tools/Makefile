@@ -103,6 +103,7 @@ $(curdir)/libtool/compile := $(curdir)/automake/compile $(curdir)/gnulib/compile
 $(curdir)/lzma-old/compile := $(curdir)/zlib/compile
 $(curdir)/lzop/compile := $(curdir)/cmake/compile $(curdir)/liblzo/compile
 $(curdir)/llvm-bpf/compile := $(curdir)/cmake/compile
+$(curdir)/m4/compile := $(curdir)/gnulib/compile
 $(curdir)/make-ext4fs/compile := $(curdir)/zlib/compile
 $(curdir)/meson/compile := $(curdir)/ninja/compile
 $(curdir)/missing-macros/compile := $(curdir)/autoconf/compile

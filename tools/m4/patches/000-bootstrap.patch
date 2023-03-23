@@ -1,0 +1,12 @@
+--- a/bootstrap
++++ b/bootstrap
+@@ -3085,7 +3085,8 @@ func_fini ()
+ {
+     $debug_cmd
+ 
+-    func_gettext_configuration
++# Openwrt: disable po generation
++#   func_gettext_configuration
+     func_clean_dangling_symlinks
+     func_clean_unused_macros
+     func_skip_po_recommendation
