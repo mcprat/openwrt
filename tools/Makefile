@@ -158,10 +158,10 @@ $(foreach tool, $(tools-y), $(eval $(curdir)/$(tool)/compile += $(patsubst %,$(c
 tools-y += $(tools-core)
 
 # make core tools depend on sed and flock
-$(foreach tool, $(filter-out xz,$(tools-core)), $(eval $(curdir)/$(tool)/compile += $(curdir)/sed/compile))
+$(foreach tool, $(filter-out xz gnulib,$(tools-core)), $(eval $(curdir)/$(tool)/compile += $(curdir)/sed/compile))
 $(curdir)/xz/compile += $(curdir)/flock/compile
 
-$(curdir)/sed/compile := $(curdir)/flock/compile $(curdir)/xz/compile
+$(curdir)/sed/compile := $(curdir)/flock/compile $(curdir)/gnulib/compile $(curdir)/xz/compile
 tools-y += flock sed
 
 $(curdir)/autoremove := 1

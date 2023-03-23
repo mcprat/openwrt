@@ -21,6 +21,8 @@ HOSTCXX := $(HOSTCXX_NOCACHE)
 
 include $(INCLUDE_DIR)/host-build.mk
 
+export GNULIB_SRCDIR:=$(HOST_GNULIB_SRCDIR)
+
 HOST_CONFIGURE_ARGS += \
 	--disable-acl \
 	--disable-nls \
@@ -32,6 +34,16 @@ HOST_CONFIGURE_VARS += \
 	ac_cv_search_setfilecon=no \
 	ac_cv_header_selinux_context_h=no \
 	ac_cv_header_selinux_selinux_h=no \
+
+define Host/Prepare
+	$(call Host/Prepare/Default)
+	$(if $(QUILT),,(cd $(HOST_BUILD_DIR); touch README-release; ./bootstrap --no-git --skip-po --force --gnulib-srcdir=$(GNULIB_SRCDIR) --bootstrap-sync))
+endef
+
+define Host/Configure
+	$(if $(QUILT),(cd $(HOST_BUILD_DIR); touch README-release; ./bootstrap --no-git --skip-po --force --gnulib-srcdir=$(GNULIB_SRCDIR) --bootstrap-sync))
+	$(call Host/Configure/Default)
+endef
 
 define Host/Compile
 	+$(MAKE) $(HOST_JOBS) -C $(HOST_BUILD_DIR) SHELL="$(BASH)"
