@@ -21,18 +21,21 @@ include $(INCLUDE_DIR)/host-build.mk
 
 HOST_CONFIGURE_ARGS += --disable-shared
 
+define Host/Compile
+	$(call Host/Compile/Default,SUBDIRS="src tools")
+endef
+
 define Host/Install
-	$(call Host/Install/Default)
+	$(call Host/Compile/Default,install SUBDIRS="src tools")
 	$(LN) flex $(STAGING_DIR_HOST)/bin/lex
 endef
 
 define Host/Uninstall
-	-$(call Host/Compile/Default,uninstall)
+	-$(call Host/Compile/Default,uninstall SUBDIRS="src tools")
 endef
 
 define Host/Clean
 	rm -f $(STAGING_DIR_HOST)/bin/lex
-	$(call Host/Clean/Default)
 endef
 
 $(eval $(call HostBuild))
