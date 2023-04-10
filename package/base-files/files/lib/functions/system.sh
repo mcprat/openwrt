@@ -1,3 +1,4 @@
+#!/bin/ash
 # Copyright (C) 2006-2013 OpenWrt.org
 
 . /lib/functions.sh
@@ -12,7 +13,7 @@ get_mac_binary() {
 		return
 	fi
 
-	macaddr_canonicalize $(hexdump -v -s "$offset" -n "$length" -e '6/1 "%02x"' "$path" 2>/dev/null)
+	macaddr_canonicalize $(hexdump -s "$offset" -n "$length" -e '6/1 "%02x"' "$path" 2>/dev/null)
 }
 
 get_mac_label_dt() {
@@ -100,10 +101,8 @@ mtd_get_mac_ascii() {
 mtd_get_mac_encrypted_arcadyan() {
 	local iv="00000000000000000000000000000000"
 	local key="2A4B303D7644395C3B2B7053553C5200"
-	local mac_dirty
 	local mtdname="$1"
-	local part
-	local size
+	local part size mac
 
 	part=$(find_mtd_part "$mtdname")
 	if [ -z "$part" ]; then
@@ -111,51 +110,53 @@ mtd_get_mac_encrypted_arcadyan() {
 		return
 	fi
 
-	# Config decryption and getting mac. Trying uencrypt and openssl utils.
-	size=$((0x$(dd if=$part skip=9 bs=1 count=4 2>/dev/null | hexdump -v -e '1/4 "%08x"')))
-	if [[ -f  "/usr/bin/uencrypt" ]]; then
-		mac_dirty=$(dd if=$part bs=1 count=$size skip=$((0x100)) 2>/dev/null | \
-			uencrypt -d -n -k $key -i $iv | grep mac | cut -c 5-)
-	elif [[ -f  "/usr/bin/openssl" ]]; then
-		mac_dirty=$(dd if=$part bs=1 count=$size skip=$((0x100)) 2>/dev/null | \
-			openssl aes-128-cbc -d -nopad -K $key -iv $iv | grep mac | cut -c 5-)
-	else
-		echo "mtd_get_mac_encrypted_arcadyan: Neither uencrypt nor openssl was found!" >&2
+	size=$(($(hexdump -s 9 -n 4 -e '1/4 "0x%x"' "$part")))
+
+	[ -n "$mac" ] || mac=$(dd if="$part" bs=1 count="$size" skip=$((0x100)) 2>/dev/null | \
+		uencrypt -d -n -k "$key" -i "$iv" | grep mac)
+
+	[ -n "$mac" ] || mac=$(dd if="$part" bs=1 count="$size" skip=$((0x100)) 2>/dev/null | \
+		openssl aes-128-cbc -d -nopad -K "$key" -iv "$iv" | grep mac)
+
+	if [ -z "$mac" ]; then
+		echo "mtd_get_mac_encrypted_arcadyan: failed to unencrypt mac address!" >&2
 		return
 	fi
 
-	# "canonicalize" mac
-	[ -n "$mac_dirty" ] && macaddr_canonicalize "$mac_dirty"
+	macaddr_canonicalize "${mac//mac/}"
 }
 
 mtd_get_mac_encrypted_deco() {
+	local tplink_key="3336303032384339"
 	local mtdname="$1"
+	local part key mac
 
-	if ! [ -e "$mtdname" ]; then
-		echo "mtd_get_mac_encrypted_deco: file $mtdname not found!" >&2
+	part=$(find_mtd_part "$mtdname")
+	if [ -z "$part" ]; then
+		echo "mtd_get_mac_encrypted_deco: partition $mtdname not found!" >&2
 		return
 	fi
 
-	tplink_key="3336303032384339"
+	key=$(dd if="$part" bs=1 skip=16 count=8 2>/dev/null | \
+		uencrypt -n -d -k "$tplink_key" -c des-ecb | hexdump -n 8 -e '8/1 "%02x"')
 
-	key=$(dd if=$mtdname bs=1 skip=16 count=8 2>/dev/null | \
-		uencrypt -n -d -k $tplink_key -c des-ecb | hexdump -v -n 8 -e '1/1 "%02x"')
+	mac=$(dd if="$part" bs=1 skip=32 count=8 2>/dev/null | \
+		uencrypt -n -d -k "$key" -c des-ecb | hexdump -n 6 -e '6/1 "%02x"')
 
-	macaddr=$(dd if=$mtdname bs=1 skip=32 count=8 2>/dev/null | \
-		uencrypt -n -d -k $key -c des-ecb | hexdump -v -n 6 -e '5/1 "%02x:" 1/1 "%02x"')
-
-	echo $macaddr
+	macaddr_canonicalize "$mac"
 }
 
 mtd_get_mac_uci_config_ubi() {
-	local volumename="$1"
+	local mtdname="$1"
+	local ubidev part mac
 
 	. /lib/upgrade/nand.sh
 
-	local ubidev=$(nand_attach_ubi $CI_UBIPART)
-	local part=$(nand_find_volume $ubidev $volumename)
+	ubidev=$(nand_attach_ubi "$CI_UBIPART")
+	part=$(nand_find_volume "$ubidev" "$mtdname")
+	mac=$(grep 'option macaddr' "/dev/$part")
 
-	cat "/dev/$part" | sed -n 's/^\s*option macaddr\s*'"'"'\?\([0-9A-F:]\+\)'"'"'\?/\1/Ip'
+	macaddr_canonicalize "${mac//option macaddr/}"
 }
 
 mtd_get_mac_text() {
@@ -228,7 +229,7 @@ macaddr_add() {
 macaddr_generate_from_mmc_cid() {
 	local mmc_dev="$1"
 
-	local sd_hash=$(sha256sum /sys/class/block/$mmc_dev/device/cid)
+	local sd_hash=$(sha256sum "/sys/class/block/$mmc_dev/device/cid")
 
 	macaddr_unsetbit_mc $(macaddr_setbit_la "${sd_hash%% *}")
 }
