@@ -27,6 +27,29 @@ PKG_BUILD_DEPENDS:=gettext-full/host
 PKG_BUILD_PARALLEL:=0
 HOST_BUILD_PARALLEL:=0
 
+PKG_SUBDIRS:= \
+	$$$$(foreach dir, \
+		gnulib-lib \
+		$$$$(if $$$$(wildcard ../libtextstyle/gnulib-local),,gnulib-local) \
+		intl \
+		intl-csharp \
+		intl-java \
+		its \
+		lib \
+		$$$$(SUBDIR_libasprintf) \
+		libgettextpo \
+		libgrep \
+		libtextstyle \
+		$$$$(if $$$$(wildcard ../gnulib-local/m4 ../gettext-$(PKG_VERSION)/m4),,m4) \
+		misc \
+		po \
+		projects \
+		src \
+		styles \
+		gettext-runtime \
+		gettext-tools \
+	,$$$$(wildcard $$$$(dir)) )
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/host-build.mk
 
@@ -75,6 +98,14 @@ HOST_CONFIGURE_VARS += \
 
 HOST_CFLAGS += $(HOST_FPIC)
 
+define Host/Compile
+	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
+endef
+
+define Build/Compile
+	$(call Build/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
+endef
+
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib/libintl-full/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/libintl.h $(1)/usr/lib/libintl-full/include/
@@ -89,8 +120,12 @@ define Build/InstallDev
 endef
 
 define Host/Install
-	$(call Host/Install/Default)
+	$(call Host/Install/Default,SUBDIRS='$(PKG_SUBDIRS)')
 	$(LN) msgfmt $(STAGING_DIR_HOSTPKG)/bin/gmsgfmt
+endef
+
+define Build/Install
+	$(call Build/Install/Default,SUBDIRS='$(PKG_SUBDIRS)')
 endef
 
 define Package/libintl-full/install
