@@ -25,6 +25,8 @@ PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 PKG_BUILD_DEPENDS:=gettext-full/host
 PKG_BUILD_PARALLEL:=0
+
+HOST_BUILD_DEPENDS:=libxml2/host
 HOST_BUILD_PARALLEL:=0
 
 PKG_SUBDIRS:= \
@@ -88,7 +90,7 @@ HOST_CONFIGURE_ARGS += \
 	--disable-java \
 	--disable-openmp \
 	--without-emacs \
-	--without-libxml2-prefix
+	--with-libxml2-prefix=$(STAGING_DIR_HOSTPKG)
 
 HOST_CONFIGURE_VARS += \
 	EMACS="no" \
