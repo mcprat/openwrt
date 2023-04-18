@@ -30,18 +30,18 @@ HOST_BUILD_PARALLEL:=0
 
 PKG_SUBDIRS:= \
 	$$$$(foreach dir, \
-		gnulib-lib \
-		$$$$(if $$$$(wildcard ../libtextstyle/gnulib-local),,gnulib-local) \
 		intl \
 		intl-csharp \
 		intl-java \
 		its \
+		gnulib-lib \
+		gnulib-local \
 		lib \
 		$$$$(SUBDIR_libasprintf) \
 		libgettextpo \
 		libgrep \
 		libtextstyle \
-		$$$$(if $$$$(wildcard ../gnulib-local/m4 ../gettext-$(PKG_VERSION)/m4),,m4) \
+		m4 \
 		misc \
 		po \
 		projects \
@@ -50,6 +50,12 @@ PKG_SUBDIRS:= \
 		gettext-runtime \
 		gettext-tools \
 	,$$$$(wildcard $$$$(dir)) )
+
+PKG_MAKEFILES_FAKE:= \
+	gnulib-local/m4/Makefile \
+	libtextstyle/gnulib-local/Makefile \
+	libtextstyle/m4/Makefile \
+	m4/Makefile
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/host-build.mk
@@ -110,10 +116,12 @@ define Host/Bootstrap
 endef
 
 define Host/Compile
+	$(foreach makefile,$(PKG_MAKEFILES_FAKE),printf '%s\n%s\n' 'all:' 'install:' > $(HOST_BUILD_DIR)/$(makefile); )
 	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
 endef
 
 define Build/Compile
+	$(foreach makefile,$(PKG_MAKEFILES_FAKE),printf '%s\n%s\n' 'all:' 'install:' > $(PKG_BUILD_DIR)/$(makefile); )
 	$(call Build/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
 endef
 
@@ -141,12 +149,12 @@ define Build/InstallDev
 endef
 
 define Host/Install
-	$(call Host/Install/Default,SUBDIRS='$(PKG_SUBDIRS)')
+	$(call Host/Compile/Default,install SUBDIRS='$(PKG_SUBDIRS)')
 	$(LN) msgfmt $(STAGING_DIR_HOSTPKG)/bin/gmsgfmt
 endef
 
 define Build/Install
-	$(call Build/Install/Default,SUBDIRS='$(PKG_SUBDIRS)')
+	$(call Build/Install/Default,install SUBDIRS='$(PKG_SUBDIRS)')
 endef
 
 define Package/libintl-full/install
