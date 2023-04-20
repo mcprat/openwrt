@@ -26,7 +26,7 @@ AM_TOOL_PATHS:= \
 	AUTOPOINT=true \
 	GTKDOCIZE=true
 
-AM_TOOL_PATHS_FAKE:=$(subst = ,=,$(patsubst "%,"/usr/bin/env true",$(subst =,= ",$(AM_TOOL_PATHS))))
+AM_TOOL_PATHS_FAKE:=$(subst = ,=,$(patsubst "%,"$(TRUE)",$(subst =,= ",$(AM_TOOL_PATHS))))
 
 # 1: build dir
 # 2: remove files
