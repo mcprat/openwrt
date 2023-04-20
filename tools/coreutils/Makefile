@@ -52,6 +52,7 @@ endef
 
 define Host/Configure
 	$(if $(QUILT),$(call Host/Bootstrap))
+	-$(CP) $(HOST_BUILD_DIR)/lib/time.in.h~ $(HOST_BUILD_DIR)/lib/time.in.h # @GNULIB_TIME@ not defined
 	$(call Host/Configure/Default)
 endef
 
