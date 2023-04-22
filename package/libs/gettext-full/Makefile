@@ -116,16 +116,6 @@ define Host/Bootstrap
 	)
 endef
 
-define Host/Compile
-	$(foreach makefile,$(PKG_MAKEFILES_FAKE),printf '%s\n%s\n' 'all:' 'install:' > $(HOST_BUILD_DIR)/$(makefile); )
-	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
-endef
-
-define Build/Compile
-	$(foreach makefile,$(PKG_MAKEFILES_FAKE),printf '%s\n%s\n' 'all:' 'install:' > $(PKG_BUILD_DIR)/$(makefile); )
-	$(call Build/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
-endef
-
 define Host/Prepare
 	$(call Host/Prepare/Default)
 	$(if $(QUILT),,$(call Host/Bootstrap))
@@ -134,6 +124,16 @@ endef
 define Host/Configure
 	$(if $(QUILT),$(call Host/Bootstrap))
 	$(call Host/Configure/Default)
+endef
+
+define Host/Compile
+	$(foreach makefile,$(PKG_MAKEFILES_FAKE),printf '%s\n%s\n' 'all:' 'install:' > $(HOST_BUILD_DIR)/$(makefile); )
+	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
+endef
+
+define Build/Compile
+	$(foreach makefile,$(PKG_MAKEFILES_FAKE),printf '%s\n%s\n' 'all:' 'install:' > $(PKG_BUILD_DIR)/$(makefile); )
+	$(call Build/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
 endef
 
 define Build/InstallDev
