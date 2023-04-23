@@ -131,6 +131,24 @@ define Host/Compile
 	$(call Host/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
 endef
 
+define Build/Bootstrap
+	( \
+		cd $(HOST_BUILD_DIR); \
+		$(AM_TOOL_PATHS) \
+		./autogen.sh \
+	)
+endef
+
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	$(if $(QUILT),,$(call Build/Bootstrap))
+endef
+
+define Build/Configure
+	$(if $(QUILT),$(call Build/Bootstrap))
+	$(call Build/Configure/Default)
+endef
+
 define Build/Compile
 	$(foreach makefile,$(PKG_MAKEFILES_FAKE),printf '%s\n%s\n' 'all:' 'install:' > $(PKG_BUILD_DIR)/$(makefile); )
 	$(call Build/Compile/Default,SUBDIRS='$(PKG_SUBDIRS)')
