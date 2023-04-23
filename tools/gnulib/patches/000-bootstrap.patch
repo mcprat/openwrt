@@ -10,7 +10,7 @@
        # If not found, run with diagnostics as one may be
        # presented with env variables to set to find the right version
 -      ($2 --version </dev/null)
-+      ($2 $3 $4--version </dev/null)
++      ($2 $3 $4 --version </dev/null)
      fi
    else
 -    ($1 --version </dev/null) >/dev/null 2>&1
@@ -27,23 +27,22 @@
  
    $app --version >/dev/null 2>&1 || { $app --version; return 1; }
  
-@@ -367,14 +367,14 @@ check_versions() {
+@@ -366,13 +366,13 @@ check_versions() {
+     if [ "$req_ver" = "-" ]; then
        # Merely require app to exist; not all prereq apps are well-behaved
        # so we have to rely on $? rather than get_version.
-       if ! check_exists --verbose $app; then
--        warn_ "Error: '$app' not found"
-+        warn_ "Error: '$app' not found 1"
+-      if ! check_exists --verbose $app; then
++      if ! check_exists --verbose "$app"; then
+         warn_ "Error: '$app' not found"
          ret=1
        fi
      else
        # Require app to produce a new enough version string.
-       inst_ver=$(get_version $app)
+-      inst_ver=$(get_version $app)
++      inst_ver=$(get_version "$app")
        if [ ! "$inst_ver" ]; then
--        warn_ "Error: '$app' not found"
-+        warn_ "Error: '$app' not found 2"
+         warn_ "Error: '$app' not found"
          ret=1
-       else
-         latest_ver=$(sort_ver $req_ver $inst_ver | cut -d' ' -f2)
 @@ -1135,7 +1135,7 @@ autogen()
    # two just-pre-run programs.
  
