@@ -133,7 +133,7 @@ endef
 
 define Build/Bootstrap
 	( \
-		cd $(HOST_BUILD_DIR); \
+		cd $(PKG_BUILD_DIR); \
 		$(AM_TOOL_PATHS) \
 		./autogen.sh \
 	)
