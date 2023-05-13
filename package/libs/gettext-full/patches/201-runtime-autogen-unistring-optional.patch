@@ -1,0 +1,10 @@
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -78,6 +78,7 @@ if ! $skip_gnulib; then
+     getopt-gnu
+     gettext-h
+     havelib
++    libunistring-optional
+     memmove
+     noreturn
+     progname
