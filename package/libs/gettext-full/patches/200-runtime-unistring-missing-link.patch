@@ -1,0 +1,11 @@
+--- a/gettext-runtime/src/Makefile.am
++++ b/gettext-runtime/src/Makefile.am
+@@ -40,7 +40,7 @@ envsubst_SOURCES = envsubst.c
+ 
+ # Link dependencies.
+ # Need @LTLIBICONV@ because striconv.c uses iconv().
+-LDADD = ../gnulib-lib/libgrt.a @LTLIBINTL@ @LTLIBICONV@ $(WOE32_LDADD)
++LDADD = ../gnulib-lib/libgrt.a $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ $(WOE32_LDADD)
+ 
+ # Specify installation directory, for --enable-relocatable.
+ gettext_CFLAGS = -DINSTALLDIR=\"$(bindir)\"
