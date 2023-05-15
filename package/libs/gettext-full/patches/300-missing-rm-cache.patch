@@ -1,0 +1,11 @@
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -506,7 +506,7 @@ aclocal -I m4 \
+   && autoconf \
+   && touch ChangeLog \
+   && automake --add-missing --copy \
+-  && rm -rf autom4te.cache gettext-runtime/autom4te.cache gettext-tools/autom4te.cache \
++  && rm -rf autom4te.cache libtextstyle/autom4te.cache gettext-runtime/autom4te.cache gettext-tools/autom4te.cache \
+   || exit $?
+ 
+ echo "$0: done.  Now you can run './configure'."
