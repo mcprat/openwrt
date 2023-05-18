@@ -95,7 +95,6 @@ prereq: $(target/stamp-prereq) tmp/.prereq_packages
 		echo 'ERROR: Missing site config for architecture "$(ARCH)" !'; \
 		echo '       The missing file will cause configure scripts to fail during compilation.'; \
 		echo '       Please provide a "$(INCLUDE_DIR)/site/$(ARCH)" file and restart the build.'; \
-		exit 1; \
 	fi
 
 $(BIN_DIR)/profiles.json: FORCE
