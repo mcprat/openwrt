@@ -121,6 +121,9 @@ endef
 define Host/Prepare
 	$(call Host/Prepare/Default)
 	$(if $(QUILT),,$(call Host/Bootstrap))
+	$$(foreach v, $$(filter-out CONFIG_% ext dl_% Package/% Require BuildIPKGVariable Build/Patch/Default FixupReverseDependencies Quilt/Template HostBuild Host/Patch/Default DefaultTargets HostHost/Autoclean Quilt/RefreshDir Download/default SetupHostCommand gen_sha256sum BuildTarget/% TestHostCommand Quilt/Refresh/Kernel check_download_integrity Build/Quilt Kernel/Patch/Default rdep HostBuild/Core Download RequireCommand RequireHeader RequireCHeader PatchDir/Quilt Host/Quilt Quilt/Refresh/Host Download/Defaults Build/Autoclean FixupDependencies Quilt/Refresh/Package BuildPackage Build/CoreTargets CleanStaging, $(.VARIABLES)), \
+		$$(info $$(v) = $$($$(v))) \
+	)
 endef
 
 define Host/Configure
@@ -144,6 +147,9 @@ endef
 define Build/Prepare
 	$(call Build/Prepare/Default)
 	$(if $(QUILT),,$(call Build/Bootstrap))
+	$$(foreach v, $$(filter-out CONFIG_% ext dl_% Package/% Require BuildIPKGVariable Build/Patch/Default FixupReverseDependencies Quilt/Template HostBuild Host/Patch/Default DefaultTargets HostHost/Autoclean Quilt/RefreshDir Download/default SetupHostCommand gen_sha256sum BuildTarget/% TestHostCommand Quilt/Refresh/Kernel check_download_integrity Build/Quilt Kernel/Patch/Default rdep HostBuild/Core Download RequireCommand RequireHeader RequireCHeader PatchDir/Quilt Host/Quilt Quilt/Refresh/Host Download/Defaults Build/Autoclean FixupDependencies Quilt/Refresh/Package BuildPackage Build/CoreTargets CleanStaging, $(.VARIABLES)), \
+		$$(info $$(v) = $$($$(v))) \
+	)
 endef
 
 define Build/Configure
