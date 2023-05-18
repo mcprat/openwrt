@@ -119,6 +119,11 @@ define Host/Bootstrap
 endef
 
 define Host/Prepare
+	$$(warning BEGIN ENV)
+	$(foreach v, $(filter-out Package/%, $(.VARIABLES)), \
+		$$(info $(v) = $$($(v))) \
+	)
+	$$(warning END ENV)
 	$(call Host/Prepare/Default)
 	$(if $(QUILT),,$(call Host/Bootstrap))
 endef
