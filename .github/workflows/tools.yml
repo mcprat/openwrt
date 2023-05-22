@@ -118,12 +118,12 @@ jobs:
         run: |
           cd "$WORKPATH"
           pwd
-          make defconfig
+          make defconfig V=sc
 
       - name: Build tools
         run: |
           cd "$WORKPATH"
-          make -j$(nproc) BUILD_LOG=1 || ret=$? .github/workflows/scripts/show_build_failures.sh
+          make -j$(nproc) V=sc BUILD_LOG=1 || ret=$? .github/workflows/scripts/show_build_failures.sh
 
       - name: Move logs to GITHUB_WORKSPACE
         if: always()
