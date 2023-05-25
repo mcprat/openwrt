@@ -27,9 +27,9 @@ define Require
 
     prereq-$(1): $(if $(PREREQ_PREV),prereq-$(PREREQ_PREV)) FORCE
 		printf "Checking '$(1)'... "
-		if $(NO_TRACE_MAKE) -f $(firstword $(MAKEFILE_LIST)) check-$(1); then \
+		if $(NO_TRACE_MAKE) -f $(firstword $(MAKEFILE_LIST)) check-$(1) PATH="$(ORIG_PATH)"; then \
 			echo 'ok.'; \
-		elif $(NO_TRACE_MAKE) -f $(firstword $(MAKEFILE_LIST)) check-$(1); then \
+		elif $(NO_TRACE_MAKE) -f $(firstword $(MAKEFILE_LIST)) check-$(1) PATH="$(ORIG_PATH)"; then \
 			echo 'updated.'; \
 		else \
 			echo 'failed.'; \
@@ -102,8 +102,7 @@ define SetupHostCommand
 	           $(call QuoteHostCommand,$(9)) $(call QuoteHostCommand,$(10)) \
 	           $(call QuoteHostCommand,$(11)) $(call QuoteHostCommand,$(12)); do \
 		if [ -n "$$$$$$$$cmd" ]; then \
-			bin="$$$$$$$$(PATH="$(subst $(space),:,$(filter-out $(STAGING_DIR_HOST)/%,$(subst :,$(space),$(PATH))))" \
-				command -v "$$$$$$$${cmd%% *}")"; \
+			bin="$$$$$$$$(command -v "$$$$$$$${cmd%% *}")"; \
 			echo ------ path ------; \
 			echo $(subst $(space),:,$(filter-out $(STAGING_DIR_HOST)/%,$(subst :,$(space),$(PATH)))); \
 			echo ------ begin which install ------; \
