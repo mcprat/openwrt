@@ -1,0 +1,79 @@
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -424,6 +424,8 @@ fi
+ # Generate configure script in each subdirectories.
+ dir0=`pwd`
+ 
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
+ echo "$0: generating configure in gettext-runtime/libasprintf..."
+ cd gettext-runtime/libasprintf
+ aclocal -I ../../m4 -I ../m4 -I gnulib-m4 \
+@@ -435,17 +437,20 @@ aclocal -I ../../m4 -I ../m4 -I gnulib-m
+   || exit $?
+ cd "$dir0"
+ 
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
+ echo "$0: generating configure in gettext-runtime..."
+ cd gettext-runtime
+-aclocal -I m4 -I ../m4 -I gnulib-m4 \
+-  && autoconf \
+-  && autoheader && touch config.h.in \
++aclocal --verbose -I m4 -I ../m4 -I gnulib-m4 \
++  && autoconf --verbose \
++  && autoheader --verbose && touch config.h.in \
+   && touch ChangeLog intl/ChangeLog \
+-  && automake --add-missing --copy \
+-  && rm -rf autom4te.cache \
++  && automake --verbose --add-missing --copy \
+   || exit $?
+ cd "$dir0"
+ 
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
+ echo "$0: generating files in libtextstyle..."
+ cd libtextstyle
+ (if ! $skip_gnulib; then export GNULIB_SRCDIR; fi
+@@ -453,6 +458,8 @@ cd libtextstyle
+ ) || exit $?
+ cd "$dir0"
+ 
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
+ echo "$0: generating configure in gettext-tools/examples..."
+ cd gettext-tools/examples
+ aclocal -I ../../gettext-runtime/m4 -I ../../m4 \
+@@ -463,6 +470,8 @@ aclocal -I ../../gettext-runtime/m4 -I .
+   || exit $?
+ cd "$dir0"
+ 
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
+ echo "$0: copying common files from gettext-runtime to gettext-tools..."
+ cp -p gettext-runtime/ABOUT-NLS gettext-tools/ABOUT-NLS
+ cp -p gettext-runtime/po/Makefile.in.in gettext-tools/po/Makefile.in.in
+@@ -487,6 +496,8 @@ for file in po.m4; do
+   fi
+ done
+ 
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
+ echo "$0: generating configure in gettext-tools..."
+ mkdir -p gettext-tools/intl
+ cp -p gettext-runtime/intl/Makefile.am gettext-tools/intl/Makefile.am
+@@ -501,6 +512,8 @@ aclocal -I m4 -I ../gettext-runtime/m4 -
+   || exit $?
+ cd "$dir0"
+ 
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
+ aclocal -I m4 \
+   && autoconf \
+   && touch ChangeLog \
+@@ -509,3 +522,5 @@ aclocal -I m4 \
+   || exit $?
+ 
+ echo "$0: done.  Now you can run './configure'."
++echo "configure checksum"
++sha256sum "$dir0/gettext-runtime/configure"
