@@ -150,7 +150,7 @@ else
 endif
 
 ifneq ($(CONFIG_CCACHE)$(CONFIG_SDK),)
-$(foreach tool, $(filter-out zstd zlib xz pkgconf patch ninja meson libressl expat cmake,$(tools-y)), $(eval $(curdir)/$(tool)/compile += $(curdir)/ccache/compile))
+$(foreach tool, $(filter-out zstd zlib xz pkgconf patch ninja missing-macros meson m4 lzma libtool libressl gnulib expat e2fsprogs cmake automake autoconf,$(tools-y)), $(eval $(curdir)/$(tool)/compile += $(curdir)/ccache/compile))
 tools-y += ccache
 $(curdir)/ccache/compile := $(curdir)/cmake/compile
 endif
