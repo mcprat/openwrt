@@ -10,7 +10,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
 
 --- a/lib/uuid/gen_uuid.c
 +++ b/lib/uuid/gen_uuid.c
-@@ -601,12 +601,13 @@ fail:
+@@ -575,12 +575,13 @@ fail:
  #pragma GCC diagnostic pop
  #endif
  
@@ -25,7 +25,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
  
  	if (!has_init) {
  		if (get_node_id(node_id) <= 0) {
-@@ -620,12 +621,13 @@ void __uuid_generate_time(uuid_t out, in
+@@ -594,12 +595,13 @@ void __uuid_generate_time(uuid_t out, in
  		}
  		has_init = 1;
  	}

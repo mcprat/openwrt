@@ -50,7 +50,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
  				printf(_("Generated %d UUID's:\n"), num);
 --- a/lib/uuid/gen_uuid.c
 +++ b/lib/uuid/gen_uuid.c
-@@ -601,7 +601,7 @@ fail:
+@@ -575,7 +575,7 @@ fail:
  #pragma GCC diagnostic pop
  #endif
  
@@ -59,7 +59,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
  {
  	static unsigned char node_id[6];
  	static int has_init = 0;
-@@ -668,11 +668,11 @@ void uuid_generate_time(uuid_t out)
+@@ -642,11 +642,11 @@ void uuid_generate_time(uuid_t out)
  		return;
  #endif
  
@@ -73,7 +73,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
  {
  	uuid_t	buf;
  	struct uuid uu;
-@@ -700,7 +700,7 @@ void uuid_generate_random(uuid_t out)
+@@ -674,7 +674,7 @@ void uuid_generate_random(uuid_t out)
  	int	num = 1;
  	/* No real reason to use the daemon for random uuid's -- yet */
  

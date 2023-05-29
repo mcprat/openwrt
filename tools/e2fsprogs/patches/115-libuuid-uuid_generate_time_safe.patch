@@ -21,7 +21,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
 
 --- a/lib/uuid/gen_uuid.c
 +++ b/lib/uuid/gen_uuid.c
-@@ -630,7 +630,15 @@ int __uuid_generate_time(uuid_t out, int
+@@ -604,7 +604,15 @@ int __uuid_generate_time(uuid_t out, int
  	return ret;
  }
  
@@ -38,7 +38,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
  {
  #ifdef TLS
  	THREAD_LOCAL int		num = 0;
-@@ -650,7 +658,7 @@ void uuid_generate_time(uuid_t out)
+@@ -624,7 +632,7 @@ void uuid_generate_time(uuid_t out)
  			last_time = time(0);
  			uuid_unpack(out, &uu);
  			num--;
@@ -47,7 +47,7 @@ Signed-off-by: Petr Uzel <petr.uzel@suse.cz>
  		}
  		num = 0;
  	}
-@@ -663,14 +671,30 @@ void uuid_generate_time(uuid_t out)
+@@ -637,14 +645,30 @@ void uuid_generate_time(uuid_t out)
  		}
  		num--;
  		uuid_pack(&uu, out);
