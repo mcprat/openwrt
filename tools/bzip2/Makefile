@@ -42,8 +42,8 @@ define Host/Configure
 endef
 
 define Host/Uninstall
-	$(call Host/Compile/Default,uninstall)
-	$(call Host/Compile/Default,clean)
+	-$(call Host/Compile/Default,uninstall)
+	-$(call Host/Compile/Default,clean)
 endef
 
 define Host/Clean
