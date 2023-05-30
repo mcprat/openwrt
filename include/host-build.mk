@@ -26,6 +26,7 @@ HOST_STAMP_CONFIGURED:=$(HOST_BUILD_DIR)/.configured
 HOST_STAMP_BUILT:=$(HOST_BUILD_DIR)/.built
 HOST_BUILD_PREFIX?=$(if $(IS_PACKAGE_BUILD),$(STAGING_DIR_HOSTPKG),$(STAGING_DIR_HOST))
 HOST_STAMP_INSTALLED:=$(HOST_BUILD_PREFIX)/stamp/.$(PKG_NAME)_installed
+HOST_STAMP_PROGRAMS:=$(foreach program,$(PKG_PROGRAMS),$(subst $(PKG_NAME),$(program),$(HOST_STAMP_INSTALLED)) )
 
 override MAKEFLAGS=
 
@@ -172,6 +173,7 @@ ifndef DUMP
 		mkdir -p $$(shell dirname $$@)
 		touch $(HOST_STAMP_BUILT)
 		touch $$@
+		-touch -r $$@ $(HOST_STAMP_PROGRAMS)
 
   $(call DefaultTargets,$(patsubst %,host-%,$(DEFAULT_SUBDIR_TARGETS)))
   ifndef STAMP_BUILT
@@ -195,7 +197,7 @@ ifndef DUMP
 
   host-clean: host-clean-build
 	$(call Host/Clean)
-	rm -rf $(HOST_STAMP_INSTALLED)
+	rm -rf $(HOST_STAMP_INSTALLED) $(HOST_STAMP_PROGRAMS)
 
     ifneq ($(CONFIG_AUTOREMOVE),)
       host-compile:
