@@ -16,20 +16,18 @@ PKG_HASH:=6885ff47b9cdb211de47d368c17853f406daaf98b148aaecdf10de29cc04b0b3
 
 HOST_BUILD_PARALLEL := 1
 
-BUILD_PROGRAMS = date readlink touch ln chown ginstall
+PKG_PROGRAMS:=date readlink touch ln chown ginstall
 
 include $(INCLUDE_DIR)/host-build.mk
 
 export GNULIB_SRCDIR:=$(HOST_GNULIB_SRCDIR)
 
-BUILD_BINS = $(patsubst %,src/%,$(BUILD_PROGRAMS))
-
 HOST_CONFIGURE_ARGS += \
-	 --enable-install-program=$(subst $(space),$(comma),$(strip $(BUILD_PROGRAMS)))
+	 --enable-install-program=$(subst $(space),$(comma),$(strip $(PKG_PROGRAMS)))
 
 HOST_MAKE_FLAGS += \
 	$(AM_TOOL_PATHS_FAKE) \
-	PROGRAMS="$(BUILD_BINS)" \
+	PROGRAMS="$(patsubst %,src/%,$(PKG_PROGRAMS))" \
 	LIBRARIES= MANS= SUBDIRS=.
 
 define Host/Bootstrap
@@ -58,7 +56,7 @@ endef
 
 define Host/Install
 	$(INSTALL_DIR) $(1)/bin
-	$(INSTALL_BIN) $(patsubst %,$(HOST_BUILD_DIR)/%,$(BUILD_BINS)) $(1)/bin/
+	$(INSTALL_BIN) $(patsubst %,$(HOST_BUILD_DIR)/src/%,$(PKG_PROGRAMS)) $(1)/bin/
 	ln -sf ginstall $(1)/bin/install
 endef
 
