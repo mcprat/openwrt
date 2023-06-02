@@ -172,8 +172,7 @@ ifndef DUMP
 		$(foreach hook,$(Hooks/HostInstall/Post),$(call $(hook))$(sep))
 		mkdir -p $$(shell dirname $$@)
 		touch $(HOST_STAMP_BUILT)
-		touch $$@
-		-touch -r $$@ $(HOST_STAMP_PROGRAMS)
+		touch $$@ $(HOST_STAMP_PROGRAMS)
 
   $(call DefaultTargets,$(patsubst %,host-%,$(DEFAULT_SUBDIR_TARGETS)))
   ifndef STAMP_BUILT
@@ -188,7 +187,7 @@ ifndef DUMP
 
   $(_host_target)host-prepare: $(HOST_STAMP_PREPARED)
   $(_host_target)host-configure: $(HOST_STAMP_CONFIGURED)
-  $(_host_target)host-compile: $(HOST_STAMP_BUILT) $(HOST_STAMP_INSTALLED)
+  $(_host_target)host-compile: $(HOST_STAMP_BUILT) $(HOST_STAMP_INSTALLED) $(HOST_STAMP_PROGRAMS)
   host-install: host-compile
 
   host-clean-build: FORCE
