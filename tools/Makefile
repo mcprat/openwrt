@@ -134,10 +134,10 @@ $(curdir)/zstd/compile := $(curdir)/meson/compile
 
 # downloads that use scripts/dl_github_archive.py
 ifneq ($(CONFIG_BUILD_ALL_HOST_TOOLS)$(BUILD_PYTHON),)
-$(curdir)/b43-tools/compile += $(curdir)/python3/compile
-$(curdir)/cbootimage-configs/compile := $(curdir)/python3/compile
-$(curdir)/kernel2minor/compile := $(curdir)/python3/compile
-$(curdir)/sdimage/compile := $(curdir)/python3/compile
+  $(curdir)/b43-tools/compile += $(curdir)/python3/compile
+  $(curdir)/cbootimage-configs/compile := $(curdir)/python3/compile
+  $(curdir)/kernel2minor/compile := $(curdir)/python3/compile
+  $(curdir)/sdimage/compile := $(curdir)/python3/compile
 endif
 
 ifneq ($(HOST_OS),Linux)
