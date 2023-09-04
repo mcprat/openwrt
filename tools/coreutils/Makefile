@@ -8,11 +8,11 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=coreutils
 PKG_CPE_ID:=cpe:/a:gnu:coreutils
-PKG_VERSION:=9.3
+PKG_VERSION:=9.4
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=@GNU/coreutils
-PKG_HASH:=adbcfcfe899235b71e8768dcf07cd532520b7f54f9a8064843f8d199a904bbaa
+PKG_HASH:=ea613a4cf44612326e917201bbbcdfbd301de21ffc3b59b6e5c07e040b275e52
 
 HOST_BUILD_PARALLEL := 1
 
@@ -23,6 +23,7 @@ include $(INCLUDE_DIR)/host-build.mk
 export GNULIB_SRCDIR:=$(HOST_GNULIB_SRCDIR)
 
 HOST_CONFIGURE_ARGS += \
+	--disable-year2038 \
 	 --enable-install-program=$(subst $(space),$(comma),$(strip $(PKG_PROGRAMS)))
 
 HOST_MAKE_FLAGS += \
@@ -35,7 +36,6 @@ define Host/Bootstrap
 		cd $(HOST_BUILD_DIR); \
 		$(AM_TOOL_PATHS_FAKE) \
 		./bootstrap \
-			--bootstrap-sync \
 			--force \
 			--no-git \
 			--skip-po \
