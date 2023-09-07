@@ -1,6 +1,6 @@
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -1049,68 +1049,6 @@ static void device_links_missing_supplie
+@@ -1057,82 +1057,6 @@ static bool dev_is_best_effort(struct de
  }
  
  /**
@@ -22,7 +22,7 @@
 -int device_links_check_suppliers(struct device *dev)
 -{
 -	struct device_link *link;
--	int ret = 0;
+-	int ret = 0, fwnode_ret = 0;
 -	struct fwnode_handle *sup_fw;
 -
 -	/*
@@ -35,12 +35,17 @@
 -		sup_fw = list_first_entry(&dev->fwnode->suppliers,
 -					  struct fwnode_link,
 -					  c_hook)->supplier;
--		dev_err_probe(dev, -EPROBE_DEFER, "wait for supplier %pfwP\n",
--			      sup_fw);
--		mutex_unlock(&fwnode_link_lock);
--		return -EPROBE_DEFER;
+-		if (!dev_is_best_effort(dev)) {
+-			fwnode_ret = -EPROBE_DEFER;
+-			dev_err_probe(dev, -EPROBE_DEFER,
+-				    "wait for supplier %pfwP\n", sup_fw);
+-		} else {
+-			fwnode_ret = -EAGAIN;
+-		}
 -	}
 -	mutex_unlock(&fwnode_link_lock);
+-	if (fwnode_ret == -EPROBE_DEFER)
+-		return fwnode_ret;
 -
 -	device_links_write_lock();
 -
@@ -50,6 +55,14 @@
 -
 -		if (link->status != DL_STATE_AVAILABLE &&
 -		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
+-
+-			if (dev_is_best_effort(dev) &&
+-			    link->flags & DL_FLAG_INFERRED &&
+-			    !link->supplier->can_match) {
+-				ret = -EAGAIN;
+-				continue;
+-			}
+-
 -			device_links_missing_supplier(dev);
 -			dev_err_probe(dev, -EPROBE_DEFER,
 -				      "supplier %s not ready\n",
@@ -62,14 +75,15 @@
 -	dev->links.status = DL_DEV_PROBING;
 -
 -	device_links_write_unlock();
--	return ret;
+-
+-	return ret ? ret : fwnode_ret;
 -}
 -
 -/**
   * __device_links_queue_sync_state - Queue a device for sync_state() callback
   * @dev: Device to call sync_state() on
   * @list: List head to queue the @dev on
-@@ -2127,6 +2065,80 @@ static void fw_devlink_link_device(struc
+@@ -2221,6 +2145,93 @@ static void fw_devlink_link_device(struc
  	mutex_unlock(&fwnode_link_lock);
  }
  
@@ -94,7 +108,7 @@
 +int device_links_check_suppliers(struct device *dev)
 +{
 +	struct device_link *link;
-+	int ret = 0;
++	int ret = 0, fwnode_ret = 0;
 +	struct fwnode_handle *sup_fw;
 +
 +	/*
@@ -107,12 +121,17 @@
 +		sup_fw = list_first_entry(&dev->fwnode->suppliers,
 +					  struct fwnode_link,
 +					  c_hook)->supplier;
-+		dev_err_probe(dev, -EPROBE_DEFER, "wait for supplier %pfwP\n",
-+			      sup_fw);
-+		mutex_unlock(&fwnode_link_lock);
-+		return -EPROBE_DEFER;
++		if (!dev_is_best_effort(dev)) {
++			fwnode_ret = -EPROBE_DEFER;
++			dev_err_probe(dev, -EPROBE_DEFER,
++				    "wait for supplier %pfwP\n", sup_fw);
++		} else {
++			fwnode_ret = -EAGAIN;
++		}
 +	}
 +	mutex_unlock(&fwnode_link_lock);
++	if (fwnode_ret == -EPROBE_DEFER)
++		return fwnode_ret;
 +
 +	device_links_write_lock();
 +
@@ -122,10 +141,15 @@
 +
 +		if (link->status != DL_STATE_AVAILABLE &&
 +		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
-+			dev_err_probe(dev, -EPROBE_DEFER,
-+				      "supplier %s not ready\n",
-+				      dev_name(link->supplier));
-+			/* supplier may be child firmware node of device */
++
++			if (dev_is_best_effort(dev) &&
++			    link->flags & DL_FLAG_INFERRED &&
++			    !link->supplier->can_match) {
++				ret = -EAGAIN;
++				continue;
++			}
++
++			/* supplier may be a child firmware node of a device, if so, retry linking */
 +			if (link->supplier->fwnode->flags & FWNODE_FLAG_PARENT_IS_DEV) {
 +				link->supplier->fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
 +				dev->fwnode->flags &= ~(FWNODE_FLAG_LINKS_ADDED);
@@ -136,6 +160,10 @@
 +			} else {
 +				device_links_missing_supplier(dev);
 +			}
++
++			dev_err_probe(dev, -EPROBE_DEFER,
++				      "supplier %s not ready\n",
++				      dev_name(link->supplier));
 +			ret = -EPROBE_DEFER;
 +			break;
 +		}
@@ -144,7 +172,8 @@
 +	dev->links.status = DL_DEV_PROBING;
 +
 +	device_links_write_unlock();
-+	return ret;
++
++	return ret ? ret : fwnode_ret;
 +}
 +
  /* Device links support end. */
