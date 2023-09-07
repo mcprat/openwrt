@@ -1,6 +1,8 @@
-Date:   Tue,  9 Aug 2022 23:00:31 -0700
-Subject: [PATCH v1 2/9] driver core: fw_devlink: Improve check for fwnode with no device/driver
-From:   Saravana Kannan <saravanak@google.com>
+From 411c0d58ca6faa9bc4b9f5382118a31c7bb92a6f Mon Sep 17 00:00:00 2001
+From: Saravana Kannan <saravanak@google.com>
+Date: Mon, 6 Feb 2023 17:41:54 -0800
+Subject: [PATCH] driver core: fw_devlink: Improve check for fwnode with no
+ device/driver
 
 fw_devlink shouldn't defer the probe of a device to wait on a supplier
 that'll never have a struct device or will never be probed by a driver.
@@ -9,13 +11,20 @@ check its ancestors. We need to check the ancestors too because if the
 ancestor will never probe, then the supplier will never probe either.
 
 Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Colin Foster <colin.foster@in-advantage.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcom/sm7225-fairphone-fp4
+Link: https://lore.kernel.org/r/20230207014207.1678715-3-saravanak@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/base/core.c | 40 ++++++++++++++++++++++++++++++++++++++--
  1 file changed, 38 insertions(+), 2 deletions(-)
 
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -1766,6 +1766,35 @@ static int fw_devlink_relax_cycle(struct
+@@ -1867,6 +1867,35 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
  	return ret;
  }
  
@@ -51,7 +60,7 @@ Signed-off-by: Saravana Kannan <saravanak@google.com>
  /**
   * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
   * @con: consumer device for the device link
-@@ -1843,9 +1872,16 @@ static int fw_devlink_create_devlink(str
+@@ -1948,9 +1977,16 @@ static int fw_devlink_create_devlink(struct device *con,
  		goto out;
  	}
  
