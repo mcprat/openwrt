@@ -1,6 +1,6 @@
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -98,12 +98,41 @@ static int __fwnode_link_add(struct fwno
+@@ -102,13 +102,43 @@ static int __fwnode_link_add(struct fwno
  	return 0;
  }
  
@@ -30,20 +30,22 @@
 +
  int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
  {
- 	int ret = 0;
+ 	int ret;
  
  	mutex_lock(&fwnode_link_lock);
--	ret = __fwnode_link_add(con, sup);
+-	ret = __fwnode_link_add(con, sup, 0);
 +
 +	if (sup->flags & FWNODE_FLAG_NOT_DEVICE)
 +		ret = __fwnode_link_to_parents(con, sup, false);
 +	else
-+		ret = __fwnode_link_add(con, sup);
++		ret = __fwnode_link_add(con, sup, 0);
 +
  	mutex_unlock(&fwnode_link_lock);
++
  	return ret;
  }
-@@ -207,22 +236,26 @@ static void __fwnode_links_move_consumer
+ 
+@@ -224,22 +254,26 @@ static void __fwnode_links_move_consumer
   * @new_sup: fwnode of new supplier
   *
   * If the @fwnode has a corresponding struct device and the device supports
@@ -75,7 +77,7 @@
  
  	fwnode_for_each_available_child_node(fwnode, child)
  		__fw_devlink_pickup_dangling_consumers(child, new_sup);
-@@ -1821,6 +1854,9 @@ static int fw_devlink_create_devlink(str
+@@ -1940,6 +1974,9 @@ static int fw_devlink_create_devlink(str
  	struct device *sup_dev;
  	int ret = 0;
  
@@ -99,19 +101,21 @@
  		of_node_put(sup_np);
 --- a/include/linux/fwnode.h
 +++ b/include/linux/fwnode.h
-@@ -26,11 +26,15 @@ struct device;
-  *			     driver needs its child devices to be bound with
-  *			     their respective drivers as soon as they are
-  *			     added.
-+ * PARENT_IS_DEV: The fwnode is a child of a fwnode that got populated as a
-+ *		  struct device, which is likely more suitable for device links
-+ *		  than the fwnode child which may never have a struct device
+@@ -29,6 +29,9 @@ struct device;
+  * BEST_EFFORT: The fwnode/device needs to probe early and might be missing some
+  *		suppliers. Only enforce ordering with suppliers that have
+  *		drivers.
++ * PARENT_IS_DEV: The fwnode is a child of a fwnode that is or will be populated as a
++ *		  struct device, which is more suitable for device links
++ *		  than the fwnode child which may never have a struct device.
   */
  #define FWNODE_FLAG_LINKS_ADDED			BIT(0)
  #define FWNODE_FLAG_NOT_DEVICE			BIT(1)
- #define FWNODE_FLAG_INITIALIZED			BIT(2)
+@@ -36,6 +39,7 @@ struct device;
  #define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
-+#define FWNODE_FLAG_PARENT_IS_DEV		BIT(4)
+ #define FWNODE_FLAG_BEST_EFFORT			BIT(4)
+ #define FWNODE_FLAG_VISITED			BIT(5)
++#define FWNODE_FLAG_PARENT_IS_DEV		BIT(6)
  
  struct fwnode_handle {
  	struct fwnode_handle *secondary;
