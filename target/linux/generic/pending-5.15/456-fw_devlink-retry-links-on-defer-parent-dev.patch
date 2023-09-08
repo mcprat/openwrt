@@ -80,7 +80,7 @@
   * __device_links_queue_sync_state - Queue a device for sync_state() callback
   * @dev: Device to call sync_state() on
   * @list: List head to queue the @dev on
-@@ -2251,6 +2178,95 @@ static void fw_devlink_link_device(struc
+@@ -2251,6 +2178,90 @@ static void fw_devlink_link_device(struc
  	mutex_unlock(&fwnode_link_lock);
  }
  
@@ -90,9 +90,7 @@
 + *
 + * Check links from this device to any suppliers.  Walk the list of the device's
 + * links to suppliers and see if all of them are available.  If not, simply
-+ * return -EPROBE_DEFER. If a supplier fails to become available and is flagged
-+ * as having a parent device, retry all fwnode/device links to the consumer device,
-+ * which will be handled differently because of the flags.
++ * return -EPROBE_DEFER.
 + *
 + * We need to guarantee that the supplier will not go away after the check has
 + * been positive here.  It only can go away in __device_release_driver() and
@@ -113,15 +111,12 @@
 +	 * probe.
 +	 */
 +	mutex_lock(&fwnode_link_lock);
-+	if (dev->fwnode && !list_empty(&dev->fwnode->suppliers) &&
-+	    !fw_devlink_is_permissive()) {
-+		sup_fw = list_first_entry(&dev->fwnode->suppliers,
-+					  struct fwnode_link,
-+					  c_hook)->supplier;
++	sup_fw = fwnode_links_check_suppliers(dev->fwnode);
++	if (sup_fw) {
 +		if (!dev_is_best_effort(dev)) {
 +			fwnode_ret = -EPROBE_DEFER;
 +			dev_err_probe(dev, -EPROBE_DEFER,
-+				    "wait for supplier %pfwP\n", sup_fw);
++				    "wait for supplier %pfwf\n", sup_fw);
 +		} else {
 +			fwnode_ret = -EAGAIN;
 +		}

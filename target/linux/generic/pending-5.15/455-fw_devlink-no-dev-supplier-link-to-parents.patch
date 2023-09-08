@@ -38,7 +38,7 @@
 +	if (sup->flags & FWNODE_FLAG_NOT_DEVICE)
 +		ret = __fwnode_link_to_parents(con, sup, false);
 +	else
-+		ret = __fwnode_link_add(con, sup);
++		ret = __fwnode_link_add(con, sup, 0);
 +
  	mutex_unlock(&fwnode_link_lock);
 +
