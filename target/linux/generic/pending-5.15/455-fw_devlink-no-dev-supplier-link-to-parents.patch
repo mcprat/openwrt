@@ -1,6 +1,6 @@
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -102,13 +102,43 @@ static int __fwnode_link_add(struct fwno
+@@ -102,13 +102,44 @@ static int __fwnode_link_add(struct fwno
  	return 0;
  }
  
@@ -35,7 +35,8 @@
  	mutex_lock(&fwnode_link_lock);
 -	ret = __fwnode_link_add(con, sup, 0);
 +
-+	if (sup->flags & FWNODE_FLAG_NOT_DEVICE)
++	if ((sup->flags & FWNODE_FLAG_NOT_DEVICE) &&
++	    (sup->flags & FWNODE_FLAG_PARENT_IS_DEV))
 +		ret = __fwnode_link_to_parents(con, sup, false);
 +	else
 +		ret = __fwnode_link_add(con, sup, 0);
@@ -45,7 +46,7 @@
  	return ret;
  }
  
-@@ -224,22 +254,26 @@ static void __fwnode_links_move_consumer
+@@ -224,22 +255,26 @@ static void __fwnode_links_move_consumer
   * @new_sup: fwnode of new supplier
   *
   * If the @fwnode has a corresponding struct device and the device supports
@@ -69,24 +70,26 @@
  
 -	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
 -	__fwnode_links_move_consumers(fwnode, new_sup);
-+	fwnode->flags |= FWNODE_FLAG_PARENT_IS_DEV;
-+	new_sup->flags &= ~(FWNODE_FLAG_PARENT_IS_DEV);
-+
 +	if (fwnode->flags & FWNODE_FLAG_NOT_DEVICE)
 +		__fwnode_links_move_consumers(fwnode, new_sup);
++
++	fwnode->flags |= FWNODE_FLAG_PARENT_IS_DEV;
++	new_sup->flags &= ~(FWNODE_FLAG_PARENT_IS_DEV);
  
  	fwnode_for_each_available_child_node(fwnode, child)
  		__fw_devlink_pickup_dangling_consumers(child, new_sup);
-@@ -1940,6 +1974,9 @@ static int fw_devlink_create_devlink(str
- 	struct device *sup_dev;
- 	int ret = 0;
+@@ -1959,8 +1994,10 @@ static int fw_devlink_create_devlink(str
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
  
-+	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
+-	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
++	if (sup_handle->flags & FWNODE_FLAG_PARENT_IS_DEV)
+ 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
++	else if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
 +		return -EINVAL;
-+
- 	/*
- 	 * In some cases, a device P might also be a supplier to its child node
- 	 * C. However, this would defer the probe of C until the probe of P
+ 	else
+ 		sup_dev = get_dev_from_fwnode(sup_handle);
+ 
 --- a/drivers/of/property.c
 +++ b/drivers/of/property.c
 @@ -1130,7 +1130,8 @@ static int of_link_to_phandle(struct dev
