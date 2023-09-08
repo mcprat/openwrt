@@ -22,11 +22,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  include/linux/fwnode.h | 11 +++++++++-
  2 files changed, 50 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index ac19752422e0ed..6639f90cf30133 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -76,13 +76,15 @@ static bool fw_devlink_best_effort;
+@@ -74,13 +74,15 @@ static bool fw_devlink_best_effort;
   * are ignored and there is no reference counting.
   */
  static int __fwnode_link_add(struct fwnode_handle *con,
@@ -44,7 +42,7 @@ index ac19752422e0ed..6639f90cf30133 100644
  
  	link = kzalloc(sizeof(*link), GFP_KERNEL);
  	if (!link)
-@@ -92,6 +94,7 @@ static int __fwnode_link_add(struct fwnode_handle *con,
+@@ -90,6 +92,7 @@ static int __fwnode_link_add(struct fwno
  	INIT_LIST_HEAD(&link->s_hook);
  	link->consumer = con;
  	INIT_LIST_HEAD(&link->c_hook);
@@ -52,7 +50,7 @@ index ac19752422e0ed..6639f90cf30133 100644
  
  	list_add(&link->s_hook, &sup->consumers);
  	list_add(&link->c_hook, &con->suppliers);
-@@ -106,7 +109,7 @@ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
+@@ -104,7 +107,7 @@ int fwnode_link_add(struct fwnode_handle
  	int ret;
  
  	mutex_lock(&fwnode_link_lock);
@@ -61,11 +59,10 @@ index ac19752422e0ed..6639f90cf30133 100644
  	mutex_unlock(&fwnode_link_lock);
  	return ret;
  }
-@@ -126,6 +129,19 @@ static void __fwnode_link_del(struct fwnode_link *link)
- 	kfree(link);
+@@ -125,6 +128,19 @@ static void __fwnode_link_del(struct fwn
  }
  
-+/**
+ /**
 + * __fwnode_link_cycle - Mark a fwnode link as being part of a cycle.
 + * @link: the fwnode_link to be marked
 + *
@@ -78,10 +75,11 @@ index ac19752422e0ed..6639f90cf30133 100644
 +	link->flags |= FWLINK_FLAG_CYCLE;
 +}
 +
- /**
++/**
   * fwnode_links_purge_suppliers - Delete all supplier links of fwnode_handle.
   * @fwnode: fwnode whose supplier links need to be deleted
-@@ -199,7 +215,7 @@ static void __fwnode_links_move_consumers(struct fwnode_handle *from,
+  *
+@@ -197,7 +213,7 @@ static void __fwnode_links_move_consumer
  	struct fwnode_link *link, *tmp;
  
  	list_for_each_entry_safe(link, tmp, &from->consumers, s_hook) {
@@ -90,7 +88,7 @@ index ac19752422e0ed..6639f90cf30133 100644
  		__fwnode_link_del(link);
  	}
  }
-@@ -1041,6 +1057,21 @@ static bool dev_is_best_effort(struct device *dev)
+@@ -1022,6 +1038,21 @@ static bool dev_is_best_effort(struct de
  		(dev->fwnode && (dev->fwnode->flags & FWNODE_FLAG_BEST_EFFORT));
  }
  
@@ -112,7 +110,7 @@ index ac19752422e0ed..6639f90cf30133 100644
  /**
   * device_links_check_suppliers - Check presence of supplier drivers.
   * @dev: Consumer device.
-@@ -1068,11 +1099,8 @@ int device_links_check_suppliers(struct device *dev)
+@@ -1049,11 +1080,8 @@ int device_links_check_suppliers(struct
  	 * probe.
  	 */
  	mutex_lock(&fwnode_link_lock);
@@ -126,7 +124,7 @@ index ac19752422e0ed..6639f90cf30133 100644
  		if (!dev_is_best_effort(dev)) {
  			fwnode_ret = -EPROBE_DEFER;
  			dev_err_probe(dev, -EPROBE_DEFER,
-@@ -1261,7 +1289,9 @@ static ssize_t waiting_for_supplier_show(struct device *dev,
+@@ -1242,7 +1270,9 @@ static ssize_t waiting_for_supplier_show
  	bool val;
  
  	device_lock(dev);
@@ -137,11 +135,9 @@ index ac19752422e0ed..6639f90cf30133 100644
  	device_unlock(dev);
  	return sysfs_emit(buf, "%u\n", val);
  }
-diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
-index 89b9bdfca925c5..fdf2ee0285b7af 100644
 --- a/include/linux/fwnode.h
 +++ b/include/linux/fwnode.h
-@@ -18,7 +18,7 @@ struct fwnode_operations;
+@@ -17,7 +17,7 @@ struct fwnode_operations;
  struct device;
  
  /*
@@ -150,7 +146,7 @@ index 89b9bdfca925c5..fdf2ee0285b7af 100644
   *
   * LINKS_ADDED:	The fwnode has already be parsed to add fwnode links.
   * NOT_DEVICE:	The fwnode will never be populated as a struct device.
-@@ -36,6 +36,7 @@ struct device;
+@@ -35,6 +35,7 @@ struct device;
  #define FWNODE_FLAG_INITIALIZED			BIT(2)
  #define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
  #define FWNODE_FLAG_BEST_EFFORT			BIT(4)
@@ -158,7 +154,7 @@ index 89b9bdfca925c5..fdf2ee0285b7af 100644
  
  struct fwnode_handle {
  	struct fwnode_handle *secondary;
-@@ -46,11 +47,19 @@ struct fwnode_handle {
+@@ -45,11 +46,19 @@ struct fwnode_handle {
  	u8 flags;
  };
  

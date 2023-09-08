@@ -24,7 +24,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -1867,6 +1867,35 @@ static int fw_devlink_relax_cycle(struct device *con, void *sup)
+@@ -1855,6 +1855,35 @@ static int fw_devlink_relax_cycle(struct
  	return ret;
  }
  
@@ -60,7 +60,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  /**
   * fw_devlink_create_devlink - Create a device link from a consumer to fwnode
   * @con: consumer device for the device link
-@@ -1948,9 +1977,16 @@ static int fw_devlink_create_devlink(struct device *con,
+@@ -1936,9 +1965,16 @@ static int fw_devlink_create_devlink(str
  		goto out;
  	}
  

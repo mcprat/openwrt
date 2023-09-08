@@ -44,11 +44,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  include/linux/device/driver.h |   1 +
  4 files changed, 110 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/base/base.h b/drivers/base/base.h
-index ab71403d102fcf..b3a43a164dcd1d 100644
 --- a/drivers/base/base.h
 +++ b/drivers/base/base.h
-@@ -160,6 +160,7 @@ extern int devres_release_all(struct device *dev);
+@@ -160,6 +160,7 @@ extern int devres_release_all(struct dev
  extern void device_block_probing(void);
  extern void device_unblock_probing(void);
  extern void deferred_probe_extend_timeout(void);
@@ -56,11 +54,9 @@ index ab71403d102fcf..b3a43a164dcd1d 100644
  
  /* /sys/devices directory */
  extern struct kset *devices_kset;
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 7cd789c4985d40..61fdfe99b34823 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -54,6 +54,7 @@ static unsigned int defer_sync_state_count = 1;
+@@ -53,6 +53,7 @@ static unsigned int defer_sync_state_cou
  static DEFINE_MUTEX(fwnode_link_lock);
  static bool fw_devlink_is_permissive(void);
  static bool fw_devlink_drv_reg_done;
@@ -68,7 +64,7 @@ index 7cd789c4985d40..61fdfe99b34823 100644
  
  /**
   * fwnode_link_add - Create a link between two fwnode_handles.
-@@ -965,6 +966,11 @@ static void device_links_missing_supplier(struct device *dev)
+@@ -965,6 +966,11 @@ static void device_links_missing_supplie
  	}
  }
  
@@ -80,7 +76,7 @@ index 7cd789c4985d40..61fdfe99b34823 100644
  /**
   * device_links_check_suppliers - Check presence of supplier drivers.
   * @dev: Consumer device.
-@@ -984,7 +990,7 @@ static void device_links_missing_supplier(struct device *dev)
+@@ -984,7 +990,7 @@ static void device_links_missing_supplie
  int device_links_check_suppliers(struct device *dev)
  {
  	struct device_link *link;
@@ -89,7 +85,7 @@ index 7cd789c4985d40..61fdfe99b34823 100644
  	struct fwnode_handle *sup_fw;
  
  	/*
-@@ -997,12 +1003,17 @@ int device_links_check_suppliers(struct device *dev)
+@@ -997,12 +1003,17 @@ int device_links_check_suppliers(struct
  		sup_fw = list_first_entry(&dev->fwnode->suppliers,
  					  struct fwnode_link,
  					  c_hook)->supplier;
@@ -111,7 +107,7 @@ index 7cd789c4985d40..61fdfe99b34823 100644
  
  	device_links_write_lock();
  
-@@ -1012,6 +1023,14 @@ int device_links_check_suppliers(struct device *dev)
+@@ -1012,6 +1023,14 @@ int device_links_check_suppliers(struct
  
  		if (link->status != DL_STATE_AVAILABLE &&
  		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
@@ -126,7 +122,7 @@ index 7cd789c4985d40..61fdfe99b34823 100644
  			device_links_missing_supplier(dev);
  			dev_err_probe(dev, -EPROBE_DEFER,
  				      "supplier %s not ready\n",
-@@ -1024,7 +1043,8 @@ int device_links_check_suppliers(struct device *dev)
+@@ -1024,7 +1043,8 @@ int device_links_check_suppliers(struct
  	dev->links.status = DL_DEV_PROBING;
  
  	device_links_write_unlock();
@@ -136,7 +132,7 @@ index 7cd789c4985d40..61fdfe99b34823 100644
  }
  
  /**
-@@ -1289,6 +1309,18 @@ void device_links_driver_bound(struct device *dev)
+@@ -1289,6 +1309,18 @@ void device_links_driver_bound(struct de
  			 * save to drop the managed link completely.
  			 */
  			device_link_drop_managed(link);
@@ -218,11 +214,9 @@ index 7cd789c4985d40..61fdfe99b34823 100644
  static void fw_devlink_unblock_consumers(struct device *dev)
  {
  	struct device_link *link;
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 11b0fb6414d373..4a55fbb7e0da29 100644
 --- a/drivers/base/dd.c
 +++ b/drivers/base/dd.c
-@@ -172,7 +172,7 @@ static bool driver_deferred_probe_enable;
+@@ -171,7 +171,7 @@ static bool driver_deferred_probe_enable
   * changes in the midst of a probe, then deferred processing should be triggered
   * again.
   */
@@ -231,7 +225,7 @@ index 11b0fb6414d373..4a55fbb7e0da29 100644
  {
  	if (!driver_deferred_probe_enable)
  		return;
-@@ -580,7 +580,7 @@ static int really_probe(struct device *dev, struct device_driver *drv)
+@@ -560,7 +560,7 @@ static int really_probe(struct device *d
  {
  	bool test_remove = IS_ENABLED(CONFIG_DEBUG_TEST_DRIVER_REMOVE) &&
  			   !drv->suppress_bind_attrs;
@@ -240,7 +234,7 @@ index 11b0fb6414d373..4a55fbb7e0da29 100644
  
  	if (defer_all_probes) {
  		/*
-@@ -592,9 +592,9 @@ static int really_probe(struct device *dev, struct device_driver *drv)
+@@ -572,9 +572,9 @@ static int really_probe(struct device *d
  		return -EPROBE_DEFER;
  	}
  
@@ -253,11 +247,10 @@ index 11b0fb6414d373..4a55fbb7e0da29 100644
  
  	pr_debug("bus: '%s': %s: probing driver %s with device %s\n",
  		 drv->bus->name, __func__, drv->name, dev_name(dev));
-@@ -633,6 +633,15 @@ static int really_probe(struct device *dev, struct device_driver *drv)
- 
+@@ -614,6 +614,15 @@ re_probe:
  	ret = call_driver_probe(dev, drv);
  	if (ret) {
-+		/*
+ 		/*
 +		 * If fw_devlink_best_effort is active (denoted by -EAGAIN), the
 +		 * device might actually probe properly once some of its missing
 +		 * suppliers have probed. So, treat this as if the driver
@@ -266,14 +259,13 @@ index 11b0fb6414d373..4a55fbb7e0da29 100644
 +		if (link_ret == -EAGAIN)
 +			ret = -EPROBE_DEFER;
 +
- 		/*
++		/*
  		 * Return probe errors as positive values so that the callers
  		 * can distinguish them from other errors.
-diff --git a/include/linux/device/driver.h b/include/linux/device/driver.h
-index 700453017e1c72..2114d65b862fc6 100644
+ 		 */
 --- a/include/linux/device/driver.h
 +++ b/include/linux/device/driver.h
-@@ -129,6 +129,7 @@ extern struct device_driver *driver_find(const char *name,
+@@ -128,6 +128,7 @@ extern struct device_driver *driver_find
  					 struct bus_type *bus);
  extern int driver_probe_done(void);
  extern void wait_for_device_probe(void);

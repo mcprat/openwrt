@@ -16,11 +16,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  drivers/base/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 61fdfe99b34823..977b379a495b85 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -1613,7 +1613,7 @@ static int __init fw_devlink_setup(char *arg)
+@@ -1662,7 +1662,7 @@ static int __init fw_devlink_setup(char
  }
  early_param("fw_devlink", fw_devlink_setup);
  

@@ -26,11 +26,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  include/linux/fwnode.h | 4 ++++
  2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 839f64485a5553..ccdd5b4295dee6 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -968,7 +968,8 @@ static void device_links_missing_supplier(struct device *dev)
+@@ -968,7 +968,8 @@ static void device_links_missing_supplie
  
  static bool dev_is_best_effort(struct device *dev)
  {
@@ -40,11 +38,9 @@ index 839f64485a5553..ccdd5b4295dee6 100644
  }
  
  /**
-diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
-index 9a81c4410b9f9b..89b9bdfca925c5 100644
 --- a/include/linux/fwnode.h
 +++ b/include/linux/fwnode.h
-@@ -27,11 +27,15 @@ struct device;
+@@ -26,11 +26,15 @@ struct device;
   *			     driver needs its child devices to be bound with
   *			     their respective drivers as soon as they are
   *			     added.

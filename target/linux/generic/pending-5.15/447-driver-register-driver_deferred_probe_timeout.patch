@@ -56,11 +56,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  drivers/base/driver.c                         |  1 +
  4 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index c7513d01df8239..963dfe8e121da4 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -945,8 +945,10 @@
+@@ -931,8 +931,10 @@
  			[KNL] Debugging option to set a timeout in seconds for
  			deferred probe to give up waiting on dependencies to
  			probe. Only specific dependencies (subsystems or
@@ -73,11 +71,9 @@ index c7513d01df8239..963dfe8e121da4 100644
  			dump out devices still on the deferred probe list after
  			retrying.
  
-diff --git a/drivers/base/base.h b/drivers/base/base.h
-index 2882af26392ab0..ab71403d102fcf 100644
 --- a/drivers/base/base.h
 +++ b/drivers/base/base.h
-@@ -159,6 +159,7 @@ extern char *make_class_name(const char *name, struct kobject *kobj);
+@@ -159,6 +159,7 @@ extern char *make_class_name(const char
  extern int devres_release_all(struct device *dev);
  extern void device_block_probing(void);
  extern void device_unblock_probing(void);
@@ -85,11 +81,9 @@ index 2882af26392ab0..ab71403d102fcf 100644
  
  /* /sys/devices directory */
  extern struct kset *devices_kset;
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 810f45c731aa3d..80039b4a2e8682 100644
 --- a/drivers/base/dd.c
 +++ b/drivers/base/dd.c
-@@ -256,7 +256,12 @@ static int deferred_devs_show(struct seq_file *s, void *data)
+@@ -255,7 +255,12 @@ static int deferred_devs_show(struct seq
  }
  DEFINE_SHOW_ATTRIBUTE(deferred_devs);
  
@@ -100,9 +94,9 @@ index 810f45c731aa3d..80039b4a2e8682 100644
 +#endif
 +
  EXPORT_SYMBOL_GPL(driver_deferred_probe_timeout);
- static DECLARE_WAIT_QUEUE_HEAD(probe_timeout_waitqueue);
  
-@@ -317,6 +322,20 @@ static void deferred_probe_timeout_work_func(struct work_struct *work)
+ static int __init deferred_probe_timeout_setup(char *str)
+@@ -314,6 +319,20 @@ static void deferred_probe_timeout_work_
  }
  static DECLARE_DELAYED_WORK(deferred_probe_timeout_work, deferred_probe_timeout_work_func);
  
@@ -123,11 +117,9 @@ index 810f45c731aa3d..80039b4a2e8682 100644
  /**
   * deferred_probe_initcall() - Enable probing of deferred devices
   *
-diff --git a/drivers/base/driver.c b/drivers/base/driver.c
-index 1b9d47b10bd0a8..15a75afe6b8450 100644
 --- a/drivers/base/driver.c
 +++ b/drivers/base/driver.c
-@@ -246,6 +246,7 @@ int driver_register(struct device_driver *drv)
+@@ -177,6 +177,7 @@ int driver_register(struct device_driver
  		return ret;
  	}
  	kobject_uevent(&drv->p->kobj, KOBJ_ADD);

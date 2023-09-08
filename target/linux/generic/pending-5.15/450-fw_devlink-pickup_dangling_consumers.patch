@@ -31,7 +31,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -54,11 +54,12 @@ static LIST_HEAD(deferred_sync);
+@@ -52,11 +52,12 @@ static LIST_HEAD(deferred_sync);
  static unsigned int defer_sync_state_count = 1;
  static DEFINE_MUTEX(fwnode_link_lock);
  static bool fw_devlink_is_permissive(void);
@@ -45,7 +45,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
   * @con: Consumer end of the link.
   * @sup: Supplier end of the link.
   *
-@@ -74,22 +75,18 @@ static bool fw_devlink_best_effort;
+@@ -72,22 +73,18 @@ static bool fw_devlink_best_effort;
   * Attempts to create duplicate links between the same pair of fwnode handles
   * are ignored and there is no reference counting.
   */
@@ -73,7 +73,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	link->supplier = sup;
  	INIT_LIST_HEAD(&link->s_hook);
-@@ -100,9 +97,17 @@ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup)
+@@ -98,9 +95,17 @@ int fwnode_link_add(struct fwnode_handle
  	list_add(&link->c_hook, &con->suppliers);
  	pr_debug("%pfwP Linked as a fwnode consumer to %pfwP\n",
  		 con, sup);
@@ -93,7 +93,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	return ret;
  }
  
-@@ -181,6 +186,51 @@ void fw_devlink_purge_absent_suppliers(struct fwnode_handle *fwnode)
+@@ -179,6 +184,51 @@ void fw_devlink_purge_absent_suppliers(s
  }
  EXPORT_SYMBOL_GPL(fw_devlink_purge_absent_suppliers);
  
@@ -145,7 +145,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  #ifdef CONFIG_SRCU
  static DEFINE_MUTEX(device_links_lock);
  DEFINE_STATIC_SRCU(device_links_srcu);
-@@ -1267,16 +1317,23 @@ void device_links_driver_bound(struct device *dev)
+@@ -1255,16 +1305,23 @@ void device_links_driver_bound(struct de
  	 * them. So, fw_devlink no longer needs to create device links to any
  	 * of the device's suppliers.
  	 *
@@ -174,7 +174,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	}
  	device_remove_file(dev, &dev_attr_waiting_for_supplier);
  
-@@ -1855,7 +1912,11 @@ static int fw_devlink_create_devlink(struct device *con,
+@@ -1843,7 +1900,11 @@ static int fw_devlink_create_devlink(str
  	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
  		return -EINVAL;
  
