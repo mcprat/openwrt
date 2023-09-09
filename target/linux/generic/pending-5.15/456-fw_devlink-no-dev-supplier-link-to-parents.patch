@@ -16,7 +16,7 @@
 +		    fwnode_device_is_available(parent) &&
 +		  !(parent->flags & FWNODE_FLAG_NOT_DEVICE) &&
 +		  !(parent->flags & FWNODE_FLAG_PARENT_IS_DEV)) {
-+			ret = __fwnode_link_add(con, parent);
++			ret = __fwnode_link_add(con, parent, 0);
 +		}
 +
 +		if (!loop && !ret) {
