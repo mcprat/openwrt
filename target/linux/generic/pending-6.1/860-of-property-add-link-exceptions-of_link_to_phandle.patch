@@ -1,0 +1,53 @@
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -1095,24 +1095,42 @@ static struct device_node *of_get_compat
+ static void of_link_to_phandle(struct device_node *con_np,
+ 			      struct device_node *sup_np)
+ {
++	struct device *sup_dev;
+ 	struct device_node *tmp_np = of_node_get(sup_np);
+ 
+-	/* Check that sup_np and its ancestors are available. */
++	/*
++	 * Don't create links to "early devices" that won't have struct devices
++	 * created for them.
++	 */
++	sup_dev = get_dev_from_fwnode(&tmp_np->fwnode);
++	if (!sup_dev &&
++	    (of_node_check_flag(sup_np, OF_POPULATED) ||
++	     sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
++		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
++			 con_np, sup_np);
++		goto out_put_tmp;
++	}
++	put_device(sup_dev);
++
++	/* Check that sup_np or its ancestors are available, */
++	/* and that sup_np is not the consumer or a child of the consumer. */
+ 	while (tmp_np) {
+-		if (of_fwnode_handle(tmp_np)->dev) {
+-			of_node_put(tmp_np);
++		if (tmp_np == con_np)
++			goto out_put_tmp;
++
++		if (of_fwnode_handle(tmp_np)->dev)
+ 			break;
+-		}
+ 
+-		if (!of_device_is_available(tmp_np)) {
+-			of_node_put(tmp_np);
+-			return;
+-		}
++		if (!of_device_is_available(tmp_np))
++			goto out_put_tmp;
+ 
+ 		tmp_np = of_get_next_parent(tmp_np);
+ 	}
+ 
+ 	fwnode_link_add(of_fwnode_handle(con_np), of_fwnode_handle(sup_np));
++
++out_put_tmp:
++	of_node_put(tmp_np);
+ }
+ 
+ /**
