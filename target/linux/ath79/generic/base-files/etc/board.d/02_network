@@ -48,6 +48,7 @@ ath79_setup_interfaces()
 	enterasys,ws-ap3705i|\
 	extreme-networks,ws-ap3805i|\
 	fortinet,fap-221-b|\
+	fortinet,fap-223-b|\
 	glinet,gl-ar300m-lite|\
 	glinet,gl-usb150|\
 	hak5,wifi-pineapple-nano|\
@@ -713,7 +714,8 @@ ath79_setup_macs()
 	enterasys,ws-ap3705i)
 		label_mac=$(mtd_get_mac_ascii u-boot-env0 ethaddr)
 		;;
-	fortinet,fap-221-b)
+	fortinet,fap-221-b|\
+	fortinet,fap-223-b)
 		lan_mac=$(mtd_get_mac_text u-boot 0x3ff80 12)
 		label_mac=$lan_mac
 		;;
