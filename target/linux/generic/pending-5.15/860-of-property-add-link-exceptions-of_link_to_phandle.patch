@@ -1,6 +1,6 @@
 --- a/drivers/of/property.c
 +++ b/drivers/of/property.c
-@@ -1077,24 +1077,42 @@ static struct device_node *of_get_compat
+@@ -1077,24 +1077,43 @@ static struct device_node *of_get_compat
  static void of_link_to_phandle(struct device_node *con_np,
  			      struct device_node *sup_np)
  {
@@ -12,20 +12,19 @@
 +	/* and that sup_np is not the consumer or a child of the consumer. */
  	while (tmp_np) {
 -		if (of_fwnode_handle(tmp_np)->dev) {
--			of_node_put(tmp_np);
 +		if (tmp_np == con_np)
-+			goto out_put_tmp;
+ 			of_node_put(tmp_np);
++			return;
 +
 +		if (of_fwnode_handle(tmp_np)->dev)
  			break;
 -		}
  
 -		if (!of_device_is_available(tmp_np)) {
--			of_node_put(tmp_np);
--			return;
--		}
 +		if (!of_device_is_available(tmp_np))
-+			goto out_put_tmp;
+ 			of_node_put(tmp_np);
+ 			return;
+-		}
  
  		tmp_np = of_get_next_parent(tmp_np);
  	}
@@ -40,13 +39,12 @@
 +	     sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
 +		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
 +			 con_np, sup_np);
-+		goto out_put_tmp;
++		of_node_put(tmp_np);
++		return;
 +	}
 +	put_device(sup_dev);
 +
  	fwnode_link_add(of_fwnode_handle(con_np), of_fwnode_handle(sup_np));
-+
-+out_put_tmp:
 +	of_node_put(tmp_np);
  }
  
