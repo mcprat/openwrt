@@ -84,7 +84,7 @@
  
 --- a/drivers/of/property.c
 +++ b/drivers/of/property.c
-@@ -1104,7 +1104,8 @@ static void of_link_to_phandle(struct de
+@@ -1106,7 +1106,8 @@ static void of_link_to_phandle(struct de
  	sup_dev = get_dev_from_fwnode(&tmp_np->fwnode);
  	if (!sup_dev &&
  	    (of_node_check_flag(sup_np, OF_POPULATED) ||

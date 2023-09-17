@@ -1,6 +1,6 @@
 --- a/drivers/of/property.c
 +++ b/drivers/of/property.c
-@@ -1077,24 +1077,43 @@ static struct device_node *of_get_compat
+@@ -1077,15 +1077,20 @@ static struct device_node *of_get_compat
  static void of_link_to_phandle(struct device_node *con_np,
  			      struct device_node *sup_np)
  {
@@ -12,20 +12,19 @@
 +	/* and that sup_np is not the consumer or a child of the consumer. */
  	while (tmp_np) {
 -		if (of_fwnode_handle(tmp_np)->dev) {
-+		if (tmp_np == con_np)
++		if (tmp_np == con_np) {
  			of_node_put(tmp_np);
+-			break;
 +			return;
-+
-+		if (of_fwnode_handle(tmp_np)->dev)
- 			break;
--		}
+ 		}
  
--		if (!of_device_is_available(tmp_np)) {
-+		if (!of_device_is_available(tmp_np))
++		if (of_fwnode_handle(tmp_np)->dev)
++			break;
++
+ 		if (!of_device_is_available(tmp_np)) {
  			of_node_put(tmp_np);
  			return;
--		}
- 
+@@ -1094,7 +1099,23 @@ static void of_link_to_phandle(struct de
  		tmp_np = of_get_next_parent(tmp_np);
  	}
  
