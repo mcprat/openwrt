@@ -34,10 +34,10 @@
 +	 */
 +	sup_dev = get_dev_from_fwnode(&tmp_np->fwnode);
 +	if (!sup_dev &&
-+	    (of_node_check_flag(sup_np, OF_POPULATED) ||
-+	     sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
++	    (of_node_check_flag(tmp_np, OF_POPULATED) ||
++	     tmp_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
 +		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
-+			 con_np, sup_np);
++			 con_np, tmp_np);
 +		of_node_put(tmp_np);
 +		return;
 +	}
