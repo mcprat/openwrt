@@ -19,7 +19,7 @@
  		if (of_fwnode_handle(tmp_np)->dev) {
  			of_node_put(tmp_np);
  			break;
-@@ -1094,6 +1101,21 @@ static void of_link_to_phandle(struct de
+@@ -1094,6 +1101,20 @@ static void of_link_to_phandle(struct de
  		tmp_np = of_get_next_parent(tmp_np);
  	}
  
@@ -33,7 +33,6 @@
 +	     sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
 +		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
 +			 con_np, sup_np);
-+		of_node_put(sup_np);
 +		return;
 +	}
 +	put_device(sup_dev);

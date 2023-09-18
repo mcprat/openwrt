@@ -93,7 +93,7 @@
 +	   !(sup_np->fwnode.flags & FWNODE_FLAG_PARENT_IS_DEV)))) {
  		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
  			 con_np, sup_np);
- 		of_node_put(sup_np);
+ 		return;
 --- a/include/linux/fwnode.h
 +++ b/include/linux/fwnode.h
 @@ -29,6 +29,9 @@ struct device;
