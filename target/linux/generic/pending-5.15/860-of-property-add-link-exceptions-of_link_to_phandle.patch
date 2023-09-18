@@ -24,7 +24,7 @@
  		if (!of_device_is_available(tmp_np)) {
  			of_node_put(tmp_np);
  			return;
-@@ -1094,7 +1099,23 @@ static void of_link_to_phandle(struct de
+@@ -1094,6 +1099,22 @@ static void of_link_to_phandle(struct de
  		tmp_np = of_get_next_parent(tmp_np);
  	}
  
@@ -43,8 +43,7 @@
 +	}
 +	put_device(sup_dev);
 +
- 	fwnode_link_add(of_fwnode_handle(con_np), of_fwnode_handle(sup_np));
 +	of_node_put(tmp_np);
+ 	fwnode_link_add(of_fwnode_handle(con_np), of_fwnode_handle(sup_np));
  }
  
- /**
