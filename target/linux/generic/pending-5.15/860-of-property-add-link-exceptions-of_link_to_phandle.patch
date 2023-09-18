@@ -24,26 +24,3 @@
  		if (!of_device_is_available(tmp_np)) {
  			of_node_put(tmp_np);
  			return;
-@@ -1094,6 +1099,22 @@ static void of_link_to_phandle(struct de
- 		tmp_np = of_get_next_parent(tmp_np);
- 	}
- 
-+	/*
-+	 * Don't create links to "early devices" that won't have struct devices
-+	 * created for them.
-+	 */
-+	sup_dev = get_dev_from_fwnode(&tmp_np->fwnode);
-+	if (!sup_dev &&
-+	    (of_node_check_flag(tmp_np, OF_POPULATED) ||
-+	     tmp_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
-+		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
-+			 con_np, tmp_np);
-+		of_node_put(tmp_np);
-+		return;
-+	}
-+	put_device(sup_dev);
-+
-+	of_node_put(tmp_np);
- 	fwnode_link_add(of_fwnode_handle(con_np), of_fwnode_handle(sup_np));
- }
- 
