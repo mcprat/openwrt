@@ -1,3 +1,6 @@
+Revert fb42378dcc7f247df56f0ecddfdae85487495fbc
+Subject: [PATCH] mtd: mtdpart: Don't create platform device that'll never probe
+Link: https://lore.kernel.org/r/20230207014207.1678715-13-saravanak@google.com
 --- a/drivers/mtd/mtdpart.c
 +++ b/drivers/mtd/mtdpart.c
 @@ -712,7 +712,6 @@ static int mtd_part_of_parse(struct mtd_
