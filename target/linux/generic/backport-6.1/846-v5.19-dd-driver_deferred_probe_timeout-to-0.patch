@@ -27,7 +27,7 @@ Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 
 --- a/drivers/base/dd.c
 +++ b/drivers/base/dd.c
-@@ -255,12 +255,7 @@ static int deferred_devs_show(struct seq
+@@ -256,12 +256,7 @@ static int deferred_devs_show(struct seq
  }
  DEFINE_SHOW_ATTRIBUTE(deferred_devs);
  
