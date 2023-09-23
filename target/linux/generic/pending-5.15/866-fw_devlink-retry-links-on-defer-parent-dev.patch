@@ -149,9 +149,9 @@
 +				device_links_purge(dev);
 +				fw_devlink_link_device(dev);
 +				device_links_write_lock();
-+			} else {
-+				device_links_missing_supplier(dev);
 +			}
++
++			device_links_missing_supplier(dev);
 +
 +			dev_err_probe(dev, -EPROBE_DEFER,
 +				      "supplier %s not ready\n",
