@@ -1,0 +1,154 @@
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -79,6 +79,7 @@ static void __device_set_deferred_probe_
+  */
+ static void deferred_probe_work_func(struct work_struct *work)
+ {
++	pr_debug("%s: start\n", __func__);
+ 	struct device *dev;
+ 	struct device_private *private;
+ 	/*
+@@ -125,6 +126,7 @@ static void deferred_probe_work_func(str
+ 		put_device(dev);
+ 	}
+ 	mutex_unlock(&deferred_probe_mutex);
++	pr_debug("%s: end\n", __func__);
+ }
+ static DECLARE_WORK(deferred_probe_work, deferred_probe_work_func);
+ 
+@@ -133,6 +135,7 @@ void driver_deferred_probe_add(struct de
+ 	if (!dev->can_match)
+ 		return;
+ 
++	pr_debug("%s: start\n", __func__);
+ 	mutex_lock(&deferred_probe_mutex);
+ 	if (list_empty(&dev->p->deferred_probe)) {
+ 		dev_dbg(dev, "Added to deferred list\n");
+@@ -143,6 +146,7 @@ void driver_deferred_probe_add(struct de
+ 
+ void driver_deferred_probe_del(struct device *dev)
+ {
++	pr_debug("%s: start\n", __func__);
+ 	mutex_lock(&deferred_probe_mutex);
+ 	if (!list_empty(&dev->p->deferred_probe)) {
+ 		dev_dbg(dev, "Removed from deferred list\n");
+@@ -176,6 +180,7 @@ void driver_deferred_probe_trigger(void)
+ 	if (!driver_deferred_probe_enable)
+ 		return;
+ 
++	pr_debug("%s: start\n", __func__);
+ 	/*
+ 	 * A successful probe means that all the devices in the pending list
+ 	 * should be triggered to be reprobed.  Move all the deferred devices
+@@ -187,11 +192,15 @@ void driver_deferred_probe_trigger(void)
+ 			      &deferred_probe_active_list);
+ 	mutex_unlock(&deferred_probe_mutex);
+ 
++	pr_debug("%s: deferred moved to active list\n", __func__);
++
+ 	/*
+ 	 * Kick the re-probe thread.  It may already be scheduled, but it is
+ 	 * safe to kick it again.
+ 	 */
+ 	queue_work(system_unbound_wq, &deferred_probe_work);
++
++	pr_debug("%s: end\n", __func__);
+ }
+ 
+ /**
+@@ -225,6 +234,7 @@ void device_unblock_probing(void)
+  */
+ void device_set_deferred_probe_reason(const struct device *dev, struct va_format *vaf)
+ {
++	pr_debug("%s: start\n", __func__);
+ 	const char *drv = dev_driver_string(dev);
+ 	char *reason;
+ 
+@@ -283,6 +293,7 @@ __setup("deferred_probe_timeout=", defer
+  */
+ int driver_deferred_probe_check_state(struct device *dev)
+ {
++	pr_debug("%s: start\n", __func__);
+ 	if (!IS_ENABLED(CONFIG_MODULES) && initcalls_done) {
+ 		dev_warn(dev, "ignoring dependency for device, assuming no driver\n");
+ 		return -ENODEV;
+@@ -301,6 +312,7 @@ static void deferred_probe_timeout_work_
+ {
+ 	struct device_private *p;
+ 
++	pr_debug("%s: start\n", __func__);
+ 	fw_devlink_drivers_done();
+ 
+ 	driver_deferred_probe_timeout = 0;
+@@ -316,6 +328,7 @@ static DECLARE_DELAYED_WORK(deferred_pro
+ 
+ void deferred_probe_extend_timeout(void)
+ {
++	pr_debug("%s: start\n", __func__);
+ 	/*
+ 	 * If the work hasn't been queued yet or if the work expired, don't
+ 	 * start a new one.
+@@ -337,6 +350,7 @@ void deferred_probe_extend_timeout(void)
+  */
+ static int deferred_probe_initcall(void)
+ {
++	pr_debug("%s: start\n", __func__);
+ 	debugfs_create_file("devices_deferred", 0444, NULL, NULL,
+ 			    &deferred_devs_fops);
+ 
+@@ -346,6 +360,8 @@ static int deferred_probe_initcall(void)
+ 	flush_work(&deferred_probe_work);
+ 	initcalls_done = true;
+ 
++	pr_debug("%s: after first driver_deferred_probe_trigger\n", __func__);
++
+ 	if (!IS_ENABLED(CONFIG_MODULES))
+ 		fw_devlink_drivers_done();
+ 
+@@ -356,10 +372,15 @@ static int deferred_probe_initcall(void)
+ 	driver_deferred_probe_trigger();
+ 	flush_work(&deferred_probe_work);
+ 
++	pr_debug("%s: after second driver_deferred_probe_trigger\n", __func__);
++
+ 	if (driver_deferred_probe_timeout > 0) {
+ 		schedule_delayed_work(&deferred_probe_timeout_work,
+ 			driver_deferred_probe_timeout * HZ);
+ 	}
++
++	pr_debug("%s: end\n", __func__);
++
+ 	return 0;
+ }
+ late_initcall(deferred_probe_initcall);
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -1061,13 +1061,19 @@ static void device_links_missing_supplie
+ {
+ 	struct device_link *link;
+ 
++	pr_debug("device: '%s': start of %s\n", dev_name(dev), __func__);
++
+ 	list_for_each_entry(link, &dev->links.suppliers, c_node) {
+ 		if (link->status != DL_STATE_CONSUMER_PROBE)
+ 			continue;
+ 
++		pr_debug("device: '%s': in loop of %s\n", dev_name(dev), __func__);
++
+ 		if (link->supplier->links.status == DL_DEV_DRIVER_BOUND) {
++			pr_debug("device: '%s': in if of %s\n", dev_name(dev), __func__);
+ 			WRITE_ONCE(link->status, DL_STATE_AVAILABLE);
+ 		} else {
++			pr_debug("device: '%s': in else of %s\n", dev_name(dev), __func__);
+ 			WARN_ON(!(link->flags & DL_FLAG_SYNC_STATE_ONLY));
+ 			WRITE_ONCE(link->status, DL_STATE_DORMANT);
+ 		}
+@@ -2309,6 +2315,8 @@ void device_links_fixup_suppliers(struct
+ 		if (!(link->flags & DL_FLAG_MANAGED))
+ 			continue;
+ 
++		pr_debug("device: '%s': in loop of %s\n", dev_name(dev), __func__);
++
+ 		if (link->status != DL_STATE_AVAILABLE &&
+ 		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
+ 
