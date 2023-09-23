@@ -1,6 +1,6 @@
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -1096,79 +1096,6 @@ static struct fwnode_handle *fwnode_link
+@@ -1096,80 +1096,6 @@ static struct fwnode_handle *fwnode_link
  }
  
  /**
@@ -56,7 +56,8 @@
 -			if (dev_is_best_effort(dev) &&
 -			    link->flags & DL_FLAG_INFERRED &&
 -			    !link->supplier->can_match) {
--				ret = -EAGAIN;
+-				if (!ret)
+-					ret = -EAGAIN;
 -				continue;
 -			}
 -
@@ -65,7 +66,7 @@
 -				      "supplier %s not ready\n",
 -				      dev_name(link->supplier));
 -			ret = -EPROBE_DEFER;
--			break;
+-			continue;
 -		}
 -		WRITE_ONCE(link->status, DL_STATE_CONSUMER_PROBE);
 -	}
@@ -80,7 +81,7 @@
   * __device_links_queue_sync_state - Queue a device for sync_state() callback
   * @dev: Device to call sync_state() on
   * @list: List head to queue the @dev on
-@@ -2271,6 +2198,90 @@ static void fw_devlink_link_device(struc
+@@ -2272,6 +2198,91 @@ static void fw_devlink_link_device(struc
  	mutex_unlock(&fwnode_link_lock);
  }
  
@@ -137,7 +138,8 @@
 +			if (dev_is_best_effort(dev) &&
 +			    link->flags & DL_FLAG_INFERRED &&
 +			    !link->supplier->can_match) {
-+				ret = -EAGAIN;
++				if (!ret)
++					ret = -EAGAIN;
 +				continue;
 +			}
 +
@@ -157,7 +159,7 @@
 +				      "supplier %s not ready\n",
 +				      dev_name(link->supplier));
 +			ret = -EPROBE_DEFER;
-+			break;
++			continue;
 +		}
 +		WRITE_ONCE(link->status, DL_STATE_CONSUMER_PROBE);
 +	}
