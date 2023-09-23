@@ -1,0 +1,21 @@
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -1148,7 +1148,8 @@ int device_links_check_suppliers(struct
+ 			if (dev_is_best_effort(dev) &&
+ 			    link->flags & DL_FLAG_INFERRED &&
+ 			    !link->supplier->can_match) {
+-				ret = -EAGAIN;
++				if (!ret)
++					ret = -EAGAIN;
+ 				continue;
+ 			}
+ 
+@@ -1157,7 +1158,7 @@ int device_links_check_suppliers(struct
+ 				      "supplier %s not ready\n",
+ 				      dev_name(link->supplier));
+ 			ret = -EPROBE_DEFER;
+-			break;
++			continue;
+ 		}
+ 		WRITE_ONCE(link->status, DL_STATE_CONSUMER_PROBE);
+ 	}
