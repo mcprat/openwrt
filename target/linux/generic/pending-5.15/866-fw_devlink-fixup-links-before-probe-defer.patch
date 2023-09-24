@@ -1,0 +1,96 @@
+--- a/drivers/base/base.h
++++ b/drivers/base/base.h
+@@ -193,6 +193,7 @@ extern void device_links_no_driver(struc
+ extern bool device_links_busy(struct device *dev);
+ extern void device_links_unbind_consumers(struct device *dev);
+ extern void fw_devlink_drivers_done(void);
++extern void device_links_fixup_suppliers(struct device *dev);
+ 
+ /* device pm support */
+ void device_pm_move_to_tail(struct device *dev);
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -1795,6 +1795,9 @@ static void fw_devlink_relax_link(struct
+ 	if (device_link_flag_is_sync_state_only(link->flags))
+ 		return;
+ 
++	if (link->supplier->fwnode->flags & FWNODE_FLAG_PARENT_IS_DEV)
++		return;
++
+ 	pm_runtime_drop_link(link);
+ 	link->flags = DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
+ 	dev_dbg(link->consumer, "Relaxing link with %s\n",
+@@ -2270,6 +2273,62 @@ static void fw_devlink_link_device(struc
+ 	mutex_unlock(&fwnode_link_lock);
+ }
+ 
++/**
++ * device_links_fixup_suppliers - Fix bad device links to suppliers of @dev.
++ * @dev: Consumer device.
++ *
++ * This should be called after @dev has a device link to all it's suppliers
++ * and @dev is probing so that, even if the consumer device
++ * has had it's fwtree parsed and it's attempt to probe started first,
++ * the suppliers are guarenteed to have an attempt at probing
++ * thanks to the dependency defined through the existing device links.
++ *
++ * In driver core, the suppliers have had an opportunity to probe at this point.
++ * Therefore, this is an ideal position to handle corner cases where,
++ * for whatever reason, the supplier is not optional, but the link to
++ * a supplier is bad and causing the probing of the consumer to defer.
++ * This is the last opportunity to handle a bad device link before
++ * that link will cause a probe defer of the consumer.
++ */
++void device_links_fixup_suppliers(struct device *dev)
++{
++	struct device_link *link, *tmp;
++	struct fwnode_handle *sup_fw;
++
++	/* Wait for all supplier fwnode links to become device links */
++	mutex_lock(&fwnode_link_lock);
++	sup_fw = fwnode_links_check_suppliers(dev->fwnode);
++	if (sup_fw) {
++		mutex_unlock(&fwnode_link_lock);
++		return;
++	}
++	mutex_unlock(&fwnode_link_lock);
++
++	device_links_write_lock();
++
++	/* Keep flag checks in sync with device_links_check_suppliers() */
++	list_for_each_entry_safe(link, tmp, &dev->links.suppliers, c_node) {
++		if (!(link->flags & DL_FLAG_MANAGED))
++			continue;
++
++		if (link->status != DL_STATE_AVAILABLE &&
++		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
++
++			/* The supplier may be a child firmware node of a device, if so, retry links */
++			if (link->supplier->fwnode->flags & FWNODE_FLAG_PARENT_IS_DEV) {
++				link->supplier->fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++				dev->fwnode->flags &= ~FWNODE_FLAG_LINKS_ADDED;
++				device_links_write_unlock();
++				device_links_purge(dev);
++				fw_devlink_link_device(dev);
++				device_links_fixup_suppliers(dev);
++				return;
++			}
++		}
++	}
++	device_links_write_unlock();
++}
++
+ /* Device links support end. */
+ 
+ int (*platform_notify)(struct device *dev) = NULL;
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -557,6 +557,8 @@ static int really_probe(struct device *d
+ 			   !drv->suppress_bind_attrs;
+ 	int ret, link_ret;
+ 
++	device_links_fixup_suppliers(dev);
++
+ 	if (defer_all_probes) {
+ 		/*
+ 		 * Value of defer_all_probes can be set only by
