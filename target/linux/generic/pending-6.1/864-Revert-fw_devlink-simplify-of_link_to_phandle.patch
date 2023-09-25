@@ -2,6 +2,7 @@ Revert 4a032827daa89350365166b19d14d82fe8219128 Mon Sep 17 00:00:00 2001
 From: Saravana Kannan <saravanak@google.com>
 Date: Mon, 6 Feb 2023 17:42:01 -0800
 Subject: [PATCH] of: property: Simplify of_link_to_phandle()
+Link: https://lore.kernel.org/r/20230207014207.1678715-10-saravanak@google.com
 --- a/drivers/of/property.c
 +++ b/drivers/of/property.c
 @@ -1062,6 +1062,20 @@ of_fwnode_device_get_match_data(const st
