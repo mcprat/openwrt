@@ -225,7 +225,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  {
  	if (!driver_deferred_probe_enable)
  		return;
-@@ -555,7 +555,7 @@ static int really_probe(struct device *d
+@@ -560,7 +560,7 @@ static int really_probe(struct device *d
  {
  	bool test_remove = IS_ENABLED(CONFIG_DEBUG_TEST_DRIVER_REMOVE) &&
  			   !drv->suppress_bind_attrs;
@@ -234,7 +234,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	if (defer_all_probes) {
  		/*
-@@ -567,9 +567,9 @@ static int really_probe(struct device *d
+@@ -572,9 +572,9 @@ static int really_probe(struct device *d
  		return -EPROBE_DEFER;
  	}
  
@@ -247,7 +247,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	pr_debug("bus: '%s': %s: probing driver %s with device %s\n",
  		 drv->bus->name, __func__, drv->name, dev_name(dev));
-@@ -609,6 +609,15 @@ re_probe:
+@@ -614,6 +614,15 @@ re_probe:
  	ret = call_driver_probe(dev, drv);
  	if (ret) {
  		/*
