@@ -1,0 +1,35 @@
+From 21780f89d65837e23fef825c79aa836c1cb3a8e9 Mon Sep 17 00:00:00 2001
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Date: Tue, 8 Nov 2022 16:11:08 +0200
+Subject: [PATCH] mac_pton: Don't access memory over expected length
+
+The strlen() may go too far when estimating the length of
+the given string. In some cases it may go over the boundary
+and crash the system which is the case according to the commit
+13a55372b64e ("ARM: orion5x: Revert commit 4904dbda41c8.").
+
+Rectify this by switching to strnlen() for the expected
+maximum length of the string.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221108141108.62974-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ lib/net_utils.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+--- a/lib/net_utils.c
++++ b/lib/net_utils.c
+@@ -6,10 +6,11 @@
+ 
+ bool mac_pton(const char *s, u8 *mac)
+ {
++	size_t maxlen = 3 * ETH_ALEN - 1;
+ 	int i;
+ 
+ 	/* XX:XX:XX:XX:XX:XX */
+-	if (strlen(s) < 3 * ETH_ALEN - 1)
++	if (strnlen(s, maxlen) < maxlen)
+ 		return false;
+ 
+ 	/* Don't dirty result unless string is valid MAC. */
