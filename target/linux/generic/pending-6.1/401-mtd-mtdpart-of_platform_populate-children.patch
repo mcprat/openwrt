@@ -1,0 +1,32 @@
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -697,6 +697,7 @@ static int mtd_part_of_parse(struct mtd_
+ {
+ 	struct mtd_part_parser *parser;
+ 	struct device_node *np;
++	struct device_node *child;
+ 	struct property *prop;
+ 	struct device *dev;
+ 	const char *compat;
+@@ -720,7 +721,9 @@ static int mtd_part_of_parse(struct mtd_
+ 			continue;
+ 		ret = mtd_part_do_parse(parser, master, pparts, NULL);
+ 		if (ret > 0) {
+-			of_platform_populate(np, NULL, NULL, dev);
++			if (!of_platform_populate(np, NULL, NULL, dev))
++				for_each_child_of_node(np, child)
++					of_platform_populate(child, NULL, NULL, dev);
+ 			of_node_put(np);
+ 			return ret;
+ 		}
+@@ -728,7 +731,9 @@ static int mtd_part_of_parse(struct mtd_
+ 		if (ret < 0 && !err)
+ 			err = ret;
+ 	}
+-	of_platform_populate(np, NULL, NULL, dev);
++	if (!of_platform_populate(np, NULL, NULL, dev))
++		for_each_child_of_node(np, child)
++			of_platform_populate(child, NULL, NULL, dev);
+ 	of_node_put(np);
+ 
+ 	/*
