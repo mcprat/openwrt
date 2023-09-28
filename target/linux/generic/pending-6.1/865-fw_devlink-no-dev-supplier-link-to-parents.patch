@@ -57,7 +57,7 @@
  static void __fw_devlink_pickup_dangling_consumers(struct fwnode_handle *fwnode,
  						   struct fwnode_handle *new_sup)
 @@ -239,8 +271,11 @@ static void __fw_devlink_pickup_dangling
- 	if (fwnode->dev && !fwnode->dev)
+ 	if (fwnode->dev && fwnode->dev->driver)
  		return;
  
 -	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;

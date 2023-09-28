@@ -14,7 +14,7 @@
  	struct fwnode_handle *child;
  
 -	if (fwnode->dev && fwnode->dev->bus)
-+	if (fwnode->dev && !fwnode->dev)
++	if (fwnode->dev && fwnode->dev->driver)
  		return;
  
  	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
