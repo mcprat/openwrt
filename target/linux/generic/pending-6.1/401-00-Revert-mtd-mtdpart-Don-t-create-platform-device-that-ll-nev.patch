@@ -5,7 +5,7 @@ Subject: [PATCH] mtd: mtdpart: Don't create platform device that'll never probe
 Link: https://lore.kernel.org/r/20230207014207.1678715-13-saravanak@google.com
 --- a/drivers/mtd/mtdpart.c
 +++ b/drivers/mtd/mtdpart.c
-@@ -712,7 +712,6 @@ static int mtd_part_of_parse(struct mtd_
+@@ -697,7 +697,6 @@ static int mtd_part_of_parse(struct mtd_
  {
  	struct mtd_part_parser *parser;
  	struct device_node *np;
@@ -13,7 +13,7 @@ Link: https://lore.kernel.org/r/20230207014207.1678715-13-saravanak@google.com
  	struct property *prop;
  	struct device *dev;
  	const char *compat;
-@@ -730,15 +729,6 @@ static int mtd_part_of_parse(struct mtd_
+@@ -715,15 +714,6 @@ static int mtd_part_of_parse(struct mtd_
  	else
  		np = of_get_child_by_name(np, "partitions");
  
