@@ -177,30 +177,6 @@
  	if (con->fwnode == link->consumer)
  		flags = fw_devlink_get_flags(link->flags);
  	else
-@@ -2102,14 +2114,20 @@ static int fw_devlink_create_devlink(str
- 		device_links_write_unlock();
- 	}
- 
--	if (sup_handle->flags & FWNODE_FLAG_PARENT_IS_DEV)
-+	if (sup_handle->flags & FWNODE_FLAG_PARENT_IS_DEV) {
-+		pr_debug("device: '%s': getting parent dev to link to %s\n", dev_name(con), __func__);
- 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
--	else if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
-+		pr_debug("device: '%s': parent dev name %s\n", dev_name(sup_dev), __func__);
-+	} else if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE) {
-+		pr_debug("device: '%s': sup is not device in %s\n", dev_name(con), __func__);
- 		return -EINVAL;
--	else
-+	} else {
-+		pr_debug("device: '%s': get sup normally %s\n", dev_name(con), __func__);
- 		sup_dev = get_dev_from_fwnode(sup_handle);
-+	}
- 
- 	if (sup_dev) {
-+		pr_debug("device: '%s': got sup device %s\n", dev_name(sup_dev), __func__);
- 		/*
- 		 * If it's one of those drivers that don't actually bind to
- 		 * their device using driver core, then don't wait on this
 @@ -2124,6 +2142,7 @@ static int fw_devlink_create_devlink(str
  			goto out;
  		}
