@@ -70,14 +70,14 @@
  
  	fwnode_for_each_available_child_node(fwnode, child)
  		__fw_devlink_pickup_dangling_consumers(child, new_sup);
-@@ -2067,8 +2102,10 @@ static int fw_devlink_create_devlink(str
+@@ -2067,8 +2102,9 @@ static int fw_devlink_create_devlink(str
  		device_links_write_unlock();
  	}
  
 -	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
-+	if (sup_handle->flags & FWNODE_FLAG_PARENT_IS_DEV)
- 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
-+	else if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
+-		sup_dev = fwnode_get_next_parent_dev(sup_handle);
++	if ((sup_handle->flags & FWNODE_FLAG_NOT_DEVICE) &&
++	   !(sup_handle->flags & FWNODE_FLAG_PARENT_IS_DEV))
 +		return -EINVAL;
  	else
  		sup_dev = get_dev_from_fwnode(sup_handle);
