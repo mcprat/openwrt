@@ -48,6 +48,11 @@
 	};
 };
 
+&eth0 {
+	nvmem-cells = <&macaddr_uboot_3ff80 0>;
+	nvmem-cell-names = "mac-address";
+};
+
 &ath9k {
 	ieee80211-freq-limit = <2402000 2482000>;
 
@@ -65,11 +70,29 @@
 &art {
 	compatible = "nvmem-cells";
 
-	calibration_wmac: calibration@1000 {
-		reg = <0x1000 0x440>;
-	};
+	nvmem-layout {
+		compatible = "fixed-layout";
 
-	calibration_pcie: calibration@5000 {
-		reg = <0x5000 0x440>;
+		calibration_wmac: calibration@1000 {
+			reg = <0x1000 0x440>;
+		};
+
+		calibration_pcie: calibration@5000 {
+			reg = <0x5000 0x440>;
+		};
+	};
+};
+
+&uboot {
+	compatible = "nvmem-cells";
+
+	nvmem-layout {
+		compatible = "fixed-layout";
+
+		macaddr_uboot_3ff80: macaddr@3ff80 {
+			compatible = "mac-base";
+			reg = <0x3ff80 0xc>;
+			#nvmem-cell-cells = <1>;
+		};
 	};
 };
