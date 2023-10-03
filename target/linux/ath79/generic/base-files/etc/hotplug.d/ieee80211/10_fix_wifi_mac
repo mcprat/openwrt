@@ -41,7 +41,8 @@ case "$board" in
 	engenius,esr900)
 		macaddr_add "$(mtd_get_mac_ascii u-boot-env ethaddr)" "$PHYNBR" > /sys${DEVPATH}/macaddress
 		;;
-	fortinet,fap-221-b)
+	fortinet,fap-221-b|\
+	fortinet,fap-223-b)
 		macaddr_add "$(mtd_get_mac_text u-boot 0x3ff80 12)" $((PHYNBR*7+1)) > /sys${DEVPATH}/macaddress
 		;;
 	iodata,wn-ac1600dgr)

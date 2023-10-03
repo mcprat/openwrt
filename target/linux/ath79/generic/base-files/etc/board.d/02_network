@@ -48,6 +48,7 @@ ath79_setup_interfaces()
 	enterasys,ws-ap3705i|\
 	extreme-networks,ws-ap3805i|\
 	fortinet,fap-221-b|\
+	fortinet,fap-223-b|\
 	glinet,gl-ar300m-lite|\
 	glinet,gl-usb150|\
 	hak5,wifi-pineapple-nano|\
