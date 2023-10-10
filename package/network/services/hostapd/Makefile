@@ -747,6 +747,14 @@ define Package/wpad/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/wpad $(1)/usr/sbin/
 	$(LN) wpad $(1)/usr/sbin/hostapd
 	$(LN) wpad $(1)/usr/sbin/wpa_supplicant
+  ifeq ($(LOCAL_VARIANT),mesh)
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/net
+	$(INSTALL_DATA) ./files/90-mesh_param $(1)/etc/hotplug.d/net
+  endif
+  ifeq ($(LOCAL_VARIANT),full)
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/net
+	$(INSTALL_DATA) ./files/90-mesh_param $(1)/etc/hotplug.d/net
+  endif
 endef
 Package/wpad-basic/install = $(Package/wpad/install)
 Package/wpad-basic-openssl/install = $(Package/wpad/install)
@@ -763,6 +771,14 @@ Package/wpad-mesh-mbedtls/install = $(Package/wpad/install)
 define Package/wpa-supplicant/install
 	$(call Install/supplicant,$(1))
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/wpa_supplicant/wpa_supplicant $(1)/usr/sbin/
+  ifeq ($(LOCAL_VARIANT),mesh)
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/net
+	$(INSTALL_DATA) ./files/90-mesh_param $(1)/etc/hotplug.d/net
+  endif
+  ifeq ($(LOCAL_VARIANT),full)
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/net
+	$(INSTALL_DATA) ./files/90-mesh_param $(1)/etc/hotplug.d/net
+  endif
 endef
 Package/wpa-supplicant-basic/install = $(Package/wpa-supplicant/install)
 Package/wpa-supplicant-mini/install = $(Package/wpa-supplicant/install)

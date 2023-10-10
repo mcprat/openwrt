@@ -1,0 +1,55 @@
+#!/bin/sh
+
+. /lib/functions.sh
+
+add_mesh_params() {
+	local section="$1"; shift
+	local device="$1"; shift
+	local path param
+
+	[ "$section" = "$device" ] || return
+
+	config_get path $section path
+	[ -d "/sys/devices/$path/net/$INTERFACE" ] || return
+
+	iw --version || return
+	logger procd hotplug: setting mesh parameters with $(iw --version)
+
+	while true; do
+		[ "$(cat /sys/devices/$path/net/$INTERFACE/operstate)" = "up" ] && break
+	done
+
+	for param in $@; do
+		while true; do
+			iw dev $INTERFACE get mesh_param ${param%=*} || ([ $? -eq 1 -o $? -eq 2 -o $? -eq 134 ] && break)
+			iw dev $INTERFACE set mesh_param $param || ([ $? -eq 2 ] && break)
+			[ "$(iw dev $INTERFACE get mesh_param ${param%=*})" = "${param#*=}" ] && break
+		done
+	done
+	logger procd hotplug: mesh parameters are set
+}
+
+find_mesh_params() {
+	local mode
+	local mesh_param
+	local device
+
+	config_get mode $1 mode
+	[ "$mode" = "mesh" ] || return
+
+	config_get mesh_param $1 mesh_param
+	[ -n "$mesh_param" ] || return
+
+	config_get device $1 device
+	config_foreach add_mesh_params wifi-device $device $mesh_param
+}
+
+if [ "$ACTION" = "add" ]; then
+	[ -e /etc/config/wireless ] || return
+	case "$INTERFACE" in
+		*"mesh"*)
+			config_load wireless
+			config_foreach find_mesh_params wifi-iface
+		;;
+	esac
+fi
