@@ -20,7 +20,7 @@
  	pm_runtime_drop_link(link);
  	link->flags = DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
  	dev_dbg(link->consumer, "Relaxing link with %s\n",
-@@ -2270,6 +2273,62 @@ static void fw_devlink_link_device(struc
+@@ -2270,6 +2273,82 @@ static void fw_devlink_link_device(struc
  	mutex_unlock(&fwnode_link_lock);
  }
  
@@ -28,8 +28,8 @@
 + * device_links_fixup_suppliers - Fix bad device links to suppliers of @dev.
 + * @dev: Consumer device.
 + *
-+ * This should be called after @dev has a device link to all it's suppliers
-+ * and @dev is probing so that, even if the consumer device
++ * This should be called after the suppliers of @dev have a chance to form
++ * device links and @dev is probing so that, even if the consumer device
 + * has had it's fwtree parsed and it's attempt to probe started first,
 + * the suppliers are guarenteed to have an attempt at probing
 + * thanks to the dependency defined through the existing device links.
@@ -40,20 +40,16 @@
 + * a supplier is bad and causing the probing of the consumer to defer.
 + * This is the last opportunity to handle a bad device link before
 + * that link will cause a probe defer of the consumer.
++ *
++ * If a fwnode link has not been translated to a device link at this point,
++ * or if a device link has not successfully resulted in the supplier probing,
++ * we know it is not possible for that node to represent a real device that
++ * provides functionality to the consumer, but an ancestor of that node might.
 + */
 +void device_links_fixup_suppliers(struct device *dev)
 +{
 +	struct device_link *link, *tmp;
-+	struct fwnode_handle *sup_fw;
-+
-+	/* Wait for all supplier fwnode links to become device links */
-+	mutex_lock(&fwnode_link_lock);
-+	sup_fw = fwnode_links_check_suppliers(dev->fwnode);
-+	if (sup_fw) {
-+		mutex_unlock(&fwnode_link_lock);
-+		return;
-+	}
-+	mutex_unlock(&fwnode_link_lock);
++	struct fwnode_link *fwlink, *fwtmp;
 +
 +	device_links_write_lock();
 +
@@ -78,6 +74,30 @@
 +		}
 +	}
 +	device_links_write_unlock();
++
++	if (!dev->fwnode)
++		return;
++
++	mutex_lock(&fwnode_link_lock);
++
++	/* Keep flag checks in sync with fwnode_links_check_suppliers() */
++	list_for_each_entry_safe(fwlink, fwtmp, &dev->fwnode->suppliers, c_hook) {
++		if (fwlink->flags & FWLINK_FLAG_CYCLE)
++			continue;
++
++		/* The supplier may be a child firmware node of a device, if so, retry links */
++		if (fwlink->supplier->flags & FWNODE_FLAG_PARENT_IS_DEV) {
++			fwlink->supplier->flags |= FWNODE_FLAG_NOT_DEVICE;
++			dev->fwnode->flags &= ~FWNODE_FLAG_LINKS_ADDED;
++			mutex_unlock(&fwnode_link_lock);
++			fwnode_links_purge(dev->fwnode);
++			device_links_purge(dev);
++			fw_devlink_link_device(dev);
++			device_links_fixup_suppliers(dev);
++			return;
++		}
++	}
++	mutex_unlock(&fwnode_link_lock);
 +}
 +
  /* Device links support end. */
