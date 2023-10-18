@@ -20,7 +20,7 @@
  	pm_runtime_drop_link(link);
  	link->flags = DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
  	dev_dbg(link->consumer, "Relaxing link with %s\n",
-@@ -2270,6 +2273,82 @@ static void fw_devlink_link_device(struc
+@@ -2270,6 +2273,89 @@ static void fw_devlink_link_device(struc
  	mutex_unlock(&fwnode_link_lock);
  }
  
@@ -48,35 +48,11 @@
 + */
 +void device_links_fixup_suppliers(struct device *dev)
 +{
-+	struct device_link *link, *tmp;
 +	struct fwnode_link *fwlink, *fwtmp;
-+
-+	device_links_write_lock();
-+
-+	/* Keep flag checks in sync with device_links_check_suppliers() */
-+	list_for_each_entry_safe(link, tmp, &dev->links.suppliers, c_node) {
-+		if (!(link->flags & DL_FLAG_MANAGED))
-+			continue;
-+
-+		if (link->status != DL_STATE_AVAILABLE &&
-+		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
-+
-+			/* The supplier may be a child firmware node of a device, if so, retry links */
-+			if (link->supplier->fwnode->flags & FWNODE_FLAG_PARENT_IS_DEV) {
-+				link->supplier->fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
-+				dev->fwnode->flags &= ~FWNODE_FLAG_LINKS_ADDED;
-+				device_links_write_unlock();
-+				device_links_purge(dev);
-+				fw_devlink_link_device(dev);
-+				device_links_fixup_suppliers(dev);
-+				return;
-+			}
-+		}
-+	}
-+	device_links_write_unlock();
++	struct device_link *link, *tmp;
 +
 +	if (!dev->fwnode)
-+		return;
++		goto no_fwnode;
 +
 +	mutex_lock(&fwnode_link_lock);
 +
@@ -87,17 +63,48 @@
 +
 +		/* The supplier may be a child firmware node of a device, if so, retry links */
 +		if (fwlink->supplier->flags & FWNODE_FLAG_PARENT_IS_DEV) {
++			dev_dbg(dev, "Linking to ancestor fwnode of %pfwf\n", fwlink->supplier);
 +			fwlink->supplier->flags |= FWNODE_FLAG_NOT_DEVICE;
 +			dev->fwnode->flags &= ~FWNODE_FLAG_LINKS_ADDED;
 +			mutex_unlock(&fwnode_link_lock);
 +			fwnode_links_purge(dev->fwnode);
 +			device_links_purge(dev);
 +			fw_devlink_link_device(dev);
-+			device_links_fixup_suppliers(dev);
-+			return;
++			mutex_lock(&fwnode_link_lock);
++			continue;
 +		}
 +	}
 +	mutex_unlock(&fwnode_link_lock);
++
++no_fwnode:
++	device_links_write_lock();
++
++	/* Keep flag checks in sync with device_links_check_suppliers() */
++	list_for_each_entry_safe(link, tmp, &dev->links.suppliers, c_node) {
++		if (!(link->flags & DL_FLAG_MANAGED))
++			continue;
++
++		if (link->status != DL_STATE_AVAILABLE &&
++		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
++
++			if (!dev->fwnode || !link->supplier->fwnode)
++				continue;
++
++			/* The supplier may be a child firmware node of a device, if so, retry links */
++			if (link->supplier->fwnode->flags & FWNODE_FLAG_PARENT_IS_DEV) {
++				dev_dbg(dev, "Linking to ancestor of %s\n", dev_name(link->supplier));
++				link->supplier->fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++				dev->fwnode->flags &= ~FWNODE_FLAG_LINKS_ADDED;
++				device_links_write_unlock();
++				fwnode_links_purge(dev->fwnode);
++				device_links_purge(dev);
++				fw_devlink_link_device(dev);
++				device_links_write_lock();
++				continue;
++			}
++		}
++	}
++	device_links_write_unlock();
 +}
 +
  /* Device links support end. */
