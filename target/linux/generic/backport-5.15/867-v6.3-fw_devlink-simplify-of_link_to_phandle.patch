@@ -28,11 +28,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  drivers/of/property.c | 84 +++++++------------------------------------
  1 file changed, 13 insertions(+), 71 deletions(-)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 134cfc980b70b3..c651aad6f34b1d 100644
 --- a/drivers/of/property.c
 +++ b/drivers/of/property.c
-@@ -1062,20 +1062,6 @@ of_fwnode_device_get_match_data(const struct fwnode_handle *fwnode,
+@@ -1044,20 +1044,6 @@ of_fwnode_device_get_match_data(const st
  	return of_device_get_match_data(dev);
  }
  
@@ -53,7 +51,7 @@ index 134cfc980b70b3..c651aad6f34b1d 100644
  static struct device_node *of_get_compat_node(struct device_node *np)
  {
  	of_node_get(np);
-@@ -1106,71 +1092,27 @@ static struct device_node *of_get_compat_node_parent(struct device_node *np)
+@@ -1088,71 +1074,27 @@ static struct device_node *of_get_compat
  	return node;
  }
  
