@@ -14,13 +14,13 @@
  	if (device_link_flag_is_sync_state_only(link->flags))
  		return;
  
-+	if (link->supplier->fwnode->flags & FWNODE_FLAG_PARENT_IS_DEV)
++	if (link->supplier->fwnode && (link->supplier->fwnode->flags & FWNODE_FLAG_PARENT_IS_DEV))
 +		return;
 +
  	pm_runtime_drop_link(link);
  	link->flags = DL_FLAG_MANAGED | FW_DEVLINK_FLAGS_PERMISSIVE;
  	dev_dbg(link->consumer, "Relaxing link with %s\n",
-@@ -2270,6 +2273,89 @@ static void fw_devlink_link_device(struc
+@@ -2270,6 +2273,92 @@ static void fw_devlink_link_device(struc
  	mutex_unlock(&fwnode_link_lock);
  }
  
@@ -51,10 +51,11 @@
 +	struct fwnode_link *fwlink, *fwtmp;
 +	struct device_link *link, *tmp;
 +
++	mutex_lock(&fwnode_link_lock);
++	device_links_write_lock();
++
 +	if (!dev->fwnode)
 +		goto no_fwnode;
-+
-+	mutex_lock(&fwnode_link_lock);
 +
 +	/* Keep flag checks in sync with fwnode_links_check_suppliers() */
 +	list_for_each_entry_safe(fwlink, fwtmp, &dev->fwnode->suppliers, c_hook) {
@@ -68,17 +69,16 @@
 +			dev->fwnode->flags &= ~FWNODE_FLAG_LINKS_ADDED;
 +			mutex_unlock(&fwnode_link_lock);
 +			fwnode_links_purge(dev->fwnode);
++			device_links_write_unlock();
 +			device_links_purge(dev);
 +			fw_devlink_link_device(dev);
 +			mutex_lock(&fwnode_link_lock);
++			device_links_write_lock();
 +			continue;
 +		}
 +	}
-+	mutex_unlock(&fwnode_link_lock);
 +
 +no_fwnode:
-+	device_links_write_lock();
-+
 +	/* Keep flag checks in sync with device_links_check_suppliers() */
 +	list_for_each_entry_safe(link, tmp, &dev->links.suppliers, c_node) {
 +		if (!(link->flags & DL_FLAG_MANAGED))
@@ -95,15 +95,18 @@
 +				dev_dbg(dev, "Linking to ancestor of %s\n", dev_name(link->supplier));
 +				link->supplier->fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
 +				dev->fwnode->flags &= ~FWNODE_FLAG_LINKS_ADDED;
-+				device_links_write_unlock();
++				mutex_unlock(&fwnode_link_lock);
 +				fwnode_links_purge(dev->fwnode);
++				device_links_write_unlock();
 +				device_links_purge(dev);
 +				fw_devlink_link_device(dev);
++				mutex_lock(&fwnode_link_lock);
 +				device_links_write_lock();
 +				continue;
 +			}
 +		}
 +	}
++	mutex_unlock(&fwnode_link_lock);
 +	device_links_write_unlock();
 +}
 +
