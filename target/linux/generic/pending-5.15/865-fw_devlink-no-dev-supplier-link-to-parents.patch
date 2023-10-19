@@ -82,18 +82,6 @@
  	else
  		sup_dev = get_dev_from_fwnode(sup_handle);
  
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -1141,7 +1141,8 @@ static int of_link_to_phandle(struct dev
- 	sup_dev = get_dev_from_fwnode(&sup_np->fwnode);
- 	if (!sup_dev &&
- 	    (of_node_check_flag(sup_np, OF_POPULATED) ||
--	     sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
-+	   ((sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE) &&
-+	   !(sup_np->fwnode.flags & FWNODE_FLAG_PARENT_IS_DEV)))) {
- 		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
- 			 con_np, sup_np);
- 		of_node_put(sup_np);
 --- a/include/linux/fwnode.h
 +++ b/include/linux/fwnode.h
 @@ -29,6 +29,9 @@ struct device;
