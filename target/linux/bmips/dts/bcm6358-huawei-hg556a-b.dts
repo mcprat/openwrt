@@ -3,14 +3,17 @@
 #include "bcm6358.dtsi"
 
 / {
-	model = "Huawei EchoLife HG556a (version B)";
 	compatible = "huawei,hg556a-b", "brcm,bcm6358";
+	model = "Huawei EchoLife HG556a (version B)";
 
 	aliases {
 		led-boot = &led_power_red;
 		led-failsafe = &led_power_red;
 		led-running = &led_power_red;
 		led-upgrade = &led_power_red;
+
+		led-dsl = &led_dsl_red;
+		led-usb = &led_hspa_red;
 	};
 
 	keys {
@@ -54,12 +57,12 @@
 			gpios = <&gpio 0 GPIO_ACTIVE_LOW>;
 		};
 
-		led@1 {
+		led_hspa_red: led@1 {
 			label = "red:hspa";
 			gpios = <&gpio 1 GPIO_ACTIVE_LOW>;
 		};
 
-		led@2 {
+		led_dsl_red: led@2 {
 			label = "red:dsl";
 			gpios = <&gpio 2 GPIO_ACTIVE_LOW>;
 		};

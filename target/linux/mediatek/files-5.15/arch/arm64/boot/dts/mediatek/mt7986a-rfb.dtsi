@@ -78,7 +78,7 @@
 	};
 };
 
-&wifi {
+&wmac {
 	status = "okay";
 	pinctrl-names = "default", "dbdc";
 	pinctrl-0 = <&wf_2g_5g_pins>;

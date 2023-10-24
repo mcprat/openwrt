@@ -89,10 +89,6 @@
 	};
 };
 
-&crypto {
-	status = "okay";
-};
-
 &eth {
 	status = "okay";
 
@@ -211,8 +207,8 @@
 		reg = <0>;
 
 		spi-max-frequency = <20000000>;
-		spi-tx-bus-width = <4>;
-		spi-rx-bus-width = <4>;
+		spi-tx-buswidth = <4>;
+		spi-rx-buswidth = <4>;
 
 		partitions: partitions {
 			compatible = "fixed-partitions";
@@ -334,19 +330,11 @@
 	};
 };
 
-&watchdog {
-	status = "okay";
-};
-
-&wifi {
+&wmac {
 	status = "okay";
 	pinctrl-names = "default", "dbdc";
 	pinctrl-0 = <&wf_2g_5g_pins>;
 	pinctrl-1 = <&wf_dbdc_pins>;
-};
-
-&trng {
-	status = "okay";
 };
 
 &uart0 {

@@ -65,8 +65,6 @@
 	gmac-config {
 		device = <&gmac>;
 		rgmii-gmac0 = <1>;
-		rxdv-delay = <3>;
-		rxd-delay = <3>;
 	};
 };
 

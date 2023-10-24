@@ -10,6 +10,10 @@
 		led-boot = &led_phone_green;
 		led-failsafe = &led_phone_green;
 		led-upgrade = &led_phone_green;
+
+		led-internet = &led_internet_green;
+		led-usb = &led_usb_green;
+		led-wireless = &led_wireless_green;
 	};
 
 	keys {
@@ -46,7 +50,7 @@
 			gpios = <&gpio 28 GPIO_ACTIVE_LOW>;
 		};
 
-		led@30 {
+		led_usb_green: led@30 {
 			label = "green:usb";
 			gpios = <&gpio 30 GPIO_ACTIVE_LOW>;
 		};
@@ -70,13 +74,13 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_leds>;
 
-	led@3 {
+	led_internet_green: led@3 {
 		reg = <3>;
 		active-low;
 		label = "green:internet";
 	};
 
-	led@5 {
+	led_wireless_green: led@5 {
 		reg = <5>;
 		active-low;
 		label = "green:wifi";

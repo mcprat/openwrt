@@ -67,10 +67,6 @@
 	};
 };
 
-&scm {
-	qcom,sdi-enabled;
-};
-
 &tlmm {
 	fw_pinmux: fw_pinmux {
 		wp {

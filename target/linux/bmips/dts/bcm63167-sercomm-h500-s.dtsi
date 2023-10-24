@@ -8,6 +8,10 @@
 		led-failsafe = &led_power_red;
 		led-running = &led_power_green;
 		led-upgrade = &led_power_green;
+
+		led-internet = &led_internet_green;
+		led-usb = &led_mobile_green;
+		led-wireless = &led_wireless_green;
 	};
 
 	keys {
@@ -52,7 +56,7 @@
 		label = "red:mobile";
 	};
 
-	led@1 {
+	led_mobile_green: led@1 {
 		reg = <1>;
 		label = "green:mobile";
 	};
@@ -60,10 +64,9 @@
 	led_power_red: led@8 {
 		reg = <8>;
 		label = "red:power";
-		panic-indicator;
 	};
 
-	led@9 {
+	led_wireless_green: led@9 {
 		reg = <9>;
 		label = "green:wifi";
 	};
@@ -83,7 +86,7 @@
 		label = "red:internet";
 	};
 
-	led@15 {
+	led_internet_green: led@15 {
 		reg = <15>;
 		label = "green:internet";
 	};

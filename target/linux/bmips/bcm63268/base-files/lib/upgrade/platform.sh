@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
+. /lib/upgrade/cfe-jffs2-nand.sh
+
 PART_NAME=firmware
 REQUIRE_IMAGE_METADATA=1
 
@@ -9,10 +11,8 @@ platform_check_image() {
 
 platform_do_upgrade() {
 	case "$(board_name)" in
-	comtrend,vg-8050 |\
 	comtrend,vr-3032u)
-		CI_JFFS2_CLEAN_MARKERS=1
-		nand_do_upgrade "$1"
+		cfe_jffs2_nand_upgrade "$1"
 		;;
 	sercomm,h500-s-lowi |\
 	sercomm,h500-s-vfes |\

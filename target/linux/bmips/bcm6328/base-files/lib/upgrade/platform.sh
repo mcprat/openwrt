@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
+. /lib/upgrade/cfe-jffs2-nand.sh
+
 PART_NAME=firmware
 REQUIRE_IMAGE_METADATA=1
 
@@ -9,9 +11,6 @@ platform_check_image() {
 
 platform_do_upgrade() {
 	case "$(board_name)" in
-	sercomm,ad1018)
-		nand_do_upgrade "$1"
-		;;
 	*)
 		default_do_upgrade "$1"
 		;;
