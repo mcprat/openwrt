@@ -62,7 +62,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/dsa/qca/qca8k-8xxx.c
 +++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -575,8 +575,11 @@ static struct regmap_config qca8k_regmap
+@@ -523,8 +523,11 @@ static struct regmap_config qca8k_regmap
  	.rd_table = &qca8k_readable_table,
  	.disable_locking = true, /* Locking is handled by qca8k read/write */
  	.cache_type = REGCACHE_NONE, /* Explicitly disable CACHE */

@@ -39,7 +39,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/dsa/qca/qca8k-8xxx.c
 +++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -504,8 +504,8 @@ qca8k_bulk_read(void *ctx, const void *r
+@@ -452,8 +452,8 @@ qca8k_bulk_read(void *ctx, const void *r
  		void *val_buf, size_t val_len)
  {
  	int i, count = val_len / sizeof(u32), ret;
@@ -49,7 +49,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  
  	if (priv->mgmt_master &&
  	    !qca8k_read_eth(priv, reg, val_buf, val_len))
-@@ -526,8 +526,8 @@ qca8k_bulk_gather_write(void *ctx, const
+@@ -474,8 +474,8 @@ qca8k_bulk_gather_write(void *ctx, const
  			const void *val_buf, size_t val_len)
  {
  	int i, count = val_len / sizeof(u32), ret;

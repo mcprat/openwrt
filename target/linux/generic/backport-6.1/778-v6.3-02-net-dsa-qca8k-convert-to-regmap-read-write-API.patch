@@ -25,7 +25,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/dsa/qca/qca8k-8xxx.c
 +++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -425,16 +425,12 @@ qca8k_regmap_update_bits_eth(struct qca8
+@@ -373,16 +373,12 @@ qca8k_regmap_update_bits_eth(struct qca8
  }
  
  static int
@@ -43,7 +43,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	qca8k_split_addr(reg, &r1, &r2, &page);
  
  	mutex_lock_nested(&bus->mdio_lock, MDIO_MUTEX_NESTED);
-@@ -451,16 +447,12 @@ exit:
+@@ -399,16 +395,12 @@ exit:
  }
  
  static int
@@ -61,7 +61,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	qca8k_split_addr(reg, &r1, &r2, &page);
  
  	mutex_lock_nested(&bus->mdio_lock, MDIO_MUTEX_NESTED);
-@@ -477,17 +469,14 @@ exit:
+@@ -425,17 +417,14 @@ exit:
  }
  
  static int
@@ -81,7 +81,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	qca8k_split_addr(reg, &r1, &r2, &page);
  
  	mutex_lock_nested(&bus->mdio_lock, MDIO_MUTEX_NESTED);
-@@ -510,17 +499,84 @@ exit:
+@@ -458,17 +447,84 @@ exit:
  	return ret;
  }
  
@@ -168,7 +168,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
  
  static int
-@@ -2089,8 +2145,6 @@ static SIMPLE_DEV_PM_OPS(qca8k_pm_ops,
+@@ -2039,8 +2095,6 @@ static SIMPLE_DEV_PM_OPS(qca8k_pm_ops,
  
  static const struct qca8k_info_ops qca8xxx_ops = {
  	.autocast_mib = qca8k_get_ethtool_stats_eth,

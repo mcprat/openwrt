@@ -32,7 +32,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 
 --- a/drivers/net/dsa/qca/qca8k-8xxx.c
 +++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -1881,9 +1881,8 @@ qca8k_setup(struct dsa_switch *ds)
+@@ -1829,9 +1829,8 @@ qca8k_setup(struct dsa_switch *ds)
  			if (ret)
  				return ret;
  
@@ -44,7 +44,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  			if (ret)
  				return ret;
  
-@@ -1989,6 +1988,8 @@ static const struct dsa_switch_ops qca8k
+@@ -1937,6 +1936,8 @@ static const struct dsa_switch_ops qca8k
  	.port_change_mtu	= qca8k_port_change_mtu,
  	.port_max_mtu		= qca8k_port_max_mtu,
  	.port_stp_state_set	= qca8k_port_stp_state_set,
@@ -131,7 +131,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  int qca8k_port_bridge_join(struct dsa_switch *ds, int port,
 --- a/drivers/net/dsa/qca/qca8k.h
 +++ b/drivers/net/dsa/qca/qca8k.h
-@@ -448,6 +448,12 @@ int qca8k_get_mac_eee(struct dsa_switch
+@@ -453,6 +453,12 @@ int qca8k_get_mac_eee(struct dsa_switch
  
  /* Common bridge function */
  void qca8k_port_stp_state_set(struct dsa_switch *ds, int port, u8 state);
