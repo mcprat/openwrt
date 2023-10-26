@@ -205,7 +205,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  /**
   * nvmem_register() - Register a nvmem device for given nvmem_config.
   * Also creates a binary entry in /sys/bus/nvmem/devices/dev-name/nvmem
-@@ -834,6 +933,12 @@ struct nvmem_device *nvmem_register(cons
+@@ -832,6 +931,12 @@ struct nvmem_device *nvmem_register(cons
  			goto err_put_device;
  	}
  
@@ -218,7 +218,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	if (config->cells) {
  		rval = nvmem_add_cells(nvmem, config->cells, config->ncells);
  		if (rval)
-@@ -854,12 +959,17 @@ struct nvmem_device *nvmem_register(cons
+@@ -852,12 +957,17 @@ struct nvmem_device *nvmem_register(cons
  	if (rval)
  		goto err_remove_cells;
  
@@ -233,10 +233,10 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  err_remove_cells:
  	nvmem_device_remove_all_cells(nvmem);
 +	nvmem_layout_put(nvmem->layout);
+ err_teardown_compat:
  	if (config->compat)
  		nvmem_sysfs_remove_compat(nvmem, config);
- err_put_device:
-@@ -881,6 +991,7 @@ static void nvmem_device_release(struct
+@@ -880,6 +990,7 @@ static void nvmem_device_release(struct
  		device_remove_bin_file(nvmem->base_dev, &nvmem->eeprom);
  
  	nvmem_device_remove_all_cells(nvmem);
@@ -244,9 +244,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	device_unregister(&nvmem->dev);
  }
  
-@@ -1246,6 +1357,15 @@ struct nvmem_cell *of_nvmem_cell_get(str
+@@ -1243,6 +1354,15 @@ struct nvmem_cell *of_nvmem_cell_get(str
+ 	if (!nvmem_np)
  		return ERR_PTR(-EINVAL);
- 	}
  
 +	/* nvmem layouts produce cells within the nvmem-layout container */
 +	if (of_node_name_eq(nvmem_np, "nvmem-layout")) {
@@ -259,7 +259,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +
  	nvmem = __nvmem_device_get(nvmem_np, device_match_of_node);
  	of_node_put(nvmem_np);
- 	if (IS_ERR(nvmem)) {
+ 	if (IS_ERR(nvmem))
 --- /dev/null
 +++ b/drivers/nvmem/layouts/Kconfig
 @@ -0,0 +1,5 @@
