@@ -141,7 +141,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 +	err = of_phy_leds(phydev);
 +
  out:
- 	/* Re-assert the reset signal on error */
+ 	/* Assert the reset signal */
  	if (err)
 --- a/include/linux/phy.h
 +++ b/include/linux/phy.h

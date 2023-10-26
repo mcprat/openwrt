@@ -16,7 +16,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/nvmem/sunxi_sid.c
 +++ b/drivers/nvmem/sunxi_sid.c
-@@ -125,7 +125,6 @@ static int sun8i_sid_read_by_reg(void *c
+@@ -112,7 +112,6 @@ static int sun8i_sid_read_by_reg(void *c
  static int sunxi_sid_probe(struct platform_device *pdev)
  {
  	struct device *dev = &pdev->dev;
@@ -24,7 +24,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	struct nvmem_config *nvmem_cfg;
  	struct nvmem_device *nvmem;
  	struct sunxi_sid *sid;
-@@ -142,8 +141,7 @@ static int sunxi_sid_probe(struct platfo
+@@ -129,8 +128,7 @@ static int sunxi_sid_probe(struct platfo
  		return -EINVAL;
  	sid->value_offset = cfg->value_offset;
  

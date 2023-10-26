@@ -44,7 +44,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/acpi/bus.c
 +++ b/drivers/acpi/bus.c
-@@ -806,9 +806,10 @@ static bool acpi_of_modalias(struct acpi
+@@ -814,9 +814,10 @@ static bool acpi_of_modalias(struct acpi
   * @modalias:   Pointer to buffer that modalias value will be copied into
   * @len:	Length of modalias buffer
   *

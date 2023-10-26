@@ -36,7 +36,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	cell->bit_offset = info->bit_offset;
  	cell->nbits = info->nbits;
-@@ -1563,6 +1565,13 @@ static int __nvmem_cell_read(struct nvme
+@@ -1556,6 +1558,13 @@ static int __nvmem_cell_read(struct nvme
  	if (cell->bit_offset || cell->nbits)
  		nvmem_shift_read_buffer_in_place(cell, buf);
  
@@ -50,7 +50,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	if (nvmem->cell_post_process) {
  		rc = nvmem->cell_post_process(nvmem->priv, id, index,
  					      cell->offset, buf, cell->bytes);
-@@ -1671,6 +1680,14 @@ static int __nvmem_cell_entry_write(stru
+@@ -1664,6 +1673,14 @@ static int __nvmem_cell_entry_write(stru
  	    (cell->bit_offset == 0 && len != cell->bytes))
  		return -EINVAL;
  

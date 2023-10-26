@@ -27,7 +27,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 
 --- a/drivers/net/dsa/mv88e6xxx/chip.c
 +++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -472,7 +472,9 @@ restore_link:
+@@ -465,7 +465,9 @@ restore_link:
  
  static int mv88e6xxx_phy_is_internal(struct mv88e6xxx_chip *chip, int port)
  {
@@ -54,7 +54,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
  struct mv88e6xxx_atu_entry {
 --- a/drivers/net/dsa/mv88e6xxx/global2.c
 +++ b/drivers/net/dsa/mv88e6xxx/global2.c
-@@ -1185,8 +1185,11 @@ int mv88e6xxx_g2_irq_mdio_setup(struct m
+@@ -1165,8 +1165,11 @@ int mv88e6xxx_g2_irq_mdio_setup(struct m
  				struct mii_bus *bus)
  {
  	int phy, irq, err, err_phy;

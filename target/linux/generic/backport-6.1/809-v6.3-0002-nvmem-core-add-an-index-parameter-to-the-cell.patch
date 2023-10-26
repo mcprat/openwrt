@@ -47,7 +47,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  };
  
  static DEFINE_MUTEX(nvmem_mutex);
-@@ -1122,7 +1123,8 @@ struct nvmem_device *devm_nvmem_device_g
+@@ -1127,7 +1128,8 @@ struct nvmem_device *devm_nvmem_device_g
  }
  EXPORT_SYMBOL_GPL(devm_nvmem_device_get);
  
@@ -57,7 +57,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  {
  	struct nvmem_cell *cell;
  	const char *name = NULL;
-@@ -1141,6 +1143,7 @@ static struct nvmem_cell *nvmem_create_c
+@@ -1146,6 +1148,7 @@ static struct nvmem_cell *nvmem_create_c
  
  	cell->id = name;
  	cell->entry = entry;
@@ -65,7 +65,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	return cell;
  }
-@@ -1179,7 +1182,7 @@ nvmem_cell_get_from_lookup(struct device
+@@ -1184,7 +1187,7 @@ nvmem_cell_get_from_lookup(struct device
  				__nvmem_device_put(nvmem);
  				cell = ERR_PTR(-ENOENT);
  			} else {
@@ -74,7 +74,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  				if (IS_ERR(cell))
  					__nvmem_device_put(nvmem);
  			}
-@@ -1227,15 +1230,27 @@ struct nvmem_cell *of_nvmem_cell_get(str
+@@ -1232,15 +1235,27 @@ struct nvmem_cell *of_nvmem_cell_get(str
  	struct nvmem_device *nvmem;
  	struct nvmem_cell_entry *cell_entry;
  	struct nvmem_cell *cell;
@@ -103,8 +103,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	if (cell_spec.args_count)
 +		cell_index = cell_spec.args[0];
  
- 	nvmem_np = of_get_parent(cell_np);
- 	if (!nvmem_np) {
+ 	nvmem_np = of_get_next_parent(cell_np);
+ 	if (!nvmem_np)
 @@ -1257,7 +1272,7 @@ struct nvmem_cell *of_nvmem_cell_get(str
  		return ERR_PTR(-ENOENT);
  	}

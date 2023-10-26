@@ -18,7 +18,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/nvmem/brcm_nvram.c
 +++ b/drivers/nvmem/brcm_nvram.c
-@@ -159,8 +159,7 @@ static int brcm_nvram_probe(struct platf
+@@ -156,8 +156,7 @@ static int brcm_nvram_probe(struct platf
  		return -ENOMEM;
  	priv->dev = dev;
  

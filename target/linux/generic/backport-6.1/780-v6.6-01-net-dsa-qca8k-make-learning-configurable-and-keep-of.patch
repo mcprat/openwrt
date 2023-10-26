@@ -32,7 +32,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 
 --- a/drivers/net/dsa/qca/qca8k-8xxx.c
 +++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -1883,9 +1883,8 @@ qca8k_setup(struct dsa_switch *ds)
+@@ -1881,9 +1881,8 @@ qca8k_setup(struct dsa_switch *ds)
  			if (ret)
  				return ret;
  
@@ -44,7 +44,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  			if (ret)
  				return ret;
  
-@@ -1991,6 +1990,8 @@ static const struct dsa_switch_ops qca8k
+@@ -1989,6 +1988,8 @@ static const struct dsa_switch_ops qca8k
  	.port_change_mtu	= qca8k_port_change_mtu,
  	.port_max_mtu		= qca8k_port_max_mtu,
  	.port_stp_state_set	= qca8k_port_stp_state_set,
@@ -55,7 +55,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  	.port_fast_age		= qca8k_port_fast_age,
 --- a/drivers/net/dsa/qca/qca8k-common.c
 +++ b/drivers/net/dsa/qca/qca8k-common.c
-@@ -565,9 +565,26 @@ int qca8k_get_mac_eee(struct dsa_switch
+@@ -559,9 +559,26 @@ int qca8k_get_mac_eee(struct dsa_switch
  	return 0;
  }
  
@@ -82,7 +82,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  	u32 stp_state;
  
  	switch (state) {
-@@ -582,8 +599,11 @@ void qca8k_port_stp_state_set(struct dsa
+@@ -576,8 +593,11 @@ void qca8k_port_stp_state_set(struct dsa
  		break;
  	case BR_STATE_LEARNING:
  		stp_state = QCA8K_PORT_LOOKUP_STATE_LEARNING;
@@ -94,7 +94,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  	default:
  		stp_state = QCA8K_PORT_LOOKUP_STATE_FORWARD;
  		break;
-@@ -591,6 +611,34 @@ void qca8k_port_stp_state_set(struct dsa
+@@ -585,6 +605,34 @@ void qca8k_port_stp_state_set(struct dsa
  
  	qca8k_rmw(priv, QCA8K_PORT_LOOKUP_CTRL(port),
  		  QCA8K_PORT_LOOKUP_STATE_MASK, stp_state);

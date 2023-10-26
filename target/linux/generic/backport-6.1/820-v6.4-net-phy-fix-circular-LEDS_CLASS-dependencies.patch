@@ -62,4 +62,4 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 +		err = of_phy_leds(phydev);
  
  out:
- 	/* Re-assert the reset signal on error */
+ 	/* Assert the reset signal */

@@ -74,7 +74,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  int __nvmem_layout_register(struct nvmem_layout *layout, struct module *owner)
  {
  	layout->owner = owner;
-@@ -972,7 +994,7 @@ struct nvmem_device *nvmem_register(cons
+@@ -970,7 +992,7 @@ struct nvmem_device *nvmem_register(cons
  	if (rval)
  		goto err_remove_cells;
  
@@ -83,7 +83,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	if (rval)
  		goto err_remove_cells;
  
-@@ -982,6 +1004,10 @@ struct nvmem_device *nvmem_register(cons
+@@ -980,6 +1002,10 @@ struct nvmem_device *nvmem_register(cons
  	if (rval)
  		goto err_remove_cells;
  

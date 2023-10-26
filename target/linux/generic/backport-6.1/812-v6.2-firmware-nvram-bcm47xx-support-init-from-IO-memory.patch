@@ -67,7 +67,7 @@ Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
  #include <linux/io.h>
  #include <linux/mod_devicetable.h>
  #include <linux/module.h>
-@@ -139,6 +140,8 @@ static int brcm_nvram_probe(struct platf
+@@ -136,6 +137,8 @@ static int brcm_nvram_probe(struct platf
  	if (err)
  		return err;
  

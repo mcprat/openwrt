@@ -26,7 +26,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
 
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -4454,68 +4454,6 @@ done:
+@@ -4437,68 +4437,6 @@ done:
  	return true;
  }
  
@@ -95,7 +95,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  static bool lruvec_is_sizable(struct lruvec *lruvec, struct scan_control *sc)
  {
  	int gen, type, zone;
-@@ -5099,6 +5037,68 @@ retry:
+@@ -5082,6 +5020,68 @@ retry:
  	return scanned;
  }
  

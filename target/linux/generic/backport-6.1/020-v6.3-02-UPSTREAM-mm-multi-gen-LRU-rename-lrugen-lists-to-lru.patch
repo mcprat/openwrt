@@ -105,7 +105,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  	/* the exponential moving average of refaulted */
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -4258,7 +4258,7 @@ static bool inc_min_seq(struct lruvec *l
+@@ -4241,7 +4241,7 @@ static bool inc_min_seq(struct lruvec *l
  
  	/* prevent cold/hot inversion if force_scan is true */
  	for (zone = 0; zone < MAX_NR_ZONES; zone++) {
@@ -114,7 +114,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  
  		while (!list_empty(head)) {
  			struct folio *folio = lru_to_folio(head);
-@@ -4269,7 +4269,7 @@ static bool inc_min_seq(struct lruvec *l
+@@ -4252,7 +4252,7 @@ static bool inc_min_seq(struct lruvec *l
  			VM_WARN_ON_ONCE_FOLIO(folio_zonenum(folio) != zone, folio);
  
  			new_gen = folio_inc_gen(lruvec, folio, false);
@@ -123,7 +123,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  
  			if (!--remaining)
  				return false;
-@@ -4297,7 +4297,7 @@ static bool try_to_inc_min_seq(struct lr
+@@ -4280,7 +4280,7 @@ static bool try_to_inc_min_seq(struct lr
  			gen = lru_gen_from_seq(min_seq[type]);
  
  			for (zone = 0; zone < MAX_NR_ZONES; zone++) {
@@ -132,7 +132,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  					goto next;
  			}
  
-@@ -4762,7 +4762,7 @@ static bool sort_folio(struct lruvec *lr
+@@ -4745,7 +4745,7 @@ static bool sort_folio(struct lruvec *lr
  
  	/* promoted */
  	if (gen != lru_gen_from_seq(lrugen->min_seq[type])) {
@@ -141,7 +141,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  		return true;
  	}
  
-@@ -4771,7 +4771,7 @@ static bool sort_folio(struct lruvec *lr
+@@ -4754,7 +4754,7 @@ static bool sort_folio(struct lruvec *lr
  		int hist = lru_hist_from_seq(lrugen->min_seq[type]);
  
  		gen = folio_inc_gen(lruvec, folio, false);
@@ -150,7 +150,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  
  		WRITE_ONCE(lrugen->protected[hist][type][tier - 1],
  			   lrugen->protected[hist][type][tier - 1] + delta);
-@@ -4783,7 +4783,7 @@ static bool sort_folio(struct lruvec *lr
+@@ -4766,7 +4766,7 @@ static bool sort_folio(struct lruvec *lr
  	if (folio_test_locked(folio) || folio_test_writeback(folio) ||
  	    (type == LRU_GEN_FILE && folio_test_dirty(folio))) {
  		gen = folio_inc_gen(lruvec, folio, true);
@@ -159,7 +159,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  		return true;
  	}
  
-@@ -4850,7 +4850,7 @@ static int scan_folios(struct lruvec *lr
+@@ -4833,7 +4833,7 @@ static int scan_folios(struct lruvec *lr
  	for (zone = sc->reclaim_idx; zone >= 0; zone--) {
  		LIST_HEAD(moved);
  		int skipped = 0;
@@ -168,7 +168,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  
  		while (!list_empty(head)) {
  			struct folio *folio = lru_to_folio(head);
-@@ -5250,7 +5250,7 @@ static bool __maybe_unused state_is_vali
+@@ -5233,7 +5233,7 @@ static bool __maybe_unused state_is_vali
  		int gen, type, zone;
  
  		for_each_gen_type_zone(gen, type, zone) {
@@ -177,7 +177,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  				return false;
  		}
  	}
-@@ -5295,7 +5295,7 @@ static bool drain_evictable(struct lruve
+@@ -5278,7 +5278,7 @@ static bool drain_evictable(struct lruve
  	int remaining = MAX_LRU_BATCH;
  
  	for_each_gen_type_zone(gen, type, zone) {
@@ -186,7 +186,7 @@ Signed-off-by: T.J. Mercier <tjmercier@google.com>
  
  		while (!list_empty(head)) {
  			bool success;
-@@ -5832,7 +5832,7 @@ void lru_gen_init_lruvec(struct lruvec *
+@@ -5815,7 +5815,7 @@ void lru_gen_init_lruvec(struct lruvec *
  		lrugen->timestamps[i] = jiffies;
  
  	for_each_gen_type_zone(gen, type, zone)

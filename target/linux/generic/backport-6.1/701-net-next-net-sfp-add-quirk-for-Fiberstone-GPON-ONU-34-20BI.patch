@@ -18,7 +18,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 
 --- a/drivers/net/phy/sfp.c
 +++ b/drivers/net/phy/sfp.c
-@@ -393,6 +393,11 @@ static const struct sfp_quirk sfp_quirks
+@@ -387,6 +387,11 @@ static const struct sfp_quirk sfp_quirks
  	SFP_QUIRK("ALCATELLUCENT", "3FE46541AA", sfp_quirk_2500basex,
  		  sfp_fixup_long_startup),
  
@@ -29,4 +29,4 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 +
  	SFP_QUIRK_F("HALNy", "HL-GSFP", sfp_fixup_halny_gsfp),
  
- 	// HG MXPD-483II-F 2.5G supports 2500Base-X, but incorrectly reports
+ 	// Huawei MA5671A can operate at 2500base-X, but report 1.2GBd NRZ in

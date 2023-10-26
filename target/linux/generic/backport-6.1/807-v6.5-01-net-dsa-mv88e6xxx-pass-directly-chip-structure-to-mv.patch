@@ -23,7 +23,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 
 --- a/drivers/net/dsa/mv88e6xxx/chip.c
 +++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -470,10 +470,8 @@ restore_link:
+@@ -463,10 +463,8 @@ restore_link:
  	return err;
  }
  
@@ -35,7 +35,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
  	return port < chip->info->num_internal_phys;
  }
  
-@@ -591,7 +589,7 @@ static void mv88e6095_phylink_get_caps(s
+@@ -584,7 +582,7 @@ static void mv88e6095_phylink_get_caps(s
  
  	config->mac_capabilities = MAC_SYM_PAUSE | MAC_10 | MAC_100;
  
@@ -44,7 +44,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
  		__set_bit(PHY_INTERFACE_MODE_MII, config->supported_interfaces);
  	} else {
  		if (cmode < ARRAY_SIZE(mv88e6185_phy_interface_modes) &&
-@@ -839,7 +837,7 @@ static void mv88e6xxx_get_caps(struct ds
+@@ -832,7 +830,7 @@ static void mv88e6xxx_get_caps(struct ds
  	chip->info->ops->phylink_get_caps(chip, port, config);
  	mv88e6xxx_reg_unlock(chip);
  
@@ -53,7 +53,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
  		__set_bit(PHY_INTERFACE_MODE_INTERNAL,
  			  config->supported_interfaces);
  		/* Internal ports with no phy-mode need GMII for PHYLIB */
-@@ -860,7 +858,7 @@ static void mv88e6xxx_mac_config(struct
+@@ -853,7 +851,7 @@ static void mv88e6xxx_mac_config(struct
  
  	mv88e6xxx_reg_lock(chip);
  
