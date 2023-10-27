@@ -5,7 +5,7 @@
  #endif
  
 -#if LINUX_VERSION_IS_LESS(6,2,0)
-+#if LINUX_VERSION_IS_LESS(6,1,4)
++#if LINUX_VERSION_IS_LESS(5,0,4)
  static inline u32 __get_random_u32_below(u32 ceil)
  {
  	/*
