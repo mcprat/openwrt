@@ -44,7 +44,7 @@ Link: https://lore.kernel.org/r/20230526204802.3081168-1-robimarko@gmail.com
  #ifdef CONFIG_DEBUG_FS
  #define SMEM_IMAGE_VERSION_BLOCKS_COUNT        32
  #define SMEM_IMAGE_VERSION_SIZE                4096
-@@ -116,54 +108,6 @@ static const char *const pmic_models[] =
+@@ -115,54 +107,6 @@ static const char *const pmic_models[] =
  };
  #endif /* CONFIG_DEBUG_FS */
  

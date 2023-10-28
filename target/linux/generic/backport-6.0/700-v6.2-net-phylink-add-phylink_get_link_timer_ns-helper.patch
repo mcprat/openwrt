@@ -15,7 +15,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 
 --- a/include/linux/phylink.h
 +++ b/include/linux/phylink.h
-@@ -613,6 +613,30 @@ int phylink_speed_up(struct phylink *pl)
+@@ -577,6 +577,30 @@ int phylink_speed_up(struct phylink *pl)
  
  void phylink_set_port_modes(unsigned long *bits);
  

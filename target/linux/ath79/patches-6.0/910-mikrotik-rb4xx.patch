@@ -45,7 +45,7 @@ Submitted-by: Christopher Hill <ch6574@gmail.com>
 
 --- a/drivers/mfd/Kconfig
 +++ b/drivers/mfd/Kconfig
-@@ -2208,6 +2208,14 @@ config RAVE_SP_CORE
+@@ -2148,6 +2148,14 @@ config RAVE_SP_CORE
  	  Select this to get support for the Supervisory Processor
  	  device found on several devices in RAVE line of hardware.
  
@@ -62,7 +62,7 @@ Submitted-by: Christopher Hill <ch6574@gmail.com>
  	depends on PCI && MIPS && 64BIT
 --- a/drivers/mfd/Makefile
 +++ b/drivers/mfd/Makefile
-@@ -269,6 +269,7 @@ obj-$(CONFIG_MFD_KHADAS_MCU) 	+= khadas-
+@@ -264,6 +264,7 @@ obj-$(CONFIG_MFD_KHADAS_MCU) 	+= khadas-
  obj-$(CONFIG_MFD_ACER_A500_EC)	+= acer-ec-a500.o
  obj-$(CONFIG_MFD_QCOM_PM8008)	+= qcom-pm8008.o
  
@@ -72,7 +72,7 @@ Submitted-by: Christopher Hill <ch6574@gmail.com>
  obj-$(CONFIG_MFD_INTEL_M10_BMC)   += intel-m10-bmc.o
 --- a/drivers/gpio/Kconfig
 +++ b/drivers/gpio/Kconfig
-@@ -1593,6 +1593,12 @@ config GPIO_SODAVILLE
+@@ -1602,6 +1602,12 @@ config GPIO_SODAVILLE
  	help
  	  Say Y here to support Intel Sodaville GPIO.
  
@@ -97,7 +97,7 @@ Submitted-by: Christopher Hill <ch6574@gmail.com>
  obj-$(CONFIG_GPIO_RDA)			+= gpio-rda.o
 --- a/drivers/mtd/nand/raw/Kconfig
 +++ b/drivers/mtd/nand/raw/Kconfig
-@@ -565,4 +565,11 @@ config MTD_NAND_AR934X
+@@ -585,4 +585,11 @@ config MTD_NAND_AR934X
  	  Enables support for NAND controller on Qualcomm Atheros SoCs.
  	  This controller is found on AR934x and QCA955x SoCs.
  

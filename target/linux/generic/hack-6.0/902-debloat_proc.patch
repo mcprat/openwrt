@@ -29,7 +29,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/fs/locks.c
 +++ b/fs/locks.c
-@@ -2885,6 +2885,8 @@ static const struct seq_operations locks
+@@ -2908,6 +2908,8 @@ static const struct seq_operations locks
  
  static int __init proc_locks_init(void)
  {
@@ -40,7 +40,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	return 0;
 --- a/fs/proc/Kconfig
 +++ b/fs/proc/Kconfig
-@@ -101,6 +101,11 @@ config PROC_CHILDREN
+@@ -100,6 +100,11 @@ config PROC_CHILDREN
  	  Say Y if you are running any user-space software which takes benefit from
  	  this interface. For example, rkt is such a piece of software.
  
@@ -135,7 +135,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	do {								\
 --- a/ipc/msg.c
 +++ b/ipc/msg.c
-@@ -1370,6 +1370,9 @@ void __init msg_init(void)
+@@ -1350,6 +1350,9 @@ void __init msg_init(void)
  {
  	msg_init_ns(&init_ipc_ns);
  
@@ -235,7 +235,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	if (!pe)
 --- a/mm/vmalloc.c
 +++ b/mm/vmalloc.c
-@@ -4177,6 +4177,8 @@ static const struct seq_operations vmall
+@@ -4160,6 +4160,8 @@ static const struct seq_operations vmall
  
  static int __init proc_vmalloc_init(void)
  {
@@ -246,9 +246,9 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  				&vmalloc_op,
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
-@@ -2109,10 +2109,12 @@ void __init init_mm_internals(void)
- 	start_shepherd_timer();
+@@ -2127,10 +2127,12 @@ void __init init_mm_internals(void)
  #endif
+ 	migrate_on_reclaim_init();
  #ifdef CONFIG_PROC_FS
 -	proc_create_seq("buddyinfo", 0444, NULL, &fragmentation_op);
 -	proc_create_seq("pagetypeinfo", 0400, NULL, &pagetypeinfo_op);
@@ -330,7 +330,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/net/core/sock.c
 +++ b/net/core/sock.c
-@@ -4077,6 +4077,8 @@ static __net_initdata struct pernet_oper
+@@ -4021,6 +4021,8 @@ static __net_initdata struct pernet_oper
  
  static int __init proto_init(void)
  {

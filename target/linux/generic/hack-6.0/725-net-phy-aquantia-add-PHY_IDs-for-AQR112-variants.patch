@@ -21,7 +21,7 @@ Signed-off-by: Daniel Golle <daniel@makrotopia.org>
  
  #define MDIO_PHYXS_VEND_IF_STATUS		0xe812
  #define MDIO_PHYXS_VEND_IF_STATUS_TYPE_MASK	GENMASK(7, 3)
-@@ -990,6 +992,30 @@ static struct phy_driver aqr_driver[] =
+@@ -932,6 +934,30 @@ static struct phy_driver aqr_driver[] =
  	.handle_interrupt = aqr_handle_interrupt,
  	.read_status	= aqr107_read_status,
  },
@@ -52,7 +52,7 @@ Signed-off-by: Daniel Golle <daniel@makrotopia.org>
  };
  
  module_phy_driver(aqr_driver);
-@@ -1007,6 +1033,8 @@ static struct mdio_device_id __maybe_unu
+@@ -949,6 +975,8 @@ static struct mdio_device_id __maybe_unu
  	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR112) },
  	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR412) },
  	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR113) },

@@ -29,7 +29,7 @@ Tested-by: Koen Vandeputte <koen.vandeputte@ncentric.com>
 
 --- a/drivers/gpio/Kconfig
 +++ b/drivers/gpio/Kconfig
-@@ -368,6 +368,12 @@ config GPIO_IXP4XX
+@@ -364,6 +364,12 @@ config GPIO_IXP4XX
  
  	  If unsure, say N.
  
@@ -42,7 +42,7 @@ Tested-by: Koen Vandeputte <koen.vandeputte@ncentric.com>
  config GPIO_LOGICVC
  	tristate "Xylon LogiCVC GPIO support"
  	depends on MFD_SYSCON && OF
-@@ -544,6 +550,10 @@ config GPIO_ROCKCHIP
+@@ -540,6 +546,10 @@ config GPIO_ROCKCHIP
  	help
  	  Say yes here to support GPIO on Rockchip SoCs.
  
@@ -73,7 +73,7 @@ Tested-by: Koen Vandeputte <koen.vandeputte@ncentric.com>
  obj-$(CONFIG_GPIO_RDA)			+= gpio-rda.o
 --- a/drivers/mtd/nand/raw/Kconfig
 +++ b/drivers/mtd/nand/raw/Kconfig
-@@ -572,4 +572,10 @@ config MTD_NAND_RB4XX
+@@ -592,4 +592,10 @@ config MTD_NAND_RB4XX
  	  Enables support for the NAND flash chip on Mikrotik Routerboard
  	  RB4xx series.
  

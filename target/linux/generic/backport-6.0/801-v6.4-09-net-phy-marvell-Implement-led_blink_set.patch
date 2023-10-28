@@ -62,7 +62,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  static int marvell_probe(struct phy_device *phydev)
  {
  	struct marvell_priv *priv;
-@@ -3112,6 +3143,7 @@ static struct phy_driver marvell_drivers
+@@ -3111,6 +3142,7 @@ static struct phy_driver marvell_drivers
  		.get_strings = marvell_get_strings,
  		.get_stats = marvell_get_stats,
  		.led_brightness_set = m88e1318_led_brightness_set,
@@ -70,7 +70,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E1145,
-@@ -3219,6 +3251,7 @@ static struct phy_driver marvell_drivers
+@@ -3218,6 +3250,7 @@ static struct phy_driver marvell_drivers
  		.cable_test_tdr_start = marvell_vct5_cable_test_tdr_start,
  		.cable_test_get_status = marvell_vct7_cable_test_get_status,
  		.led_brightness_set = m88e1318_led_brightness_set,
@@ -78,7 +78,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E1540,
-@@ -3246,6 +3279,7 @@ static struct phy_driver marvell_drivers
+@@ -3245,6 +3278,7 @@ static struct phy_driver marvell_drivers
  		.cable_test_tdr_start = marvell_vct5_cable_test_tdr_start,
  		.cable_test_get_status = marvell_vct7_cable_test_get_status,
  		.led_brightness_set = m88e1318_led_brightness_set,
@@ -86,7 +86,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E1545,
-@@ -3273,6 +3307,7 @@ static struct phy_driver marvell_drivers
+@@ -3272,6 +3306,7 @@ static struct phy_driver marvell_drivers
  		.cable_test_tdr_start = marvell_vct5_cable_test_tdr_start,
  		.cable_test_get_status = marvell_vct7_cable_test_get_status,
  		.led_brightness_set = m88e1318_led_brightness_set,
@@ -94,7 +94,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E3016,
-@@ -3415,6 +3450,7 @@ static struct phy_driver marvell_drivers
+@@ -3414,6 +3449,7 @@ static struct phy_driver marvell_drivers
  		.get_tunable = m88e1540_get_tunable,
  		.set_tunable = m88e1540_set_tunable,
  		.led_brightness_set = m88e1318_led_brightness_set,
