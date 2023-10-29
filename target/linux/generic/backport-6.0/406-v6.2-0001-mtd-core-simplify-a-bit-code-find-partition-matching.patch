@@ -37,7 +37,7 @@ Link: https://lore.kernel.org/linux-mtd/20221004083710.27704-1-zajec5@gmail.com
  	if (!mtd_is_partition(mtd))
  		return;
 -	parent = mtd->parent;
--	parent_dn = of_node_get(dev_of_node(&parent->dev));
+-	parent_dn = dev_of_node(&parent->dev);
 +	parent_dn = of_node_get(mtd_get_of_node(mtd->parent));
  	if (!parent_dn)
  		return;
