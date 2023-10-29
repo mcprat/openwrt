@@ -19,23 +19,34 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -1694,6 +1694,7 @@ enum netdev_priv_flags {
- 	/* was IFF_LIVE_RENAME_OK */
- 	IFF_TX_SKB_NO_LINEAR		= BIT_ULL(31),
+@@ -1696,6 +1696,10 @@ enum netdev_priv_flags {
  	IFF_CHANGE_PROTO_DOWN		= BIT_ULL(32),
-+	IFF_NO_IP_ALIGN			= BIT_ULL(33),
  };
  
++enum netdev_extra_priv_flags {
++	IFF_NO_IP_ALIGN			= 1<<0,
++};
++
  #define IFF_802_1Q_VLAN			IFF_802_1Q_VLAN
-@@ -1727,6 +1728,7 @@ enum netdev_priv_flags {
+ #define IFF_EBRIDGE			IFF_EBRIDGE
+ #define IFF_BONDING			IFF_BONDING
+@@ -1727,6 +1731,7 @@ enum netdev_priv_flags {
  #define IFF_FAILOVER_SLAVE		IFF_FAILOVER_SLAVE
  #define IFF_L3MDEV_RX_HANDLER		IFF_L3MDEV_RX_HANDLER
  #define IFF_TX_SKB_NO_LINEAR		IFF_TX_SKB_NO_LINEAR
-+#define IFF_NO_IP_ALIGN		IFF_NO_IP_ALIGN
++#define IFF_NO_IP_ALIGN			IFF_NO_IP_ALIGN
  
  /* Specifies the type of the struct net_device::ml_priv pointer */
  enum netdev_ml_priv_type {
-@@ -2096,6 +2098,11 @@ struct net_device {
+@@ -2038,6 +2043,7 @@ struct net_device {
+ 	/* Read-mostly cache-line for fast-path access */
+ 	unsigned int		flags;
+ 	unsigned long long	priv_flags;
++	unsigned long long	extra_priv_flags;
+ 	const struct net_device_ops *netdev_ops;
+ 	int			ifindex;
+ 	unsigned short		gflags;
+@@ -2096,6 +2102,11 @@ struct net_device {
  	const struct tlsdev_ops *tlsdev_ops;
  #endif
  
@@ -47,7 +58,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	const struct header_ops *header_ops;
  
  	unsigned char		operstate;
-@@ -2174,6 +2181,10 @@ struct net_device {
+@@ -2174,6 +2185,10 @@ struct net_device {
  	struct mctp_dev __rcu	*mctp_ptr;
  #endif
  
@@ -137,7 +148,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +	struct sk_buff *skb = __netdev_alloc_skb(dev, length + NET_IP_ALIGN, gfp);
 +
 +#ifdef CONFIG_ETHERNET_PACKET_MANGLE
-+	if (dev && (dev->priv_flags & IFF_NO_IP_ALIGN))
++	if (dev && (dev->extra_priv_flags & IFF_NO_IP_ALIGN))
 +		return skb;
 +#endif
 +
