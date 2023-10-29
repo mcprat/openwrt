@@ -69,7 +69,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/block/nbd.c
 +++ b/drivers/block/nbd.c
-@@ -2324,6 +2324,7 @@ static struct genl_family nbd_genl_famil
+@@ -2322,6 +2322,7 @@ static struct genl_family nbd_genl_famil
  	.module		= THIS_MODULE,
  	.small_ops	= nbd_connect_genl_ops,
  	.n_small_ops	= ARRAY_SIZE(nbd_connect_genl_ops),
@@ -99,7 +99,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/drivers/net/macsec.c
 +++ b/drivers/net/macsec.c
-@@ -3410,6 +3410,7 @@ static struct genl_family macsec_fam __r
+@@ -3404,6 +3404,7 @@ static struct genl_family macsec_fam __r
  	.module		= THIS_MODULE,
  	.small_ops	= macsec_genl_ops,
  	.n_small_ops	= ARRAY_SIZE(macsec_genl_ops),
@@ -129,7 +129,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.maxattr = WGDEVICE_A_MAX,
 --- a/drivers/net/wireless/mac80211_hwsim.c
 +++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -4924,6 +4924,7 @@ static struct genl_family hwsim_genl_fam
+@@ -4912,6 +4912,7 @@ static struct genl_family hwsim_genl_fam
  	.module = THIS_MODULE,
  	.small_ops = hwsim_ops,
  	.n_small_ops = ARRAY_SIZE(hwsim_ops),
@@ -248,7 +248,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/core/devlink.c
 +++ b/net/core/devlink.c
-@@ -9516,6 +9516,7 @@ static struct genl_family devlink_nl_fam
+@@ -9513,6 +9513,7 @@ static struct genl_family devlink_nl_fam
  	.module		= THIS_MODULE,
  	.small_ops	= devlink_nl_ops,
  	.n_small_ops	= ARRAY_SIZE(devlink_nl_ops),
@@ -278,7 +278,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/hsr/hsr_netlink.c
 +++ b/net/hsr/hsr_netlink.c
-@@ -520,6 +520,7 @@ static struct genl_family hsr_genl_famil
+@@ -522,6 +522,7 @@ static struct genl_family hsr_genl_famil
  	.module = THIS_MODULE,
  	.small_ops = hsr_ops,
  	.n_small_ops = ARRAY_SIZE(hsr_ops),
@@ -458,7 +458,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.id = GENL_ID_CTRL,
 --- a/net/nfc/netlink.c
 +++ b/net/nfc/netlink.c
-@@ -1807,6 +1807,7 @@ static struct genl_family nfc_genl_famil
+@@ -1783,6 +1783,7 @@ static struct genl_family nfc_genl_famil
  	.module = THIS_MODULE,
  	.ops = nfc_genl_ops,
  	.n_ops = ARRAY_SIZE(nfc_genl_ops),
@@ -478,7 +478,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.module = THIS_MODULE,
 --- a/net/openvswitch/datapath.c
 +++ b/net/openvswitch/datapath.c
-@@ -692,6 +692,7 @@ static struct genl_family dp_packet_genl
+@@ -684,6 +684,7 @@ static struct genl_family dp_packet_genl
  	.parallel_ops = true,
  	.small_ops = dp_packet_genl_ops,
  	.n_small_ops = ARRAY_SIZE(dp_packet_genl_ops),
@@ -486,7 +486,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.module = THIS_MODULE,
  };
  
-@@ -1516,6 +1517,7 @@ static struct genl_family dp_flow_genl_f
+@@ -1501,6 +1502,7 @@ static struct genl_family dp_flow_genl_f
  	.parallel_ops = true,
  	.small_ops = dp_flow_genl_ops,
  	.n_small_ops = ARRAY_SIZE(dp_flow_genl_ops),
@@ -494,7 +494,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.mcgrps = &ovs_dp_flow_multicast_group,
  	.n_mcgrps = 1,
  	.module = THIS_MODULE,
-@@ -2050,6 +2052,7 @@ static struct genl_family dp_datapath_ge
+@@ -2034,6 +2036,7 @@ static struct genl_family dp_datapath_ge
  	.parallel_ops = true,
  	.small_ops = dp_datapath_genl_ops,
  	.n_small_ops = ARRAY_SIZE(dp_datapath_genl_ops),
@@ -568,7 +568,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  int __init tipc_netlink_compat_start(void)
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -17144,6 +17144,7 @@ static struct genl_family nl80211_fam __
+@@ -17141,6 +17141,7 @@ static struct genl_family nl80211_fam __
  	.n_ops = ARRAY_SIZE(nl80211_ops),
  	.small_ops = nl80211_small_ops,
  	.n_small_ops = ARRAY_SIZE(nl80211_small_ops),

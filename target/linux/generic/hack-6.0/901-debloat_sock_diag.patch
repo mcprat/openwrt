@@ -124,7 +124,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	u64 res;
 --- a/net/ipv4/Kconfig
 +++ b/net/ipv4/Kconfig
-@@ -423,6 +423,7 @@ config INET_TUNNEL
+@@ -413,6 +413,7 @@ config INET_TUNNEL
  
  config INET_DIAG
  	tristate "INET: socket monitoring interface"

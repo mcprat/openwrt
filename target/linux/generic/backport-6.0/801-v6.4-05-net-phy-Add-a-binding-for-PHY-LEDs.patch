@@ -48,7 +48,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  #include <linux/netdevice.h>
  #include <linux/phy.h>
  #include <linux/phy_led_triggers.h>
-@@ -643,6 +645,7 @@ struct phy_device *phy_device_create(str
+@@ -642,6 +644,7 @@ struct phy_device *phy_device_create(str
  	device_initialize(&mdiodev->dev);
  
  	dev->state = PHY_DOWN;
@@ -56,7 +56,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  
  	mutex_init(&dev->lock);
  	INIT_DELAYED_WORK(&dev->state_queue, phy_state_machine);
-@@ -2929,6 +2932,74 @@ static bool phy_drv_supports_irq(struct
+@@ -2927,6 +2930,74 @@ static bool phy_drv_supports_irq(struct
  	return phydrv->config_intr && phydrv->handle_interrupt;
  }
  
@@ -131,7 +131,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  /**
   * fwnode_mdio_find_device - Given a fwnode, find the mdio_device
   * @fwnode: pointer to the mdio_device's fwnode
-@@ -3107,6 +3178,11 @@ static int phy_probe(struct device *dev)
+@@ -3105,6 +3176,11 @@ static int phy_probe(struct device *dev)
  	/* Set the state to READY by default */
  	phydev->state = PHY_READY;
  

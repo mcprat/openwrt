@@ -260,7 +260,7 @@ Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
  
  #ifdef CONFIG_SMP
  /*
-@@ -177,9 +178,15 @@ EXPORT(kexec_indirection_page)
+@@ -181,9 +182,15 @@ kexec_indirection_page:
  	PTR_WD		0
  	.size		kexec_indirection_page, PTRSIZE
  
