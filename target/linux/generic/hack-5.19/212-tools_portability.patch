@@ -81,13 +81,3 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
  struct page;
  struct kmem_cache;
---- a/tools/perf/pmu-events/jevents.py
-+++ b/tools/perf/pmu-events/jevents.py
-@@ -684,6 +684,7 @@ def main() -> None:
- #include "util/header.h"
- #include "util/pmu.h"
- #include <string.h>
-+#include <strings.h>
- #include <stddef.h>
- 
- struct compact_pmu_event {

@@ -38,7 +38,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +obj-$(CONFIG_DMA_SHARED_BUFFER) := dma-shared-buffer.o
 +
 +dma-buf-objs-y := dma-buf.o dma-fence.o dma-fence-array.o dma-fence-chain.o \
- 	 dma-fence-unwrap.o dma-resv.o
+ 	 dma-resv.o
 -obj-$(CONFIG_DMABUF_HEAPS)	+= dma-heap.o
 -obj-$(CONFIG_DMABUF_HEAPS)	+= heaps/
 -obj-$(CONFIG_SYNC_FILE)		+= sync_file.o
@@ -64,7 +64,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +dma-shared-buffer-objs :=  $(dma-buf-objs-y)
 --- a/drivers/dma-buf/dma-buf.c
 +++ b/drivers/dma-buf/dma-buf.c
-@@ -1578,4 +1578,5 @@ static void __exit dma_buf_deinit(void)
+@@ -1473,4 +1473,5 @@ static void __exit dma_buf_deinit(void)
  	kern_unmount(dma_buf_mnt);
  	dma_buf_uninit_sysfs_statistics();
  }
@@ -73,7 +73,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +MODULE_LICENSE("GPL");
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -4319,6 +4319,7 @@ int wake_up_state(struct task_struct *p,
+@@ -4293,6 +4293,7 @@ int wake_up_state(struct task_struct *p,
  {
  	return try_to_wake_up(p, state, 0);
  }

@@ -215,7 +215,7 @@ SVN-Revision: 35130
  #define UDP_CORK	1	/* Never send partially complete segments */
 --- a/net/netfilter/nf_conntrack_core.c
 +++ b/net/netfilter/nf_conntrack_core.c
-@@ -305,8 +305,8 @@ nf_ct_get_tuple(const struct sk_buff *sk
+@@ -308,8 +308,8 @@ nf_ct_get_tuple(const struct sk_buff *sk
  
  	switch (l3num) {
  	case NFPROTO_IPV4:
@@ -336,7 +336,7 @@ SVN-Revision: 35130
  #endif /* _LINUX_TYPES_H */
 --- a/net/ipv4/af_inet.c
 +++ b/net/ipv4/af_inet.c
-@@ -1470,8 +1470,8 @@ struct sk_buff *inet_gro_receive(struct
+@@ -1469,8 +1469,8 @@ struct sk_buff *inet_gro_receive(struct
  	if (unlikely(ip_fast_csum((u8 *)iph, 5)))
  		goto out;
  
@@ -482,7 +482,7 @@ SVN-Revision: 35130
 @@ -49,7 +49,7 @@ struct igmpv3_grec {
  	__be16	grec_nsrcs;
  	__be32	grec_mca;
- 	__be32	grec_src[];
+ 	__be32	grec_src[0];
 -};
 +} __attribute__((packed, aligned(2)));
  
@@ -491,7 +491,7 @@ SVN-Revision: 35130
 @@ -58,7 +58,7 @@ struct igmpv3_report {
  	__be16 resv2;
  	__be16 ngrec;
- 	struct igmpv3_grec grec[];
+ 	struct igmpv3_grec grec[0];
 -};
 +} __attribute__((packed, aligned(2)));
  
@@ -500,7 +500,7 @@ SVN-Revision: 35130
 @@ -79,7 +79,7 @@ struct igmpv3_query {
  	__u8 qqic;
  	__be16 nsrcs;
- 	__be32 srcs[];
+ 	__be32 srcs[0];
 -};
 +} __attribute__((packed, aligned(2)));
  
@@ -700,8 +700,8 @@ SVN-Revision: 35130
  #include <linux/types.h>
 +#include <linux/in6.h>
  
- struct net;
- 
+ u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport);
+ u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
 --- a/include/uapi/linux/in.h
 +++ b/include/uapi/linux/in.h
 @@ -88,7 +88,7 @@ enum {
@@ -737,7 +737,7 @@ SVN-Revision: 35130
  				       | TCPOLEN_TIMESTAMP))
 --- a/net/xfrm/xfrm_input.c
 +++ b/net/xfrm/xfrm_input.c
-@@ -165,8 +165,8 @@ int xfrm_parse_spi(struct sk_buff *skb,
+@@ -166,8 +166,8 @@ int xfrm_parse_spi(struct sk_buff *skb,
  	if (!pskb_may_pull(skb, hlen))
  		return -EINVAL;
  
@@ -750,7 +750,7 @@ SVN-Revision: 35130
  EXPORT_SYMBOL(xfrm_parse_spi);
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -4159,14 +4159,16 @@ static bool tcp_parse_aligned_timestamp(
+@@ -4158,14 +4158,16 @@ static bool tcp_parse_aligned_timestamp(
  {
  	const __be32 *ptr = (const __be32 *)(th + 1);
  
@@ -784,7 +784,7 @@ SVN-Revision: 35130
  
 --- a/include/net/neighbour.h
 +++ b/include/net/neighbour.h
-@@ -291,8 +291,10 @@ static inline bool neigh_key_eq128(const
+@@ -289,8 +289,10 @@ static inline bool neigh_key_eq128(const
  	const u32 *n32 = (const u32 *)n->primary_key;
  	const u32 *p32 = pkey;
  
