@@ -129,7 +129,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/phy/phy_device.c
 +++ b/drivers/net/phy/phy_device.c
-@@ -3151,8 +3151,6 @@ static int phy_probe(struct device *dev)
+@@ -3143,8 +3143,6 @@ static int phy_probe(struct device *dev)
  	if (phydrv->flags & PHY_IS_INTERNAL)
  		phydev->is_internal = true;
  
@@ -138,7 +138,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	/* Deassert the reset signal */
  	phy_device_reset(phydev, 0);
  
-@@ -3226,12 +3224,10 @@ static int phy_probe(struct device *dev)
+@@ -3218,12 +3216,10 @@ static int phy_probe(struct device *dev)
  		err = of_phy_leds(phydev);
  
  out:
@@ -152,7 +152,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	return err;
  }
  
-@@ -3241,9 +3237,7 @@ static int phy_remove(struct device *dev
+@@ -3233,9 +3229,7 @@ static int phy_remove(struct device *dev
  
  	cancel_delayed_work_sync(&phydev->state_queue);
  
