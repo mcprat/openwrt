@@ -69,7 +69,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/block/nbd.c
 +++ b/drivers/block/nbd.c
-@@ -2322,6 +2322,7 @@ static struct genl_family nbd_genl_famil
+@@ -2325,6 +2325,7 @@ static struct genl_family nbd_genl_famil
  	.module		= THIS_MODULE,
  	.small_ops	= nbd_connect_genl_ops,
  	.n_small_ops	= ARRAY_SIZE(nbd_connect_genl_ops),
@@ -99,7 +99,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/drivers/net/macsec.c
 +++ b/drivers/net/macsec.c
-@@ -3404,6 +3404,7 @@ static struct genl_family macsec_fam __r
+@@ -3365,6 +3365,7 @@ static struct genl_family macsec_fam __r
  	.module		= THIS_MODULE,
  	.small_ops	= macsec_genl_ops,
  	.n_small_ops	= ARRAY_SIZE(macsec_genl_ops),
@@ -129,7 +129,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.maxattr = WGDEVICE_A_MAX,
 --- a/drivers/net/wireless/mac80211_hwsim.c
 +++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -4912,6 +4912,7 @@ static struct genl_family hwsim_genl_fam
+@@ -4634,6 +4634,7 @@ static struct genl_family hwsim_genl_fam
  	.module = THIS_MODULE,
  	.small_ops = hwsim_ops,
  	.n_small_ops = ARRAY_SIZE(hwsim_ops),
@@ -159,7 +159,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/drivers/vdpa/vdpa.c
 +++ b/drivers/vdpa/vdpa.c
-@@ -1183,6 +1183,7 @@ static struct genl_family vdpa_nl_family
+@@ -1191,6 +1191,7 @@ static struct genl_family vdpa_nl_family
  	.module = THIS_MODULE,
  	.ops = vdpa_nl_ops,
  	.n_ops = ARRAY_SIZE(vdpa_nl_ops),
@@ -209,7 +209,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/include/net/genetlink.h
 +++ b/include/net/genetlink.h
-@@ -39,6 +39,8 @@ struct genl_info;
+@@ -38,6 +38,8 @@ struct genl_info;
   *	undo operations done by pre_doit, for example release locks
   * @mcgrps: multicast groups used by this family
   * @n_mcgrps: number of multicast groups
@@ -218,7 +218,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
   * @mcgrp_offset: starting number of multicast group IDs in this family
   *	(private)
   * @ops: the operations supported by this family
-@@ -58,6 +60,7 @@ struct genl_family {
+@@ -57,6 +59,7 @@ struct genl_family {
  	u8			n_ops;
  	u8			n_small_ops;
  	u8			n_mcgrps;
@@ -248,7 +248,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/core/devlink.c
 +++ b/net/core/devlink.c
-@@ -9513,6 +9513,7 @@ static struct genl_family devlink_nl_fam
+@@ -9370,6 +9370,7 @@ static struct genl_family devlink_nl_fam
  	.module		= THIS_MODULE,
  	.small_ops	= devlink_nl_ops,
  	.n_small_ops	= ARRAY_SIZE(devlink_nl_ops),
@@ -258,7 +258,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/core/drop_monitor.c
 +++ b/net/core/drop_monitor.c
-@@ -1645,6 +1645,7 @@ static struct genl_family net_drop_monit
+@@ -1657,6 +1657,7 @@ static struct genl_family net_drop_monit
  	.module		= THIS_MODULE,
  	.small_ops	= dropmon_ops,
  	.n_small_ops	= ARRAY_SIZE(dropmon_ops),
@@ -368,7 +368,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -2280,6 +2280,7 @@ static struct genl_family mptcp_genl_fam
+@@ -2263,6 +2263,7 @@ static struct genl_family mptcp_genl_fam
  	.module		= THIS_MODULE,
  	.small_ops	= mptcp_pm_ops,
  	.n_small_ops	= ARRAY_SIZE(mptcp_pm_ops),
@@ -478,7 +478,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.module = THIS_MODULE,
 --- a/net/openvswitch/datapath.c
 +++ b/net/openvswitch/datapath.c
-@@ -684,6 +684,7 @@ static struct genl_family dp_packet_genl
+@@ -692,6 +692,7 @@ static struct genl_family dp_packet_genl
  	.parallel_ops = true,
  	.small_ops = dp_packet_genl_ops,
  	.n_small_ops = ARRAY_SIZE(dp_packet_genl_ops),
@@ -486,7 +486,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.module = THIS_MODULE,
  };
  
-@@ -1501,6 +1502,7 @@ static struct genl_family dp_flow_genl_f
+@@ -1509,6 +1510,7 @@ static struct genl_family dp_flow_genl_f
  	.parallel_ops = true,
  	.small_ops = dp_flow_genl_ops,
  	.n_small_ops = ARRAY_SIZE(dp_flow_genl_ops),
@@ -494,7 +494,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.mcgrps = &ovs_dp_flow_multicast_group,
  	.n_mcgrps = 1,
  	.module = THIS_MODULE,
-@@ -2034,6 +2036,7 @@ static struct genl_family dp_datapath_ge
+@@ -2042,6 +2044,7 @@ static struct genl_family dp_datapath_ge
  	.parallel_ops = true,
  	.small_ops = dp_datapath_genl_ops,
  	.n_small_ops = ARRAY_SIZE(dp_datapath_genl_ops),
@@ -536,7 +536,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  int __init smc_nl_init(void)
 --- a/net/smc/smc_pnet.c
 +++ b/net/smc/smc_pnet.c
-@@ -715,7 +715,8 @@ static struct genl_family smc_pnet_nl_fa
+@@ -714,7 +714,8 @@ static struct genl_family smc_pnet_nl_fa
  	.netnsok = true,
  	.module = THIS_MODULE,
  	.ops = smc_pnet_ops,
@@ -568,7 +568,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  int __init tipc_netlink_compat_start(void)
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -17141,6 +17141,7 @@ static struct genl_family nl80211_fam __
+@@ -16660,6 +16660,7 @@ static struct genl_family nl80211_fam __
  	.n_ops = ARRAY_SIZE(nl80211_ops),
  	.small_ops = nl80211_small_ops,
  	.n_small_ops = ARRAY_SIZE(nl80211_small_ops),

@@ -18,7 +18,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -1625,7 +1625,7 @@ static int __init fw_devlink_setup(char
+@@ -1592,7 +1592,7 @@ static int __init fw_devlink_setup(char
  }
  early_param("fw_devlink", fw_devlink_setup);
  

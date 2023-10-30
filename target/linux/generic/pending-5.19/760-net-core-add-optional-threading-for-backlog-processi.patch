@@ -101,9 +101,9 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  			again = false;
  		} else {
  			skb_queue_splice_tail_init(&sd->input_pkt_queue,
-@@ -6360,6 +6382,55 @@ static void napi_get_frags_check(struct
- 	local_bh_enable();
+@@ -6343,6 +6365,55 @@ int dev_set_threaded(struct net_device *
  }
+ EXPORT_SYMBOL(dev_set_threaded);
  
 +int backlog_set_threaded(bool threaded)
 +{
@@ -157,7 +157,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  void netif_napi_add_weight(struct net_device *dev, struct napi_struct *napi,
  			   int (*poll)(struct napi_struct *, int), int weight)
  {
-@@ -11142,6 +11213,9 @@ static int dev_cpu_dead(unsigned int old
+@@ -11124,6 +11195,9 @@ static int dev_cpu_dead(unsigned int old
  	raise_softirq_irqoff(NET_TX_SOFTIRQ);
  	local_irq_enable();
  
@@ -167,7 +167,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  #ifdef CONFIG_RPS
  	remsd = oldsd->rps_ipi_list;
  	oldsd->rps_ipi_list = NULL;
-@@ -11445,6 +11519,7 @@ static int __init net_dev_init(void)
+@@ -11427,6 +11501,7 @@ static int __init net_dev_init(void)
  		INIT_CSD(&sd->defer_csd, trigger_rx_softirq, sd);
  		spin_lock_init(&sd->defer_lock);
  

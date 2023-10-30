@@ -13,7 +13,7 @@ Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
 
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1819,6 +1819,15 @@ config EMBEDDED
+@@ -1818,6 +1818,15 @@ config EMBEDDED
  	  an embedded system so certain expert options are available
  	  for configuration.
  

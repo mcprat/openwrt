@@ -34,7 +34,7 @@ Signed-off-by: Qingfang DENG <qingfang.deng@siflower.com.cn>
  		spin_unlock_bh(&pool->ring.producer_lock);
 --- a/net/core/page_pool.c
 +++ b/net/core/page_pool.c
-@@ -511,8 +511,8 @@ static void page_pool_return_page(struct
+@@ -510,8 +510,8 @@ static void page_pool_return_page(struct
  static bool page_pool_recycle_in_ring(struct page_pool *pool, struct page *page)
  {
  	int ret;
@@ -45,7 +45,7 @@ Signed-off-by: Qingfang DENG <qingfang.deng@siflower.com.cn>
  		ret = ptr_ring_produce(&pool->ring, page);
  	else
  		ret = ptr_ring_produce_bh(&pool->ring, page);
-@@ -570,7 +570,7 @@ __page_pool_put_page(struct page_pool *p
+@@ -569,7 +569,7 @@ __page_pool_put_page(struct page_pool *p
  			page_pool_dma_sync_for_device(pool, page,
  						      dma_sync_size);
  

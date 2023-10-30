@@ -28,7 +28,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	help
 --- a/net/core/Makefile
 +++ b/net/core/Makefile
-@@ -11,11 +11,12 @@ obj-$(CONFIG_SYSCTL) += sysctl_net_core.
+@@ -10,11 +10,12 @@ obj-$(CONFIG_SYSCTL) += sysctl_net_core.
  
  obj-y		     += dev.o dev_addr_lists.o dst.o netevent.o \
  			neighbour.o rtnetlink.o utils.o link_watch.o filter.o \
@@ -79,7 +79,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  INDIRECT_CALLABLE_DECLARE(struct dst_entry *ip6_dst_check(struct dst_entry *,
  							  u32));
  INDIRECT_CALLABLE_DECLARE(struct dst_entry *ipv4_dst_check(struct dst_entry *,
-@@ -2118,9 +2132,11 @@ static void __sk_free(struct sock *sk)
+@@ -2117,9 +2131,11 @@ static void __sk_free(struct sock *sk)
  	if (likely(sk->sk_net_refcnt))
  		sock_inuse_add(sock_net(sk), -1);
  

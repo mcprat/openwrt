@@ -56,7 +56,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  
  	mutex_init(&dev->lock);
  	INIT_DELAYED_WORK(&dev->state_queue, phy_state_machine);
-@@ -2927,6 +2930,74 @@ static bool phy_drv_supports_irq(struct
+@@ -2939,6 +2942,74 @@ static bool phy_drv_supports_irq(struct
  	return phydrv->config_intr && phydrv->handle_interrupt;
  }
  
@@ -131,7 +131,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  /**
   * fwnode_mdio_find_device - Given a fwnode, find the mdio_device
   * @fwnode: pointer to the mdio_device's fwnode
-@@ -3105,6 +3176,11 @@ static int phy_probe(struct device *dev)
+@@ -3117,6 +3188,11 @@ static int phy_probe(struct device *dev)
  	/* Set the state to READY by default */
  	phydev->state = PHY_READY;
  
