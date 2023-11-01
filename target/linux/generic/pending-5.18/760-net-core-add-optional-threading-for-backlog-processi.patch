@@ -154,8 +154,8 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +	return err;
 +}
 +
- void netif_napi_add_weight(struct net_device *dev, struct napi_struct *napi,
- 			   int (*poll)(struct napi_struct *, int), int weight)
+ void netif_napi_add(struct net_device *dev, struct napi_struct *napi,
+ 		    int (*poll)(struct napi_struct *, int), int weight)
  {
 @@ -11123,6 +11194,9 @@ static int dev_cpu_dead(unsigned int old
  	raise_softirq_irqoff(NET_TX_SOFTIRQ);
@@ -182,9 +182,9 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  static int min_rcvbuf = SOCK_MIN_RCVBUF;
  static int max_skb_frags = MAX_SKB_FRAGS;
 +static int backlog_threaded;
+ static long long_one __maybe_unused = 1;
  static long long_max __maybe_unused = LONG_MAX;
  
- static int net_msg_warn;	/* Unused, but still a sysctl */
 @@ -113,6 +114,23 @@ static int rps_sock_flow_sysctl(struct c
  }
  #endif /* CONFIG_RPS */

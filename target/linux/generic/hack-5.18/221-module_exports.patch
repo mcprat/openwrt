@@ -80,10 +80,10 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  /*
   * For every exported symbol, do the following:
   *
-@@ -87,7 +93,7 @@ struct kernel_symbol {
- 	extern typeof(sym) sym;							\
+@@ -101,7 +107,7 @@ struct kernel_symbol {
  	extern const char __kstrtab_##sym[];					\
  	extern const char __kstrtabns_##sym[];					\
+ 	__CRC_SYMBOL(sym, sec);							\
 -	asm("	.section \"__ksymtab_strings\",\"aMS\",%progbits,1	\n"	\
 +	asm("	.section \"__ksymtab_strings" __EXPORT_SUFFIX(sym) "\",\"aMS\",%progbits,1	\n"	\
  	    "__kstrtab_" #sym ":					\n"	\

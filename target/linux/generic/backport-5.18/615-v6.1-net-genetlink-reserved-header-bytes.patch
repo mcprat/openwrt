@@ -69,7 +69,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/block/nbd.c
 +++ b/drivers/block/nbd.c
-@@ -2321,6 +2321,7 @@ static struct genl_family nbd_genl_famil
+@@ -2331,6 +2331,7 @@ static struct genl_family nbd_genl_famil
  	.module		= THIS_MODULE,
  	.small_ops	= nbd_connect_genl_ops,
  	.n_small_ops	= ARRAY_SIZE(nbd_connect_genl_ops),
@@ -129,7 +129,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	.maxattr = WGDEVICE_A_MAX,
 --- a/drivers/net/wireless/mac80211_hwsim.c
 +++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -4626,6 +4626,7 @@ static struct genl_family hwsim_genl_fam
+@@ -4628,6 +4628,7 @@ static struct genl_family hwsim_genl_fam
  	.module = THIS_MODULE,
  	.small_ops = hwsim_ops,
  	.n_small_ops = ARRAY_SIZE(hwsim_ops),
@@ -159,7 +159,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/drivers/vdpa/vdpa.c
 +++ b/drivers/vdpa/vdpa.c
-@@ -1191,6 +1191,7 @@ static struct genl_family vdpa_nl_family
+@@ -1046,6 +1046,7 @@ static struct genl_family vdpa_nl_family
  	.module = THIS_MODULE,
  	.ops = vdpa_nl_ops,
  	.n_ops = ARRAY_SIZE(vdpa_nl_ops),
@@ -228,14 +228,14 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  					    struct sk_buff *skb,
 --- a/kernel/taskstats.c
 +++ b/kernel/taskstats.c
-@@ -688,6 +688,7 @@ static struct genl_family family __ro_af
+@@ -665,6 +665,7 @@ static struct genl_family family __ro_af
  	.module		= THIS_MODULE,
  	.ops		= taskstats_ops,
  	.n_ops		= ARRAY_SIZE(taskstats_ops),
-+	.resv_start_op	= CGROUPSTATS_CMD_GET + 1,
- 	.netnsok	= true,
++	.resv_start_op  = CGROUPSTATS_CMD_GET + 1,
  };
  
+ /* Needed early in initialization */
 --- a/net/batman-adv/netlink.c
 +++ b/net/batman-adv/netlink.c
 @@ -1493,6 +1493,7 @@ struct genl_family batadv_netlink_family
@@ -248,7 +248,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/core/devlink.c
 +++ b/net/core/devlink.c
-@@ -9370,6 +9370,7 @@ static struct genl_family devlink_nl_fam
+@@ -8950,6 +8950,7 @@ static struct genl_family devlink_nl_fam
  	.module		= THIS_MODULE,
  	.small_ops	= devlink_nl_ops,
  	.n_small_ops	= ARRAY_SIZE(devlink_nl_ops),
@@ -308,7 +308,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/ipv4/fou.c
 +++ b/net/ipv4/fou.c
-@@ -931,6 +931,7 @@ static struct genl_family fou_nl_family
+@@ -932,6 +932,7 @@ static struct genl_family fou_nl_family
  	.module		= THIS_MODULE,
  	.small_ops	= fou_nl_ops,
  	.n_small_ops	= ARRAY_SIZE(fou_nl_ops),
@@ -368,7 +368,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  };
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -2263,6 +2263,7 @@ static struct genl_family mptcp_genl_fam
+@@ -2161,6 +2161,7 @@ static struct genl_family mptcp_genl_fam
  	.module		= THIS_MODULE,
  	.small_ops	= mptcp_pm_ops,
  	.n_small_ops	= ARRAY_SIZE(mptcp_pm_ops),
@@ -388,7 +388,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  static int __init ncsi_init_netlink(void)
 --- a/net/netfilter/ipvs/ip_vs_ctl.c
 +++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -4005,6 +4005,7 @@ static struct genl_family ip_vs_genl_fam
+@@ -4007,6 +4007,7 @@ static struct genl_family ip_vs_genl_fam
  	.module		= THIS_MODULE,
  	.small_ops	= ip_vs_genl_ops,
  	.n_small_ops	= ARRAY_SIZE(ip_vs_genl_ops),
@@ -568,7 +568,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  int __init tipc_netlink_compat_start(void)
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -16373,6 +16373,7 @@ static struct genl_family nl80211_fam __
+@@ -16312,6 +16312,7 @@ static struct genl_family nl80211_fam __
  	.n_ops = ARRAY_SIZE(nl80211_ops),
  	.small_ops = nl80211_small_ops,
  	.n_small_ops = ARRAY_SIZE(nl80211_small_ops),
