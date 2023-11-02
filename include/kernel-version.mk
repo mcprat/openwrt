@@ -27,7 +27,7 @@ sanitize_uri=$(call qstrip,$(subst @,_,$(subst :,_,$(subst .,_,$(subst -,_,$(sub
 
 ifneq ($(call qstrip,$(CONFIG_KERNEL_GIT_CLONE_URI)),)
   LINUX_VERSION:=$(call sanitize_uri,$(call remove_uri_prefix,$(CONFIG_KERNEL_GIT_CLONE_URI)))
-  ifeq ($(call qstrip,$(CONFIG_KERNEL_GIT_REF))$(call qstrip,$(CONFIG_KERNEL_SNAPSHOT_REF)),)
+  ifeq ($(call qstrip,$(CONFIG_KERNEL_GIT_REF))$(call qstrip,$(CONFIG_KERNEL_GIT_SNAPSHOT_REF)),)
     CONFIG_KERNEL_GIT_REF:=HEAD
   endif
   LINUX_VERSION:=$(LINUX_VERSION)-$(call sanitize_uri,$(CONFIG_KERNEL_GIT_REF))
@@ -50,7 +50,7 @@ KERNEL_PATCHVER ?= $(KERNEL)
 LINUX_KERNEL_HASH:=$(LINUX_KERNEL_HASH-$(strip $(LINUX_VERSION)))
 LINUX_KERNEL_HASH?=x
 
-ifneq ($(call qstrip,$(CONFIG_KERNEL_SNAPSHOT_REF)),)
-  LINUX_VERSION:=$(call qstrip,$(CONFIG_KERNEL_SNAPSHOT_REF))
+ifneq ($(call qstrip,$(CONFIG_KERNEL_GIT_SNAPSHOT_REF)),)
+  LINUX_VERSION:=$(call qstrip,$(CONFIG_KERNEL_GIT_SNAPSHOT_REF))
   LINUX_KERNEL_HASH:=$(call qstrip,$(CONFIG_KERNEL_GIT_MIRROR_HASH))
 endif

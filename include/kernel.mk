@@ -70,8 +70,8 @@ else
       LINUX_UNAME_VERSION:=$(strip $(shell cat $(LINUX_DIR)/include/config/kernel.release 2>/dev/null))
   endif
 
-  ifneq ($(call qstrip,$(CONFIG_KERNEL_SNAPSHOT_REF)),)
-      LINUX_SOURCE:=linux-$(call qstrip,$(CONFIG_KERNEL_SNAPSHOT_REF)).tar.gz
+  ifneq ($(call qstrip,$(CONFIG_KERNEL_GIT_SNAPSHOT_REF)),)
+      LINUX_SOURCE:=linux-$(call qstrip,$(CONFIG_KERNEL_GIT_SNAPSHOT_REF)).tar.gz
       LINUX_SITE:=$(call qstrip,$(CONFIG_KERNEL_GIT_CLONE_URI))/snapshot
   endif
 

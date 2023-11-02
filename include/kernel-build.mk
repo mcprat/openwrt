@@ -84,7 +84,7 @@ endif
 define BuildKernel
   $(if $(QUILT),$(Build/Quilt))
   $(if $(LINUX_SITE),$(call Download,kernel))
-  $(if $(call qstrip,$(CONFIG_KERNEL_GIT_CLONE_URI)),$(if $(call qstrip,$(CONFIG_KERNEL_SNAPSHOT_REF)),,$(call Download,git-kernel)))
+  $(if $(call qstrip,$(CONFIG_KERNEL_GIT_CLONE_URI)),$(if $(call qstrip,$(CONFIG_KERNEL_GIT_SNAPSHOT_REF)),,$(call Download,git-kernel)))
 
   .NOTPARALLEL:
 

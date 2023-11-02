@@ -126,7 +126,7 @@ menuconfig DEVEL
 		  It can be a git hash or a branch name.
 		  If unused, the clone's repository HEAD will be checked-out.
 
-	config KERNEL_SNAPSHOT_REF
+	config KERNEL_GIT_SNAPSHOT_REF
 		string "Enter git ref at which to download a snapshot tarball" if DEVEL
 		depends on (KERNEL_GIT_CLONE_URI != "")
 		default ""
@@ -139,7 +139,7 @@ menuconfig DEVEL
 
 	config KERNEL_GIT_MIRROR_HASH
 		string "Enter hash of Git kernel tree source checkout tarball" if DEVEL
-		depends on (KERNEL_GIT_CLONE_URI != "") || (KERNEL_SNAPSHOT_REF != "")
+		depends on (KERNEL_GIT_CLONE_URI != "")
 		default ""
 
 	config BUILD_LOG
