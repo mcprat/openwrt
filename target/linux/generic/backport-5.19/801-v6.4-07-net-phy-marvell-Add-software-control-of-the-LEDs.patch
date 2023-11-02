@@ -35,7 +35,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  
  /* Magic Packet MAC address registers */
  #define MII_88E1318S_PHY_MAGIC_PACKET_WORD2		0x17
-@@ -2785,6 +2787,34 @@ static int marvell_hwmon_probe(struct ph
+@@ -2836,6 +2838,34 @@ static int marvell_hwmon_probe(struct ph
  }
  #endif
  
@@ -70,7 +70,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  static int marvell_probe(struct phy_device *phydev)
  {
  	struct marvell_priv *priv;
-@@ -3033,6 +3063,7 @@ static struct phy_driver marvell_drivers
+@@ -3084,6 +3114,7 @@ static struct phy_driver marvell_drivers
  		.get_sset_count = marvell_get_sset_count,
  		.get_strings = marvell_get_strings,
  		.get_stats = marvell_get_stats,
@@ -78,7 +78,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E1145,
-@@ -3139,6 +3170,7 @@ static struct phy_driver marvell_drivers
+@@ -3190,6 +3221,7 @@ static struct phy_driver marvell_drivers
  		.cable_test_start = marvell_vct7_cable_test_start,
  		.cable_test_tdr_start = marvell_vct5_cable_test_tdr_start,
  		.cable_test_get_status = marvell_vct7_cable_test_get_status,
@@ -86,7 +86,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E1540,
-@@ -3165,6 +3197,7 @@ static struct phy_driver marvell_drivers
+@@ -3216,6 +3248,7 @@ static struct phy_driver marvell_drivers
  		.cable_test_start = marvell_vct7_cable_test_start,
  		.cable_test_tdr_start = marvell_vct5_cable_test_tdr_start,
  		.cable_test_get_status = marvell_vct7_cable_test_get_status,
@@ -94,7 +94,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E1545,
-@@ -3191,6 +3224,7 @@ static struct phy_driver marvell_drivers
+@@ -3242,6 +3275,7 @@ static struct phy_driver marvell_drivers
  		.cable_test_start = marvell_vct7_cable_test_start,
  		.cable_test_tdr_start = marvell_vct5_cable_test_tdr_start,
  		.cable_test_get_status = marvell_vct7_cable_test_get_status,
@@ -102,7 +102,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	},
  	{
  		.phy_id = MARVELL_PHY_ID_88E3016,
-@@ -3332,6 +3366,7 @@ static struct phy_driver marvell_drivers
+@@ -3383,6 +3417,7 @@ static struct phy_driver marvell_drivers
  		.get_stats = marvell_get_stats,
  		.get_tunable = m88e1540_get_tunable,
  		.set_tunable = m88e1540_set_tunable,

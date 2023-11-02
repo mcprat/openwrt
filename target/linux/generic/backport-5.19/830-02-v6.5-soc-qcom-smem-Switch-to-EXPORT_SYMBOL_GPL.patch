@@ -17,7 +17,7 @@ Link: https://lore.kernel.org/r/20230526204802.3081168-2-robimarko@gmail.com
 
 --- a/drivers/soc/qcom/smem.c
 +++ b/drivers/soc/qcom/smem.c
-@@ -478,7 +478,7 @@ int qcom_smem_alloc(unsigned host, unsig
+@@ -500,7 +500,7 @@ int qcom_smem_alloc(unsigned host, unsig
  
  	return ret;
  }
@@ -26,7 +26,7 @@ Link: https://lore.kernel.org/r/20230526204802.3081168-2-robimarko@gmail.com
  
  static void *qcom_smem_get_global(struct qcom_smem *smem,
  				  unsigned item,
-@@ -611,7 +611,7 @@ void *qcom_smem_get(unsigned host, unsig
+@@ -674,7 +674,7 @@ void *qcom_smem_get(unsigned host, unsig
  	return ptr;
  
  }
@@ -35,16 +35,16 @@ Link: https://lore.kernel.org/r/20230526204802.3081168-2-robimarko@gmail.com
  
  /**
   * qcom_smem_get_free_space() - retrieve amount of free space in a partition
-@@ -644,7 +644,7 @@ int qcom_smem_get_free_space(unsigned ho
+@@ -719,7 +719,7 @@ int qcom_smem_get_free_space(unsigned ho
  
  	return ret;
  }
 -EXPORT_SYMBOL(qcom_smem_get_free_space);
 +EXPORT_SYMBOL_GPL(qcom_smem_get_free_space);
  
- /**
-  * qcom_smem_virt_to_phys() - return the physical address associated
-@@ -671,7 +671,7 @@ phys_addr_t qcom_smem_virt_to_phys(void
+ static bool addr_in_range(void __iomem *base, size_t size, void *addr)
+ {
+@@ -770,7 +770,7 @@ phys_addr_t qcom_smem_virt_to_phys(void
  
  	return 0;
  }

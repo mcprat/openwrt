@@ -106,7 +106,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/include/uapi/linux/if_link.h
 +++ b/include/uapi/linux/if_link.h
-@@ -553,6 +553,7 @@ enum {
+@@ -560,6 +560,7 @@ enum {
  	IFLA_BRPORT_MCAST_EHT_HOSTS_LIMIT,
  	IFLA_BRPORT_MCAST_EHT_HOSTS_CNT,
  	IFLA_BRPORT_LOCKED,
@@ -152,8 +152,8 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/net/core/rtnetlink.c
 +++ b/net/core/rtnetlink.c
-@@ -55,7 +55,7 @@
- #include <net/net_namespace.h>
+@@ -57,7 +57,7 @@
+ #include "dev.h"
  
  #define RTNL_MAX_TYPE		50
 -#define RTNL_SLAVE_MAX_TYPE	40
@@ -161,7 +161,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
  struct rtnl_link {
  	rtnl_doit_func		doit;
-@@ -4720,7 +4720,9 @@ int ndo_dflt_bridge_getlink(struct sk_bu
+@@ -4810,7 +4810,9 @@ int ndo_dflt_bridge_getlink(struct sk_bu
  	    brport_nla_put_flag(skb, flags, mask,
  				IFLA_BRPORT_MCAST_FLOOD, BR_MCAST_FLOOD) ||
  	    brport_nla_put_flag(skb, flags, mask,

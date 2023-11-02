@@ -26,7 +26,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -529,6 +529,13 @@ static int gpiochip_setup_dev(struct gpi
+@@ -522,6 +522,13 @@ static int gpiochip_setup_dev(struct gpi
  {
  	int ret;
  

@@ -19,7 +19,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -1657,6 +1657,10 @@ enum netdev_priv_flags {
+@@ -1675,6 +1675,10 @@ enum netdev_priv_flags {
  	IFF_CHANGE_PROTO_DOWN		= BIT_ULL(32),
  };
  
@@ -30,7 +30,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  #define IFF_802_1Q_VLAN			IFF_802_1Q_VLAN
  #define IFF_EBRIDGE			IFF_EBRIDGE
  #define IFF_BONDING			IFF_BONDING
-@@ -1688,6 +1692,7 @@ enum netdev_priv_flags {
+@@ -1706,6 +1710,7 @@ enum netdev_priv_flags {
  #define IFF_FAILOVER_SLAVE		IFF_FAILOVER_SLAVE
  #define IFF_L3MDEV_RX_HANDLER		IFF_L3MDEV_RX_HANDLER
  #define IFF_TX_SKB_NO_LINEAR		IFF_TX_SKB_NO_LINEAR
@@ -38,7 +38,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
  /* Specifies the type of the struct net_device::ml_priv pointer */
  enum netdev_ml_priv_type {
-@@ -1997,6 +2002,7 @@ struct net_device {
+@@ -2017,6 +2022,7 @@ struct net_device {
  	/* Read-mostly cache-line for fast-path access */
  	unsigned int		flags;
  	unsigned long long	priv_flags;
@@ -46,7 +46,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	const struct net_device_ops *netdev_ops;
  	int			ifindex;
  	unsigned short		gflags;
-@@ -2055,6 +2061,11 @@ struct net_device {
+@@ -2075,6 +2081,11 @@ struct net_device {
  	const struct tlsdev_ops *tlsdev_ops;
  #endif
  
@@ -58,7 +58,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	const struct header_ops *header_ops;
  
  	unsigned char		operstate;
-@@ -2133,6 +2144,10 @@ struct net_device {
+@@ -2153,6 +2164,10 @@ struct net_device {
  	struct mctp_dev __rcu	*mctp_ptr;
  #endif
  
@@ -71,7 +71,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
   */
 --- a/include/linux/skbuff.h
 +++ b/include/linux/skbuff.h
-@@ -2965,6 +2965,10 @@ static inline int pskb_trim(struct sk_bu
+@@ -3122,6 +3122,10 @@ static inline int pskb_trim(struct sk_bu
  	return (len < skb->len) ? __pskb_trim(skb, len) : 0;
  }
  
@@ -82,7 +82,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  /**
   *	pskb_trim_unique - remove end from a paged unique (not cloned) buffer
   *	@skb: buffer to alter
-@@ -3115,16 +3119,6 @@ static inline struct sk_buff *dev_alloc_
+@@ -3272,16 +3276,6 @@ static inline struct sk_buff *dev_alloc_
  }
  
  
@@ -116,7 +116,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	help
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -3517,6 +3517,11 @@ static int xmit_one(struct sk_buff *skb,
+@@ -3570,6 +3570,11 @@ static int xmit_one(struct sk_buff *skb,
  	if (dev_nit_active(dev))
  		dev_queue_xmit_nit(skb, dev);
  
@@ -126,8 +126,8 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +#endif
 +
  	len = skb->len;
- 	PRANDOM_ADD_NOISE(skb, dev, txq, len + jiffies);
  	trace_net_dev_start_xmit(skb, dev);
+ 	rc = netdev_start_xmit(skb, dev, txq, more);
 --- a/net/core/skbuff.c
 +++ b/net/core/skbuff.c
 @@ -61,6 +61,7 @@
