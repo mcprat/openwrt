@@ -126,9 +126,20 @@ menuconfig DEVEL
 		  It can be a git hash or a branch name.
 		  If unused, the clone's repository HEAD will be checked-out.
 
+	config KERNEL_SNAPSHOT_REF
+		string "Enter git ref at which to download a snapshot tarball" if DEVEL
+		depends on (KERNEL_GIT_CLONE_URI != "")
+		default ""
+		help
+		  Enter the git ref at which to download a snapshot tarball
+		  from the Linux kernel source tree repository at
+		  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+		  Uses the KERNEL_GIT_CLONE_URI as the webpath,
+		  and uses the KERNEL_GIT_MIRROR_HASH config option as the file hash.
+
 	config KERNEL_GIT_MIRROR_HASH
 		string "Enter hash of Git kernel tree source checkout tarball" if DEVEL
-		depends on (KERNEL_GIT_CLONE_URI != "")
+		depends on (KERNEL_GIT_CLONE_URI != "") || (KERNEL_SNAPSHOT_REF != "")
 		default ""
 
 	config BUILD_LOG
