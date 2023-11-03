@@ -29,7 +29,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/fs/locks.c
 +++ b/fs/locks.c
-@@ -2905,6 +2905,8 @@ static const struct seq_operations locks
+@@ -2850,6 +2850,8 @@ static const struct seq_operations locks
  
  static int __init proc_locks_init(void)
  {
@@ -235,7 +235,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	if (!pe)
 --- a/mm/vmalloc.c
 +++ b/mm/vmalloc.c
-@@ -4132,6 +4132,8 @@ static const struct seq_operations vmall
+@@ -4134,6 +4134,8 @@ static const struct seq_operations vmall
  
  static int __init proc_vmalloc_init(void)
  {
@@ -246,9 +246,9 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  				&vmalloc_op,
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
-@@ -2120,10 +2120,12 @@ void __init init_mm_internals(void)
- #endif
+@@ -2115,10 +2115,12 @@ void __init init_mm_internals(void)
  	migrate_on_reclaim_init();
+ #endif
  #ifdef CONFIG_PROC_FS
 -	proc_create_seq("buddyinfo", 0444, NULL, &fragmentation_op);
 -	proc_create_seq("pagetypeinfo", 0400, NULL, &pagetypeinfo_op);
@@ -341,7 +341,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/net/ipv4/fib_trie.c
 +++ b/net/ipv4/fib_trie.c
-@@ -3029,11 +3029,13 @@ static const struct seq_operations fib_r
+@@ -3026,11 +3026,13 @@ static const struct seq_operations fib_r
  
  int __net_init fib_proc_init(struct net *net)
  {
@@ -357,7 +357,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  			fib_triestat_seq_show, NULL))
  		goto out2;
  
-@@ -3044,17 +3046,21 @@ int __net_init fib_proc_init(struct net
+@@ -3041,17 +3043,21 @@ int __net_init fib_proc_init(struct net
  	return 0;
  
  out3:

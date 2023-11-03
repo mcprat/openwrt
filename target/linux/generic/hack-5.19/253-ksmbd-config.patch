@@ -10,7 +10,7 @@ Subject: [PATCH] Kconfig: add tristate for OID and ASNI string
 
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -2254,7 +2254,7 @@ config PADATA
+@@ -2395,7 +2395,7 @@ config PADATA
  	bool
  
  config ASN1
@@ -21,7 +21,7 @@ Subject: [PATCH] Kconfig: add tristate for OID and ASNI string
  	  that can be interpreted by the ASN.1 stream decoder and used to
 --- a/lib/Kconfig
 +++ b/lib/Kconfig
-@@ -620,7 +620,7 @@ config LIBFDT
+@@ -617,7 +617,7 @@ config LIBFDT
  	bool
  
  config OID_REGISTRY

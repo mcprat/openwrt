@@ -21,7 +21,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -13565,6 +13565,7 @@ F:	include/uapi/linux/meye.h
+@@ -13393,6 +13393,7 @@ F:	include/uapi/linux/meye.h
  
  MOTORCOMM PHY DRIVER
  M:	Peter Geis <pgwipeout@gmail.com>

@@ -67,7 +67,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	*(.modinfo)							\
 --- a/include/linux/export.h
 +++ b/include/linux/export.h
-@@ -84,6 +84,12 @@ struct kernel_symbol {
+@@ -82,6 +82,12 @@ struct kernel_symbol {
  
  #else
  
@@ -80,7 +80,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  /*
   * For every exported symbol, do the following:
   *
-@@ -101,7 +107,7 @@ struct kernel_symbol {
+@@ -99,7 +105,7 @@ struct kernel_symbol {
  	extern const char __kstrtab_##sym[];					\
  	extern const char __kstrtabns_##sym[];					\
  	__CRC_SYMBOL(sym, sec);							\
@@ -115,7 +115,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	.previous
 --- a/scripts/Makefile.build
 +++ b/scripts/Makefile.build
-@@ -396,7 +396,7 @@ targets += $(real-dtb-y) $(lib-y) $(alwa
+@@ -400,7 +400,7 @@ targets += $(real-dtb-y) $(lib-y) $(alwa
  # Linker scripts preprocessor (.lds.S -> .lds)
  # ---------------------------------------------------------------------------
  quiet_cmd_cpp_lds_S = LDS     $@

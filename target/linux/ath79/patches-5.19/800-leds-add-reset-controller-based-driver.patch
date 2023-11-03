@@ -13,9 +13,9 @@ Signed-off-by: John Crispin <john@phrozen.org>
 
 --- a/drivers/leds/Kconfig
 +++ b/drivers/leds/Kconfig
-@@ -872,6 +872,17 @@ source "drivers/leds/flash/Kconfig"
- comment "RGB LED drivers"
- source "drivers/leds/rgb/Kconfig"
+@@ -869,6 +869,17 @@ source "drivers/leds/blink/Kconfig"
+ comment "Flash and Torch LED drivers"
+ source "drivers/leds/flash/Kconfig"
  
 +config LEDS_RESET
 +	tristate "LED support for reset-controller API"
