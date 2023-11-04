@@ -111,7 +111,7 @@ ifneq ($(PREV_STAMP_PREPARED),)
   STAMP_PREPARED:=$(PREV_STAMP_PREPARED)
   CONFIG_AUTOREBUILD:=
 else
-  STAMP_PREPARED=$(PKG_BUILD_DIR)/.prepared$(if $(QUILT)$(DUMP),,_$(shell $(call $(if $(CONFIG_AUTOREMOVE),find_md5_reproducible,find_md5),${CURDIR} $(PKG_FILE_DEPENDS),))_$(call confvar,CONFIG_AUTOREMOVE $(PKG_PREPARED_DEPENDS)))
+  STAMP_PREPARED=$(PKG_BUILD_DIR)/.prepared$(if $(NO_DEPS)$(DUMP),,_$(shell $(call $(if $(CONFIG_AUTOREMOVE),find_md5_reproducible,find_md5),${CURDIR} $(PKG_FILE_DEPENDS),))_$(call confvar,CONFIG_AUTOREMOVE $(PKG_PREPARED_DEPENDS)))
 endif
 STAMP_CONFIGURED=$(PKG_BUILD_DIR)/.configured$(if $(DUMP),,_$(call confvar,$(PKG_CONFIG_DEPENDS)))
 STAMP_CONFIGURED_WILDCARD=$(PKG_BUILD_DIR)/.configured_*
@@ -140,7 +140,7 @@ include $(INCLUDE_DIR)/package-ipkg.mk
 include $(INCLUDE_DIR)/package-bin.mk
 include $(INCLUDE_DIR)/autotools.mk
 
-_pkg_target:=$(if $(QUILT),,.)
+_pkg_target:=$(if $(NO_DEPS),,.)
 
 override MAKEFLAGS=
 CONFIG_SITE:=$(INCLUDE_DIR)/site/$(ARCH)
@@ -150,7 +150,7 @@ PKG_CONFIG_PATH=$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgcon
 unexport QUIET CONFIG_SITE
 
 ifeq ($(DUMP)$(filter prereq clean refresh update,$(MAKECMDGOALS)),)
-  ifneq ($(if $(QUILT),,$(CONFIG_AUTOREBUILD)),)
+  ifneq ($(if $(NO_DEPS),,$(CONFIG_AUTOREBUILD)),)
     define Build/Autoclean
       $(PKG_BUILD_DIR)/.dep_files: $(STAMP_PREPARED)
       $(call rdep,${CURDIR} $(PKG_FILE_DEPENDS),$(STAMP_PREPARED),$(PKG_BUILD_DIR)/.dep_files,-x "*/.dep_*")
@@ -314,7 +314,7 @@ endef
 endif
 
   BUILD_PACKAGES += $(1)
-  $(STAMP_PREPARED): $$(if $(QUILT)$(DUMP),,$(call find_library_dependencies,$(1)))
+  $(STAMP_PREPARED): $$(if $(NO_DEPS)$(DUMP),,$(call find_library_dependencies,$(1)))
 
   $(foreach FIELD, TITLE CATEGORY SECTION VERSION,
     ifeq ($($(FIELD)),)

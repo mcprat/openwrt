@@ -10,7 +10,7 @@ ifneq ($(DUMP),1)
 endif
 
 KERNEL_FILE_DEPENDS=$(GENERIC_BACKPORT_DIR) $(GENERIC_PATCH_DIR) $(GENERIC_HACK_DIR) $(PATCH_DIR) $(GENERIC_FILES_DIR) $(FILES_DIR)
-STAMP_PREPARED=$(LINUX_DIR)/.prepared$(if $(QUILT)$(DUMP),,_$(shell $(call $(if $(CONFIG_AUTOREMOVE),find_md5_reproducible,find_md5),$(KERNEL_FILE_DEPENDS),)))
+STAMP_PREPARED=$(LINUX_DIR)/.prepared$(if $(NO_DEPS)$(DUMP),,_$(shell $(call $(if $(CONFIG_AUTOREMOVE),find_md5_reproducible,find_md5),$(KERNEL_FILE_DEPENDS),)))
 STAMP_CONFIGURED:=$(LINUX_DIR)/.configured
 include $(INCLUDE_DIR)/download.mk
 include $(INCLUDE_DIR)/quilt.mk
@@ -73,7 +73,7 @@ ifdef CONFIG_COLLECT_KERNEL_DEBUG
 endif
 
 ifeq ($(DUMP)$(filter prereq clean refresh update,$(MAKECMDGOALS)),)
-  ifneq ($(if $(QUILT),,$(CONFIG_AUTOREBUILD)),)
+  ifneq ($(if $(NO_DEPS),,$(CONFIG_AUTOREBUILD)),)
     define Kernel/Autoclean
       $(PKG_BUILD_DIR)/.dep_files: $(STAMP_PREPARED)
       $(call rdep,$(KERNEL_FILE_DEPENDS),$(STAMP_PREPARED),$(PKG_BUILD_DIR)/.dep_files,-x "*/.dep_*")
