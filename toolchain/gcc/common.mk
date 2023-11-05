@@ -41,7 +41,7 @@ ifeq ($(PKG_VERSION),13.1.0)
   PKG_HASH:=61d684f0aa5e76ac6585ad8898a2427aade8979ed5e7f85492286c4dfc13ee86
 endif
 
-PATCH_DIR=../patches-$(GCC_MAJOR_VERSION).x
+PATCH_DIR=$(CURDIR)/../patches-$(GCC_MAJOR_VERSION).x
 
 BUGURL=http://bugs.openwrt.org/
 PKGVERSION=OpenWrt GCC $(PKG_VERSION) $(REVISION)

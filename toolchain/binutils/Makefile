@@ -33,7 +33,7 @@ endif
 
 HOST_BUILD_PARALLEL:=1
 
-PATCH_DIR:=./patches/$(PKG_VERSION)
+PATCH_DIR:=$(CURDIR)/patches/$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/toolchain-build.mk
 
