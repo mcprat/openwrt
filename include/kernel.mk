@@ -80,6 +80,7 @@ else
 
   ifneq ($(TARGET_BUILD),1)
     PKG_BUILD_DIR ?= $(KERNEL_BUILD_DIR)/$(if $(BUILD_VARIANT),$(PKG_NAME)-$(BUILD_VARIANT)/)$(PKG_NAME)$(if $(PKG_VERSION),-$(PKG_VERSION))
+    PKG_SOURCE_DIR ?= $(PKG_BUILD_DIR)
   endif
 endif
 
