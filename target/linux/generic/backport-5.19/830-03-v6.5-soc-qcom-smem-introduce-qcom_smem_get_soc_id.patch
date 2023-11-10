@@ -30,7 +30,7 @@ Link: https://lore.kernel.org/r/20230526204802.3081168-3-robimarko@gmail.com
  
  /*
   * The Qualcomm shared memory system is a allocate only heap structure that
-@@ -673,6 +674,28 @@ phys_addr_t qcom_smem_virt_to_phys(void
+@@ -772,6 +773,28 @@ phys_addr_t qcom_smem_virt_to_phys(void
  }
  EXPORT_SYMBOL_GPL(qcom_smem_virt_to_phys);
  
