@@ -29,7 +29,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/fs/locks.c
 +++ b/fs/locks.c
-@@ -2905,6 +2905,8 @@ static const struct seq_operations locks
+@@ -2850,6 +2850,8 @@ static const struct seq_operations locks
  
  static int __init proc_locks_init(void)
  {
@@ -235,7 +235,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	if (!pe)
 --- a/mm/vmalloc.c
 +++ b/mm/vmalloc.c
-@@ -4132,6 +4132,8 @@ static const struct seq_operations vmall
+@@ -4136,6 +4136,8 @@ static const struct seq_operations vmall
  
  static int __init proc_vmalloc_init(void)
  {
@@ -246,9 +246,9 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  				&vmalloc_op,
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
-@@ -2120,10 +2120,12 @@ void __init init_mm_internals(void)
- #endif
+@@ -2115,10 +2115,12 @@ void __init init_mm_internals(void)
  	migrate_on_reclaim_init();
+ #endif
  #ifdef CONFIG_PROC_FS
 -	proc_create_seq("buddyinfo", 0444, NULL, &fragmentation_op);
 -	proc_create_seq("pagetypeinfo", 0400, NULL, &pagetypeinfo_op);
@@ -286,7 +286,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  		goto err;
 --- a/net/core/net-procfs.c
 +++ b/net/core/net-procfs.c
-@@ -319,10 +319,12 @@ static int __net_init dev_proc_net_init(
+@@ -317,10 +317,12 @@ static int __net_init dev_proc_net_init(
  	if (!proc_create_net("dev", 0444, net->proc_net, &dev_seq_ops,
  			sizeof(struct seq_net_private)))
  		goto out;
@@ -301,7 +301,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  			sizeof(struct seq_net_private)))
  		goto out_softnet;
  
-@@ -332,9 +334,11 @@ static int __net_init dev_proc_net_init(
+@@ -330,9 +332,11 @@ static int __net_init dev_proc_net_init(
  out:
  	return rc;
  out_ptype:
@@ -315,7 +315,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  out_dev:
  	remove_proc_entry("dev", net->proc_net);
  	goto out;
-@@ -344,8 +348,10 @@ static void __net_exit dev_proc_net_exit
+@@ -342,8 +346,10 @@ static void __net_exit dev_proc_net_exit
  {
  	wext_proc_exit(net);
  
@@ -330,7 +330,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/net/core/sock.c
 +++ b/net/core/sock.c
-@@ -4013,6 +4013,8 @@ static __net_initdata struct pernet_oper
+@@ -3937,6 +3937,8 @@ static __net_initdata struct pernet_oper
  
  static int __init proto_init(void)
  {

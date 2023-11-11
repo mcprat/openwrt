@@ -22,7 +22,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/phy/Kconfig
 +++ b/drivers/net/phy/Kconfig
-@@ -253,7 +253,7 @@ config MOTORCOMM_PHY
+@@ -246,7 +246,7 @@ config MOTORCOMM_PHY
  	tristate "Motorcomm PHYs"
  	help
  	  Enables support for Motorcomm network PHYs.

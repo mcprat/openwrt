@@ -125,7 +125,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  #include <linux/mutex.h>
  #include <linux/err.h>
  #include <linux/property.h>
-@@ -3356,3 +3357,5 @@ static int __init regmap_initcall(void)
+@@ -3352,3 +3353,5 @@ static int __init regmap_initcall(void)
  	return 0;
  }
  postcore_initcall(regmap_initcall);

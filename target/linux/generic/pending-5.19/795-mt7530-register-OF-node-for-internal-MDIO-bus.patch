@@ -16,7 +16,7 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
 
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -2064,10 +2064,13 @@ mt7530_setup_mdio(struct mt7530_priv *pr
+@@ -2059,10 +2059,13 @@ mt7530_setup_mdio(struct mt7530_priv *pr
  {
  	struct dsa_switch *ds = priv->ds;
  	struct device *dev = priv->dev;
@@ -30,7 +30,7 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
  	bus = devm_mdiobus_alloc(dev);
  	if (!bus)
  		return -ENOMEM;
-@@ -2084,7 +2087,9 @@ mt7530_setup_mdio(struct mt7530_priv *pr
+@@ -2079,7 +2082,9 @@ mt7530_setup_mdio(struct mt7530_priv *pr
  	if (priv->irq)
  		mt7530_setup_mdio_irq(priv);
  
