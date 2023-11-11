@@ -67,7 +67,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	*(.modinfo)							\
 --- a/include/linux/export.h
 +++ b/include/linux/export.h
-@@ -70,6 +70,12 @@ struct kernel_symbol {
+@@ -82,6 +82,12 @@ struct kernel_symbol {
  
  #else
  
@@ -80,10 +80,10 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  /*
   * For every exported symbol, do the following:
   *
-@@ -85,7 +91,7 @@ struct kernel_symbol {
- 	extern typeof(sym) sym;							\
+@@ -99,7 +105,7 @@ struct kernel_symbol {
  	extern const char __kstrtab_##sym[];					\
  	extern const char __kstrtabns_##sym[];					\
+ 	__CRC_SYMBOL(sym, sec);							\
 -	asm("	.section \"__ksymtab_strings\",\"aMS\",%progbits,1	\n"	\
 +	asm("	.section \"__ksymtab_strings" __EXPORT_SUFFIX(sym) "\",\"aMS\",%progbits,1	\n"	\
  	    "__kstrtab_" #sym ":					\n"	\
@@ -91,7 +91,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	    "__kstrtabns_" #sym ":					\n"	\
 --- a/include/asm-generic/export.h
 +++ b/include/asm-generic/export.h
-@@ -31,6 +31,12 @@
+@@ -26,6 +26,12 @@
  #endif
  .endm
  
@@ -104,7 +104,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  /*
   * note on .section use: we specify progbits since usage of the "M" (SHF_MERGE)
   * section flag requires it. Use '%progbits' instead of '@progbits' since the
-@@ -44,7 +50,7 @@
+@@ -39,7 +45,7 @@
  __ksymtab_\name:
  	__put \val, __kstrtab_\name
  	.previous
@@ -115,7 +115,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	.previous
 --- a/scripts/Makefile.build
 +++ b/scripts/Makefile.build
-@@ -367,7 +367,7 @@ targets += $(real-dtb-y) $(lib-y) $(alwa
+@@ -400,7 +400,7 @@ targets += $(real-dtb-y) $(lib-y) $(alwa
  # Linker scripts preprocessor (.lds.S -> .lds)
  # ---------------------------------------------------------------------------
  quiet_cmd_cpp_lds_S = LDS     $@
