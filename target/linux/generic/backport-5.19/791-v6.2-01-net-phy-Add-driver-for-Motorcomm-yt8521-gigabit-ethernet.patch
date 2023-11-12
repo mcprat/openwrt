@@ -21,7 +21,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -13289,6 +13289,7 @@ F:	include/uapi/linux/meye.h
+@@ -13404,6 +13404,7 @@ F:	include/uapi/linux/meye.h
  
  MOTORCOMM PHY DRIVER
  M:	Peter Geis <pgwipeout@gmail.com>
@@ -31,7 +31,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  F:	drivers/net/phy/motorcomm.c
 --- a/drivers/net/phy/Kconfig
 +++ b/drivers/net/phy/Kconfig
-@@ -246,7 +246,7 @@ config MOTORCOMM_PHY
+@@ -253,7 +253,7 @@ config MOTORCOMM_PHY
  	tristate "Motorcomm PHYs"
  	help
  	  Enables support for Motorcomm network PHYs.
