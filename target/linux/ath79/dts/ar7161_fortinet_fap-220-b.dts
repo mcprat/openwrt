@@ -147,20 +147,6 @@
 	status = "okay";
 };
 
-&uboot {
-	nvmem-layout {
-		compatible = "fixed-layout";
-		#address-cells = <1>;
-		#size-cells = <1>;
-
-		macaddr_uboot_3ff80: mac-address-hex@3ff80 {
-			compatible = "mac-base";
-			reg = <0x3ff80 0xc>;
-			#nvmem-cell-cells = <1>;
-		};
-	};
-};
-
 &art {
 	nvmem-layout {
 		compatible = "fixed-layout";
