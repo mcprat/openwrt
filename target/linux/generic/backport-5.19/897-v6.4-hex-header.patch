@@ -47,7 +47,7 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 +	return buf;
 +}
 +
-+extern int hex_to_bin(unsigned char ch);
++extern int hex_to_bin(char ch);
 +extern int __must_check hex2bin(u8 *dst, const char *src, size_t count);
 +extern char *bin2hex(char *dst, const void *src, size_t count);
 +
@@ -64,7 +64,7 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
  #include <linux/kstrtox.h>
  #include <linux/log2.h>
  #include <linux/math.h>
-@@ -263,34 +264,6 @@ extern enum system_states {
+@@ -272,34 +273,6 @@ extern enum system_states {
  	SYSTEM_SUSPEND,
  } system_state;
  
@@ -90,7 +90,7 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 -	return buf;
 -}
 -
--extern int hex_to_bin(unsigned char ch);
+-extern int hex_to_bin(char ch);
 -extern int __must_check hex2bin(u8 *dst, const char *src, size_t count);
 -extern char *bin2hex(char *dst, const void *src, size_t count);
 -
