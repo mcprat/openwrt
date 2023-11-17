@@ -96,7 +96,7 @@ Link: https://lore.kernel.org/linux-mtd/20220622010628.30414-4-ansuelsmth@gmail.
  /**
   *	add_mtd_device - register an MTD device
   *	@mtd: pointer to new MTD device info structure
-@@ -658,6 +718,7 @@ int add_mtd_device(struct mtd_info *mtd)
+@@ -651,6 +711,7 @@ int add_mtd_device(struct mtd_info *mtd)
  	mtd->dev.devt = MTD_DEVT(i);
  	dev_set_name(&mtd->dev, "mtd%d", i);
  	dev_set_drvdata(&mtd->dev, mtd);

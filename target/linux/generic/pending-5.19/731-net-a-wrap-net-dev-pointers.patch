@@ -26,11 +26,9 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  net/core/net-sysfs.c            | 21 +++++++++++++--------
  5 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 1ce91cb8074a18..f615a66c89e98b 100644
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -2119,6 +2119,8 @@ struct net_device {
+@@ -2099,6 +2099,8 @@ struct net_device {
  
  	/* Protocol-specific pointers */
  
@@ -39,7 +37,7 @@ index 1ce91cb8074a18..f615a66c89e98b 100644
  #if IS_ENABLED(CONFIG_VLAN_8021Q)
  	struct vlan_info __rcu	*vlan_info;
  #endif
-@@ -2131,16 +2133,18 @@ struct net_device {
+@@ -2111,16 +2113,18 @@ struct net_device {
  #if IS_ENABLED(CONFIG_ATALK)
  	void 			*atalk_ptr;
  #endif
@@ -60,11 +58,9 @@ index 1ce91cb8074a18..f615a66c89e98b 100644
  #if IS_ENABLED(CONFIG_MPLS_ROUTING)
  	struct mpls_dev __rcu	*mpls_ptr;
  #endif
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index cc8a9880b9d649..6d02e12e4702e9 100644
 --- a/include/net/cfg80211.h
 +++ b/include/net/cfg80211.h
-@@ -8006,7 +8006,9 @@ int cfg80211_register_netdevice(struct net_device *dev);
+@@ -8006,7 +8006,9 @@ int cfg80211_register_netdevice(struct n
   */
  static inline void cfg80211_unregister_netdevice(struct net_device *dev)
  {
@@ -74,8 +70,6 @@ index cc8a9880b9d649..6d02e12e4702e9 100644
  }
  
  /**
-diff --git a/include/net/cfg802154.h b/include/net/cfg802154.h
-index 85f9e84176884d..d8d8719315fd84 100644
 --- a/include/net/cfg802154.h
 +++ b/include/net/cfg802154.h
 @@ -373,6 +373,7 @@ struct wpan_dev {
@@ -86,7 +80,7 @@ index 85f9e84176884d..d8d8719315fd84 100644
  static inline int
  wpan_dev_hard_header(struct sk_buff *skb, struct net_device *dev,
  		     const struct ieee802154_addr *daddr,
-@@ -383,6 +384,7 @@ wpan_dev_hard_header(struct sk_buff *skb, struct net_device *dev,
+@@ -383,6 +384,7 @@ wpan_dev_hard_header(struct sk_buff *skb
  
  	return wpan_dev->header_ops->create(skb, dev, daddr, saddr, len);
  }
@@ -94,11 +88,9 @@ index 85f9e84176884d..d8d8719315fd84 100644
  
  struct wpan_phy *
  wpan_phy_new(const struct cfg802154_ops *ops, size_t priv_size);
-diff --git a/net/batman-adv/hard-interface.c b/net/batman-adv/hard-interface.c
-index 83fb51b6e2994c..b8f8da7ee3dea4 100644
 --- a/net/batman-adv/hard-interface.c
 +++ b/net/batman-adv/hard-interface.c
-@@ -307,9 +307,11 @@ static bool batadv_is_cfg80211_netdev(struct net_device *net_device)
+@@ -307,9 +307,11 @@ static bool batadv_is_cfg80211_netdev(st
  	if (!net_device)
  		return false;
  
@@ -110,11 +102,9 @@ index 83fb51b6e2994c..b8f8da7ee3dea4 100644
  
  	return false;
  }
-diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
-index 4980c3a5047593..e319e242dddf00 100644
 --- a/net/core/net-sysfs.c
 +++ b/net/core/net-sysfs.c
-@@ -746,7 +746,6 @@ static const struct attribute_group netstat_group = {
+@@ -745,7 +745,6 @@ static const struct attribute_group nets
  	.attrs  = netstat_attrs,
  };
  
@@ -122,7 +112,7 @@ index 4980c3a5047593..e319e242dddf00 100644
  static struct attribute *wireless_attrs[] = {
  	NULL
  };
-@@ -755,7 +754,19 @@ static const struct attribute_group wireless_group = {
+@@ -754,7 +753,19 @@ static const struct attribute_group wire
  	.name = "wireless",
  	.attrs = wireless_attrs,
  };
@@ -142,7 +132,7 @@ index 4980c3a5047593..e319e242dddf00 100644
  
  #else /* CONFIG_SYSFS */
  #define net_class_groups	NULL
-@@ -1996,14 +2007,8 @@ int netdev_register_kobject(struct net_device *ndev)
+@@ -1995,14 +2006,8 @@ int netdev_register_kobject(struct net_d
  
  	*groups++ = &netstat_group;
  
