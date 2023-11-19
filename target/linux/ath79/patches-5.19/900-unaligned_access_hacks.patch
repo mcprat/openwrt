@@ -86,7 +86,7 @@ SVN-Revision: 35130
  	} while (word != stop);
  
  	return csum_fold(csum);
-@@ -179,73 +183,6 @@ static inline __sum16 ip_compute_csum(co
+@@ -182,73 +186,6 @@ static inline __sum16 ip_compute_csum(co
  	return csum_fold(csum_partial(buff, len, 0));
  }
  
@@ -215,7 +215,7 @@ SVN-Revision: 35130
  #define UDP_CORK	1	/* Never send partially complete segments */
 --- a/net/netfilter/nf_conntrack_core.c
 +++ b/net/netfilter/nf_conntrack_core.c
-@@ -308,8 +308,8 @@ nf_ct_get_tuple(const struct sk_buff *sk
+@@ -305,8 +305,8 @@ nf_ct_get_tuple(const struct sk_buff *sk
  
  	switch (l3num) {
  	case NFPROTO_IPV4:
@@ -311,15 +311,15 @@ SVN-Revision: 35130
  		case IPV6_2292HOPOPTS:
 --- a/net/ipv6/exthdrs.c
 +++ b/net/ipv6/exthdrs.c
-@@ -1010,7 +1010,7 @@ static bool ipv6_hop_jumbo(struct sk_buf
+@@ -1008,7 +1008,7 @@ static bool ipv6_hop_jumbo(struct sk_buf
  		goto drop;
  	}
  
 -	pkt_len = ntohl(*(__be32 *)(nh + optoff + 2));
 +	pkt_len = ntohl(net_hdr_word(nh + optoff + 2));
  	if (pkt_len <= IPV6_MAXPLEN) {
- 		icmpv6_param_prob_reason(skb, ICMPV6_HDR_FIELD, optoff + 2,
- 					 SKB_DROP_REASON_IP_INHDR);
+ 		__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
+ 		icmpv6_param_prob(skb, ICMPV6_HDR_FIELD, optoff+2);
 --- a/include/linux/types.h
 +++ b/include/linux/types.h
 @@ -232,5 +232,11 @@ typedef void (*swap_func_t)(void *a, voi
@@ -336,7 +336,7 @@ SVN-Revision: 35130
  #endif /* _LINUX_TYPES_H */
 --- a/net/ipv4/af_inet.c
 +++ b/net/ipv4/af_inet.c
-@@ -1469,8 +1469,8 @@ struct sk_buff *inet_gro_receive(struct
+@@ -1470,8 +1470,8 @@ struct sk_buff *inet_gro_receive(struct
  	if (unlikely(ip_fast_csum((u8 *)iph, 5)))
  		goto out;
  
@@ -349,7 +349,7 @@ SVN-Revision: 35130
  	list_for_each_entry(p, head, list) {
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
-@@ -611,48 +611,53 @@ static void tcp_options_write(struct tcp
+@@ -611,48 +611,53 @@ static void tcp_options_write(__be32 *pt
  	u16 options = opts->options;	/* mungable copy */
  
  	if (unlikely(OPTION_MD5 & options)) {
@@ -426,7 +426,7 @@ SVN-Revision: 35130
  	}
  
  	if (unlikely(opts->num_sack_blocks)) {
-@@ -660,16 +665,17 @@ static void tcp_options_write(struct tcp
+@@ -660,16 +665,17 @@ static void tcp_options_write(__be32 *pt
  			tp->duplicate_sack : tp->selective_acks;
  		int this_sack;
  
@@ -450,7 +450,7 @@ SVN-Revision: 35130
  		}
  
  		tp->rx_opt.dsack = 0;
-@@ -682,13 +688,14 @@ static void tcp_options_write(struct tcp
+@@ -682,13 +688,14 @@ static void tcp_options_write(__be32 *pt
  
  		if (foc->exp) {
  			len = TCPOLEN_EXP_FASTOPEN_BASE + foc->len;
@@ -578,7 +578,7 @@ SVN-Revision: 35130
  			goto next_ht;
 --- a/net/ipv6/ip6_offload.c
 +++ b/net/ipv6/ip6_offload.c
-@@ -262,7 +262,7 @@ INDIRECT_CALLABLE_SCOPE struct sk_buff *
+@@ -240,7 +240,7 @@ INDIRECT_CALLABLE_SCOPE struct sk_buff *
  			continue;
  
  		iph2 = (struct ipv6hdr *)(p->data + off);
@@ -621,9 +621,9 @@ SVN-Revision: 35130
 -};
 +} __attribute__((packed, aligned(2)));
  
- /*
-  * Jumbo payload option, as described in RFC 2675 2.
-@@ -615,8 +615,8 @@ static inline void __ipv6_addr_set_half(
+ #define	IP6_MF		0x0001
+ #define	IP6_OFFSET	0xFFF8
+@@ -571,8 +571,8 @@ static inline void __ipv6_addr_set_half(
  	}
  #endif
  #endif
@@ -634,7 +634,7 @@ SVN-Revision: 35130
  }
  
  static inline void ipv6_addr_set(struct in6_addr *addr,
-@@ -675,6 +675,8 @@ static inline bool ipv6_prefix_equal(con
+@@ -631,6 +631,8 @@ static inline bool ipv6_prefix_equal(con
  	const __be32 *a1 = addr1->s6_addr32;
  	const __be32 *a2 = addr2->s6_addr32;
  	unsigned int pdw, pbi;
@@ -643,7 +643,7 @@ SVN-Revision: 35130
  
  	/* check complete u32 in prefix */
  	pdw = prefixlen >> 5;
-@@ -683,7 +685,9 @@ static inline bool ipv6_prefix_equal(con
+@@ -639,7 +641,9 @@ static inline bool ipv6_prefix_equal(con
  
  	/* check incomplete u32 in prefix */
  	pbi = prefixlen & 0x1f;
@@ -654,7 +654,7 @@ SVN-Revision: 35130
  		return false;
  
  	return true;
-@@ -804,13 +808,13 @@ static inline void ipv6_addr_set_v4mappe
+@@ -760,13 +764,13 @@ static inline void ipv6_addr_set_v4mappe
   */
  static inline int __ipv6_addr_diff32(const void *token1, const void *token2, int addrlen)
  {
@@ -670,7 +670,7 @@ SVN-Revision: 35130
  		if (xb)
  			return i * 32 + 31 - __fls(ntohl(xb));
  	}
-@@ -1004,17 +1008,18 @@ static inline u32 ip6_multipath_hash_fie
+@@ -960,17 +964,18 @@ static inline u32 ip6_multipath_hash_fie
  static inline void ip6_flow_hdr(struct ipv6hdr *hdr, unsigned int tclass,
  				__be32 flowlabel)
  {
@@ -700,8 +700,8 @@ SVN-Revision: 35130
  #include <linux/types.h>
 +#include <linux/in6.h>
  
- u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport);
- u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
+ u32 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport);
+ u32 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
 --- a/include/uapi/linux/in.h
 +++ b/include/uapi/linux/in.h
 @@ -88,7 +88,7 @@ enum {
@@ -737,7 +737,7 @@ SVN-Revision: 35130
  				       | TCPOLEN_TIMESTAMP))
 --- a/net/xfrm/xfrm_input.c
 +++ b/net/xfrm/xfrm_input.c
-@@ -166,8 +166,8 @@ int xfrm_parse_spi(struct sk_buff *skb,
+@@ -165,8 +165,8 @@ int xfrm_parse_spi(struct sk_buff *skb,
  	if (!pskb_may_pull(skb, hlen))
  		return -EINVAL;
  
@@ -750,7 +750,7 @@ SVN-Revision: 35130
  EXPORT_SYMBOL(xfrm_parse_spi);
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -4158,14 +4158,16 @@ static bool tcp_parse_aligned_timestamp(
+@@ -4136,14 +4136,16 @@ static bool tcp_parse_aligned_timestamp(
  {
  	const __be32 *ptr = (const __be32 *)(th + 1);
  
