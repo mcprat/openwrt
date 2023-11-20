@@ -14,10 +14,6 @@
 		led-upgrade = &led_power;
 	};
 
-	chosen {
-		bootargs = "console=ttyS0,9600";
-	};
-
 	keys {
 		compatible = "gpio-keys";
 
