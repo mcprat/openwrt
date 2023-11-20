@@ -1,0 +1,26 @@
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2079,9 +2079,8 @@ static void serial8250_break_ctl(struct
+ 
+ static void wait_for_lsr(struct uart_8250_port *up, int bits)
+ {
+-	unsigned int status, tmout = 10000;
++	unsigned int status, tmout = 8000;
+ 
+-	/* Wait up to 10ms for the character(s) to be sent. */
+ 	for (;;) {
+ 		status = serial_in(up, UART_LSR);
+ 
+@@ -2089,10 +2088,10 @@ static void wait_for_lsr(struct uart_825
+ 
+ 		if ((status & bits) == bits)
+ 			break;
+-		if (--tmout == 0)
+-			break;
+ 		udelay(1);
+ 		touch_nmi_watchdog();
++		if (--tmout == 0)
++			break;
+ 	}
+ }
+ 
