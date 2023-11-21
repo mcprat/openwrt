@@ -5,7 +5,7 @@
  static void wait_for_lsr(struct uart_8250_port *up, int bits)
  {
 -	unsigned int status, tmout = 10000;
-+	unsigned int status, tmout = 4000;
++	unsigned int status, tmout = 16000;
  
 -	/* Wait up to 10ms for the character(s) to be sent. */
  	for (;;) {
