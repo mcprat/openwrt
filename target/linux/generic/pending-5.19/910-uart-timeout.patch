@@ -7,7 +7,7 @@
 -	/* Wait up to 10ms for the character(s) to be sent. */
 +	/* Wait for a time relative to buffer size and baud */
 +	if (up->port.fifosize && up->port.frame_time)
-+		tmout = up->port.fifosize * (up->port.frame_time / NSEC_PER_USEC);
++		tmout = jiffies_to_usecs(uart_fifo_timeout(up->port));
 +
  	for (;;) {
  		status = serial_in(up, UART_LSR);
