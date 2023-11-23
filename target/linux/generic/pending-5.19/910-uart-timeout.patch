@@ -6,8 +6,8 @@
  
 -	/* Wait up to 10ms for the character(s) to be sent. */
 +	/* Wait for a maximum of ms relative to buffer size and baud */
-+	if (up->tx_loadsz && up->port->frame_time)
-+		tmout = up->tx_loadsz * up->port->frame_time;
++	if (up->tx_loadsz && up->port.frame_time)
++		tmout = up->tx_loadsz * up->port.frame_time;
 +
  	for (;;) {
  		status = serial_in(up, UART_LSR);
