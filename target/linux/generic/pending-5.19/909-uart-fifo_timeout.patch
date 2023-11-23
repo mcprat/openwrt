@@ -1,0 +1,146 @@
+From f9008285bb69e4713918a665250ab2d356b731ba Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Mon, 13 Jun 2022 14:39:05 +0300
+Subject: [PATCH] serial: Drop timeout from uart_port
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Since commit 31f6bd7fad3b ("serial: Store character timing information
+to uart_port"), per frame timing information is available on uart_port.
+Uart port's timeout can be derived from frame_time by multiplying with
+fifosize.
+
+Most callers of uart_poll_timeout are not made under port's lock. To be
+on the safe side, make sure frame_time is only accessed once. As
+fifo_size is effectively a constant, it shouldn't cause any issues.
+
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20220613113905.22962-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Documentation/driver-api/serial/driver.rst |  5 +++--
+ drivers/tty/serial/mux.c                   |  6 ------
+ drivers/tty/serial/serial_core.c           | 25 +++++++++-------------
+ include/linux/serial_core.h                | 16 ++++++++++++--
+ 4 files changed, 27 insertions(+), 25 deletions(-)
+
+--- a/Documentation/driver-api/serial/driver.rst
++++ b/Documentation/driver-api/serial/driver.rst
+@@ -422,8 +422,9 @@ Other functions
+ ---------------
+ 
+ uart_update_timeout(port,cflag,baud)
+-	Update the FIFO drain timeout, port->timeout, according to the
+-	number of bits, parity, stop bits and baud rate.
++	Update the frame timing information according to the number of bits,
++	parity, stop bits and baud rate. The FIFO drain timeout is derived
++	from the frame timing information.
+ 
+ 	Locking: caller is expected to take port->lock
+ 
+--- a/drivers/tty/serial/mux.c
++++ b/drivers/tty/serial/mux.c
+@@ -481,12 +481,6 @@ static int __init mux_probe(struct paris
+ 		port->line	= port_cnt;
+ 		port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MUX_CONSOLE);
+ 
+-		/* The port->timeout needs to match what is present in
+-		 * uart_wait_until_sent in serial_core.c.  Otherwise
+-		 * the time spent in msleep_interruptable will be very
+-		 * long, causing the appearance of a console hang.
+-		 */
+-		port->timeout   = HZ / 50;
+ 		spin_lock_init(&port->lock);
+ 
+ 		status = uart_add_one_port(&mux_driver, port);
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -327,13 +327,14 @@ static void uart_shutdown(struct tty_str
+ }
+ 
+ /**
+- *	uart_update_timeout - update per-port FIFO timeout.
++ *	uart_update_timeout - update per-port frame timing information.
+  *	@port:  uart_port structure describing the port
+  *	@cflag: termios cflag value
+  *	@baud:  speed of the port
+  *
+- *	Set the port FIFO timeout value.  The @cflag value should
+- *	reflect the actual hardware settings.
++ *	Set the port frame timing information from which the FIFO timeout
++ *	value is derived. The @cflag value should reflect the actual hardware
++ *	settings.
+  */
+ void
+ uart_update_timeout(struct uart_port *port, unsigned int cflag,
+@@ -343,13 +344,6 @@ uart_update_timeout(struct uart_port *po
+ 	u64 frame_time;
+ 
+ 	frame_time = (u64)size * NSEC_PER_SEC;
+-	size *= port->fifosize;
+-
+-	/*
+-	 * Figure the timeout to send the above number of bits.
+-	 * Add .02 seconds of slop
+-	 */
+-	port->timeout = (HZ * size) / baud + HZ/50;
+ 	port->frame_time = DIV64_U64_ROUND_UP(frame_time, baud);
+ }
+ EXPORT_SYMBOL(uart_update_timeout);
+@@ -1628,7 +1622,7 @@ static void uart_wait_until_sent(struct
+ {
+ 	struct uart_state *state = tty->driver_data;
+ 	struct uart_port *port;
+-	unsigned long char_time, expire;
++	unsigned long char_time, expire, fifo_timeout;
+ 
+ 	port = uart_port_ref(state);
+ 	if (!port)
+@@ -1661,8 +1655,9 @@ static void uart_wait_until_sent(struct
+ 	 * UART bug of some kind.  So, we clamp the timeout parameter at
+ 	 * 2*port->timeout.
+ 	 */
+-	if (timeout == 0 || timeout > 2 * port->timeout)
+-		timeout = 2 * port->timeout;
++	fifo_timeout = uart_fifo_timeout(port);
++	if (timeout == 0 || timeout > 2 * fifo_timeout)
++		timeout = 2 * fifo_timeout;
+ 
+ 	expire = jiffies + timeout;
+ 
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -231,7 +231,6 @@ struct uart_port {
+ 
+ 	int			hw_stopped;		/* sw-assisted CTS flow state */
+ 	unsigned int		mctrl;			/* current modem ctrl settings */
+-	unsigned int		timeout;		/* character-based timeout */
+ 	unsigned int		frame_time;		/* frame timing in ns */
+ 	unsigned int		type;			/* port type */
+ 	const struct uart_ops	*ops;
+@@ -333,10 +332,23 @@ unsigned int uart_get_baud_rate(struct u
+ 				unsigned int max);
+ unsigned int uart_get_divisor(struct uart_port *port, unsigned int baud);
+ 
++/*
++ * Calculates FIFO drain time.
++ */
++static inline unsigned long uart_fifo_timeout(struct uart_port *port)
++{
++	u64 fifo_timeout = (u64)READ_ONCE(port->frame_time) * port->fifosize;
++
++	/* Add .02 seconds of slop */
++	fifo_timeout += 20 * NSEC_PER_MSEC;
++
++	return max(nsecs_to_jiffies(fifo_timeout), 1UL);
++}
++
+ /* Base timer interval for polling */
+ static inline int uart_poll_timeout(struct uart_port *port)
+ {
+-	int timeout = port->timeout;
++	int timeout = uart_fifo_timeout(port);
+ 
+ 	return timeout > 6 ? (timeout / 2 - 2) : 1;
+ }
