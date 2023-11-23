@@ -5,9 +5,9 @@
  	unsigned int status, tmout = 10000;
  
 -	/* Wait up to 10ms for the character(s) to be sent. */
-+	/* Wait for a maximum of ms relative to buffer size and baud */
-+	if (up->tx_loadsz && up->port.frame_time)
-+		tmout = up->tx_loadsz * up->port.frame_time;
++	/* Wait for a time relative to buffer size and baud */
++	if (up->fifo_size && up->port.frame_time)
++		tmout = up->fifo_size * (up->port.frame_time / NSEC_PER_USEC);
 +
  	for (;;) {
  		status = serial_in(up, UART_LSR);
