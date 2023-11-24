@@ -6,7 +6,7 @@
  
 -	/* Wait up to 10ms for the character(s) to be sent. */
 +	/* Wait for a time relative to buffer size and baud */
-+	if (up->port.fifosize && up->port.frame_time)
++	if (up->port.fifosize > 1)
 +		tmout = jiffies_to_usecs(uart_fifo_timeout(&up->port));
 +
  	for (;;) {
