@@ -1,0 +1,22 @@
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -345,6 +345,9 @@ uart_update_timeout(struct uart_port *po
+ 
+ 	frame_time = (u64)size * NSEC_PER_SEC;
+ 	port->frame_time = DIV64_U64_ROUND_UP(frame_time, baud);
++
++	if (port->fifosize > 1)
++		port->timeout = uart_fifo_timeout(port);
+ }
+ EXPORT_SYMBOL(uart_update_timeout);
+ 
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -231,6 +231,7 @@ struct uart_port {
+ 
+ 	int			hw_stopped;		/* sw-assisted CTS flow state */
+ 	unsigned int		mctrl;			/* current modem ctrl settings */
++	unsigned long long int	timeout;		/* character-based timeout */
+ 	unsigned int		frame_time;		/* frame timing in ns */
+ 	unsigned int		type;			/* port type */
+ 	const struct uart_ops	*ops;
