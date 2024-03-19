@@ -119,7 +119,7 @@ ifdef CONFIG_MIPS64_ABI
 endif
 
 DEFAULT_SUBDIR_TARGETS:=clean download prepare compile update refresh prereq dist distcheck configure check check-depends
-NO_DEPS ?= $(if $(findstring prepare,$(MAKECMDGOALS))$(findstring refresh,$(MAKECMDGOALS)),$(HOST_QUILT)$(QUILT))
+NO_DEPS ?= $(if $(findstring prepare,$(MAKECMDGOALS))$(findstring refresh,$(MAKECMDGOALS)),$(QUILT))
 
 define DefaultTargets
 $(foreach t,$(DEFAULT_SUBDIR_TARGETS) $(1),

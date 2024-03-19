@@ -22,7 +22,7 @@ include $(INCLUDE_DIR)/depends.mk
 include $(INCLUDE_DIR)/quilt.mk
 
 BUILD_TYPES += host
-HOST_STAMP_PREPARED=$(HOST_BUILD_DIR)/.prepared$(if $(NO_DEPS)$(DUMP),,$(shell $(call $(if $(CONFIG_AUTOREMOVE),find_md5_reproducible,find_md5),${CURDIR} $(PKG_FILE_DEPENDS),))_$(call confvar,CONFIG_AUTOREMOVE $(HOST_PREPARED_DEPENDS)))
+HOST_STAMP_PREPARED=$(HOST_BUILD_DIR)/.prepared$(if $(HOST_QUILT)$(DUMP),,$(shell $(call $(if $(CONFIG_AUTOREMOVE),find_md5_reproducible,find_md5),${CURDIR} $(PKG_FILE_DEPENDS),))_$(call confvar,CONFIG_AUTOREMOVE $(HOST_PREPARED_DEPENDS)))
 HOST_STAMP_CONFIGURED:=$(HOST_BUILD_DIR)/.configured
 HOST_STAMP_BUILT:=$(HOST_BUILD_DIR)/.built
 HOST_BUILD_PREFIX?=$(if $(IS_PACKAGE_BUILD),$(STAGING_DIR_HOSTPKG),$(STAGING_DIR_HOST))
@@ -33,7 +33,7 @@ override MAKEFLAGS=
 
 include $(INCLUDE_DIR)/autotools.mk
 
-_host_target:=$(if $(NO_DEPS),,.)
+_host_target:=$(if $(HOST_QUILT),,.)
 
 Host/Patch:=$(Host/Patch/Default)
 ifneq ($(strip $(HOST_UNPACK)),)
@@ -129,7 +129,7 @@ define Host/Install
 endef
 
 
-ifneq ($(if $(NO_DEPS),,$(CONFIG_AUTOREBUILD)),)
+ifneq ($(if $(HOST_QUILT),,$(CONFIG_AUTOREBUILD)),)
   define HostHost/Autoclean
     $(call rdep,${CURDIR} $(PKG_FILE_DEPENDS),$(HOST_STAMP_PREPARED))
     $(if $(if $(Host/Compile),$(filter prepare,$(MAKECMDGOALS)),1),,$(call rdep,$(HOST_BUILD_DIR),$(HOST_STAMP_BUILT)))
