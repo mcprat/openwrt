@@ -36,6 +36,7 @@ define Host/Bootstrap
 		cd $(HOST_BUILD_DIR); \
 		$(AM_TOOL_PATHS_FAKE) \
 		./bootstrap \
+			--bootstrap-sync \
 			--force \
 			--no-git \
 			--skip-po \
