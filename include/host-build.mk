@@ -7,6 +7,8 @@ include $(INCLUDE_DIR)/download.mk
 HOST_BUILD_DIR ?= $(BUILD_DIR_HOST)/$(PKG_NAME)$(if $(PKG_VERSION),-$(PKG_VERSION))
 HOST_SOURCE_DIR ?= $(HOST_BUILD_DIR)
 HOST_INSTALL_DIR ?= $(HOST_SOURCE_DIR)/host-install
+HOST_CLEAN ?= $(HOST_BUILD_DIR) $(HOST_SOURCE_DIR)
+HOST_UNINSTALL ?= $(HOST_INSTALL_DIR)
 HOST_BUILD_PARALLEL ?=
 
 HOST_MAKE_J:=$(if $(MAKE_JOBSERVER),$(MAKE_JOBSERVER) $(if $(filter 3.% 4.0 4.1,$(MAKE_VERSION)),-j))
@@ -202,11 +204,11 @@ ifndef DUMP
 
   host-clean-build: FORCE
 	$(call Host/Uninstall)
-	rm -rf $(HOST_BUILD_DIR) $(HOST_SOURCE_DIR) $(HOST_STAMP_BUILT)
+	rm -rf $(sort $(HOST_CLEAN) $(HOST_STAMP_BUILT))
 
   host-clean: host-clean-build
 	$(call Host/Clean)
-	rm -rf $(HOST_INSTALL_DIR) $(HOST_STAMP_INSTALLED) $(HOST_STAMP_PROGRAMS)
+	rm -rf $(sort $(HOST_UNINSTALL) $(HOST_STAMP_INSTALLED) $(HOST_STAMP_PROGRAMS))
 
     ifneq ($(CONFIG_AUTOREMOVE),)
       host-compile:

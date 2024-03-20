@@ -63,6 +63,18 @@ HOST_STAMP_BUILT:=$(GCC_BUILD_DIR)/.built
 HOST_STAMP_CONFIGURED:=$(GCC_BUILD_DIR)/.configured
 HOST_STAMP_INSTALLED:=$(HOST_BUILD_PREFIX)/stamp/.gcc_$(GCC_VARIANT)_installed
 
+HOST_CLEAN:= \
+	$(if $(GCC_PREPARE),$(HOST_SOURCE_DIR)) \
+	$(GCC_BUILD_DIR) \
+	$(BUILD_DIR_TOOLCHAIN)/$(PKG_NAME)
+
+HOST_UNINSTALL:= \
+	$(HOST_BUILD_PREFIX)/stamp/.gcc_* \
+	$(HOST_BUILD_PREFIX)/stamp/.binutils_* \
+	$(TOOLCHAIN_DIR)/$(REAL_GNU_TARGET_NAME) \
+	$(TOOLCHAIN_DIR)/bin/$(REAL_GNU_TARGET_NAME)-gc* \
+	$(TOOLCHAIN_DIR)/bin/$(REAL_GNU_TARGET_NAME)-c*
+
 SEP:=,
 TARGET_LANGUAGES:="c,c++$(if $(CONFIG_INSTALL_GFORTRAN),$(SEP)fortran)$(if $(CONFIG_INSTALL_GCCGO),$(SEP)go)"
 
@@ -219,15 +231,4 @@ define Host/Configure
 	(cd $(GCC_BUILD_DIR) && rm -f config.cache; \
 		$(GCC_CONFIGURE) \
 	);
-endef
-
-define Host/Clean
-	rm -rf $(if $(GCC_PREPARE),$(HOST_SOURCE_DIR)) \
-		$(HOST_BUILD_PREFIX)/stamp/.gcc_* \
-		$(HOST_BUILD_PREFIX)/stamp/.binutils_* \
-		$(GCC_BUILD_DIR) \
-		$(BUILD_DIR_TOOLCHAIN)/$(PKG_NAME) \
-		$(TOOLCHAIN_DIR)/$(REAL_GNU_TARGET_NAME) \
-		$(TOOLCHAIN_DIR)/bin/$(REAL_GNU_TARGET_NAME)-gc* \
-		$(TOOLCHAIN_DIR)/bin/$(REAL_GNU_TARGET_NAME)-c*
 endef

@@ -40,10 +40,12 @@ ifeq ($(CONFIG_EXTERNAL_TOOLCHAIN),)
     $(curdir)/kernel-headers/compile:=$(curdir)/gcc/minimal/compile
     $(curdir)/$(LIBC)/headers/compile:=$(curdir)/kernel-headers/compile
     $(curdir)/gcc/initial/compile:=$(curdir)/$(LIBC)/headers/compile
+    $(curdir)/gcc/initial/clean:=$(curdir)/gcc/minimal/clean
   endif
 
   $(curdir)/$(LIBC)/compile:=$(curdir)/gcc/initial/compile $(curdir)/kernel-headers/compile
   $(curdir)/gcc/final/compile:=$(curdir)/$(LIBC)/compile
+  $(curdir)/gcc/final/clean:=$(curdir)/gcc/initial/clean
 endif
 
 ifndef DUMP_TARGET_DB
