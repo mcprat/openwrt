@@ -1,0 +1,23 @@
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -3435,7 +3435,9 @@ void serial8250_console_write(struct uar
+ 		 */
+ 		!(up->port.flags & UPF_CONS_FLOW);
+ 
+-	if (likely(use_fifo))
++	up->fifo_enable = likely(use_fifo);
++
++	if (up->fifo_enable)
+ 		serial8250_console_fifo_write(up, s, count);
+ 	else
+ 		uart_console_write(port, s, count, serial8250_console_putchar);
+--- a/include/linux/serial_8250.h
++++ b/include/linux/serial_8250.h
+@@ -98,6 +98,7 @@ struct uart_8250_port {
+ 	u32			capabilities;	/* port capabilities */
+ 	unsigned short		bugs;		/* port bugs */
+ 	bool			fifo_bug;	/* min RX trigger if enabled */
++	unsigned int		fifo_enable;	/* fifo enabled if capable */
+ 	unsigned int		tx_loadsz;	/* transmit fifo load size */
+ 	unsigned char		acr;
+ 	unsigned char		fcr;

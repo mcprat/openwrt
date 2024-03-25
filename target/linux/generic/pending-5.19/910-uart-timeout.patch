@@ -6,7 +6,7 @@
  
 -	/* Wait up to 10ms for the character(s) to be sent. */
 +	/* Wait for a time relative to buffer size and baud */
-+	if (up->capabilities & UART_CAP_FIFO && up->port.timeout)
++	if (up->fifo_enable && up->port.timeout)
 +		tmout = jiffies_to_usecs(up->port.timeout);
 +
  	for (;;) {
