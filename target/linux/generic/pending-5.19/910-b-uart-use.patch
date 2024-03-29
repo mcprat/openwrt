@@ -5,9 +5,9 @@
  		!(up->port.flags & UPF_CONS_FLOW);
  
 -	if (likely(use_fifo))
-+	up->fifo_enable = likely(use_fifo);
++	up->fifo_enable = use_fifo;
 +
-+	if (up->fifo_enable)
++	if (likely(up->fifo_enable))
  		serial8250_console_fifo_write(up, s, count);
  	else
  		uart_console_write(port, s, count, serial8250_console_putchar);
