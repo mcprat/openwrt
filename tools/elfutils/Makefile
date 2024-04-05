@@ -25,6 +25,26 @@ endif
 
 HOST_CFLAGS += -Wno-error -fPIC
 
+HOST_GNULIB_BASE:=libgnu
+
+HOST_GNULIB_ARGS := \
+	--source-base=$(HOST_GNULIB_BASE) \
+	--libtool \
+	--import
+
+HOST_GNULIB_MODS := \
+	argp \
+	dirname \
+	fts \
+	obstack \
+	progname \
+	strchrnul \
+	tsearch
+
+HOST_GNULIB_RLINK := \
+	lib/xmalloc.c \
+	lib/eu-config.h
+
 HOST_CONFIGURE_ARGS += \
 	--without-libintl-prefix \
 	--without-libiconv-prefix \
@@ -43,8 +63,8 @@ endif
 
 Hooks/HostConfigure/Pre := Host/Gnulib $(Hooks/HostConfigure/Pre)
 define Host/Gnulib
-	cd $(HOST_BUILD_DIR); $(STAGING_DIR_HOST)/bin/gnulib-tool --libtool --source-base=libgnu --import argp dirname fts obstack progname strchrnul tsearch;
-	ln -sf ../lib/eu-config.h $(HOST_BUILD_DIR)/libgnu/;
+	cd $(HOST_BUILD_DIR); $(STAGING_DIR_HOST)/bin/gnulib-tool $(HOST_GNULIB_ARGS) $(HOST_GNULIB_MODS);
+	cd $(HOST_BUILD_DIR); $(foreach src,$(HOST_GNULIB_RLINK),$(LN) ../$(src) $(subst $(firstword $(subst /, ,$(src)))/,$(HOST_GNULIB_BASE)/,$(src)) || true; )
 endef
 
 define Host/Uninstall
