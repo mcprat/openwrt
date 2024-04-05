@@ -19,6 +19,24 @@ PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/host-build.mk
 
+HOST_GNULIB_BASE:=libgnu
+
+HOST_GNULIB_ARGS := \
+	--dir=$(HOST_BUILD_DIR) \
+	--local-dir=$(STAGING_DIR_HOST)/share/gnulib \
+	--source-base=$(HOST_GNULIB_BASE) \
+	--libtool \
+	--import
+
+HOST_GNULIB_MODS := \
+	argp \
+	dirname \
+	fts \
+	obstack \
+	progname \
+	strchrnul \
+	tsearch
+
 ifeq ($(HOST_OS),Darwin)
   HOST_CFLAGS += -I/opt/homebrew/include
 endif
@@ -43,7 +61,7 @@ endif
 
 Hooks/HostConfigure/Pre := Host/Gnulib $(Hooks/HostConfigure/Pre)
 define Host/Gnulib
-	cd $(HOST_BUILD_DIR); $(STAGING_DIR_HOST)/bin/gnulib-tool --libtool --source-base=libgnu --import argp dirname fts obstack progname strchrnul tsearch;
+	$(STAGING_DIR_HOST)/bin/gnulib-tool $(HOST_GNULIB_ARGS) $(HOST_GNULIB_MODS);
 	ln -sf ../lib/eu-config.h $(HOST_BUILD_DIR)/libgnu/;
 endef
 
