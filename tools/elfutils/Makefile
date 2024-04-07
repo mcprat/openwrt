@@ -18,7 +18,6 @@ PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 PKG_SUBDIRS := \
-	libgnu \
 	config \
 	lib \
 	libelf \
@@ -49,6 +48,8 @@ HOST_GNULIB_MODS := \
 	strchrnul \
 	tsearch
 
+HOST_GNULIB_CFLAGS:=-D_GL_CONFIG_H_INCLUDED -I.
+
 ifeq ($(HOST_OS),Darwin)
   HOST_CFLAGS += -I/opt/homebrew/include
 endif
@@ -77,8 +78,15 @@ define Host/Gnulib
 	ln -sf ../lib/eu-config.h $(HOST_BUILD_DIR)/libgnu/;
 endef
 
+define Host/Configure
+	$(call Host/Configure/Default)
+	$(call Host/Compile/Default,SUBDIRS='$$$$(wildcard $(HOST_GNULIB_BASE))')
+	cd $(HOST_BUILD_DIR); $(LN) $(HOST_GNULIB_BASE)/stdlib.h stdlib.h
+	$(call Host/Configure/Default,,CFLAGS="$$$${CFLAGS} $(HOST_GNULIB_CFLAGS)")
+endef
+
 define Host/Compile
-	$(call Host/Compile/Default,SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))')
+	$(call Host/Compile/Default,CFLAGS="$(HOST_CFLAGS)" SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))')
 endef
 
 define Host/Uninstall
