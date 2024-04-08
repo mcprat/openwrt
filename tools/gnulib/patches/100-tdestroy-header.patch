@@ -1,0 +1,63 @@
+--- a/lib/search.in.h
++++ b/lib/search.in.h
+@@ -137,6 +137,7 @@ extern "C" {
+ # if !GNULIB_defined_search_fn_types
+ typedef int (*_gl_search_compar_fn) (const void *, const void *);
+ typedef void (*_gl_search_action_fn) (const void *, VISIT, int);
++typedef void (*_gl_search_free_fn) (void *);
+ #  define GNULIB_defined_search_fn_types 1
+ # endif
+ # ifdef __cplusplus
+@@ -252,6 +253,24 @@ _GL_CXXALIAS_SYS (twalk, void,
+ _GL_CXXALIASWARN (twalk);
+ # endif
+ 
++/* Removes the whole tree pointed to by root,
++   freeing all resources allocated by the tsearch() function.
++   The FREE_NODE function is called:
++     - For the data in each tree node.
++     - Even when no such work is necessary, to a function doing nothing
++   The arguments passed to FREE_NODE are:
++     1. The pointer to the data. */
++# if defined( _LIBC) || defined(__APPLE__)
++_GL_FUNCDECL_SYS (tdestroy, void,
++                  (void *vroot, _gl_search_free_fn freefct)
++                  _GL_ARG_NONNULL ((2)));
++# endif
++_GL_CXXALIAS_SYS (tdestroy, void,
++                  (void *vroot, _gl_search_free_fn freefct));
++# if __GLIBC__ >= 2
++_GL_CXXALIASWARN (tdestroy);
++# endif
++
+ /* Flags used by tsearch.c.  */
+ # define GNULIB_defined_tsearch  (@REPLACE_TSEARCH@ || !@HAVE_TSEARCH@)
+ # define GNULIB_defined_twalk    (@REPLACE_TWALK@ || !@HAVE_TWALK@)
+--- a/lib/tsearch.c
++++ b/lib/tsearch.c
+@@ -98,6 +98,7 @@
+ 
+ typedef int (*__compar_fn_t) (const void *, const void *);
+ typedef void (*__action_fn_t) (const void *, VISIT, int);
++typedef void (*__free_fn_t) (void *);
+ 
+ #ifndef weak_alias
+ # define __tsearch tsearch
+@@ -656,7 +657,7 @@ weak_alias (__twalk, twalk)
+ #endif /* GNULIB_defined_twalk */
+ 
+ 
+-#ifdef _LIBC
++#if defined( _LIBC) || defined(__APPLE__)
+ 
+ /* The standardized functions miss an important functionality: the
+    tree cannot be removed easily.  We provide a function to do this.  */
+@@ -683,6 +684,8 @@ __tdestroy (void *vroot, __free_fn_t fre
+   if (root != NULL)
+     tdestroy_recurse (root, freefct);
+ }
++#ifdef weak_alias
+ weak_alias (__tdestroy, tdestroy)
++#endif
+ 
+ #endif /* _LIBC */
