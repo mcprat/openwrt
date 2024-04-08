@@ -38,6 +38,7 @@ HOST_GNULIB_ARGS := \
 	--local-dir=$(STAGING_DIR_HOST)/share/gnulib \
 	--source-base=$(HOST_GNULIB_BASE) \
 	--libtool \
+	--avoid=reallocarray \
 	--import
 
 HOST_GNULIB_MODS := \
