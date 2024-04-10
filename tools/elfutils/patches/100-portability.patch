@@ -792,15 +792,6 @@
  
  if DEMANGLE
  demanglelib = -lstdc++
-@@ -77,7 +66,7 @@ ranlib_no_Wstack_usage = yes
- ar_no_Wstack_usage = yes
- unstrip_no_Wstack_usage = yes
- 
--readelf_LDADD = $(libdw) $(libebl) $(libelf) $(libeu) $(argp_LDADD)
-+readelf_LDADD = $(libdw) $(libebl) $(libelf) $(libeu) $(argp_LDADD) ../libgnu/libgnu.la
- nm_LDADD = $(libdw) $(libebl) $(libelf) $(libeu) $(argp_LDADD) $(obstack_LIBS) \
- 	   $(demanglelib)
- size_LDADD = $(libelf) $(libeu) $(argp_LDADD)
 @@ -87,9 +76,9 @@ findtextrel_LDADD = $(libdw) $(libelf) $
  addr2line_LDADD = $(libdw) $(libelf) $(libeu) $(argp_LDADD) $(demanglelib)
  elfcmp_LDADD = $(libebl) $(libdw) $(libelf) $(libeu) $(argp_LDADD)
