@@ -1,0 +1,11 @@
+--- a/libelf/elf_end.c
++++ b/libelf/elf_end.c
+@@ -132,7 +132,7 @@ elf_end (Elf *elf)
+ 		 == offsetof (struct Elf, state.elf64.rawchunks))
+ 	     ? elf->state.elf32.rawchunks
+ 	     : elf->state.elf64.rawchunks);
+-	tdestroy (rawchunks, free_chunk);
++	__tdestroy (rawchunks, free_chunk);
+ 
+ 	Elf_ScnList *list = (elf->class == ELFCLASS32
+ 			     || (offsetof (struct Elf, state.elf32.scns)
