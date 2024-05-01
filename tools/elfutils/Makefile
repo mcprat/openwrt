@@ -50,6 +50,11 @@ PKG_GNULIB_MODS = \
 
 include $(INCLUDE_DIR)/host-build.mk
 
+export $(PKG_GNULIB_BASE)=$(HOST_BUILD_DIR)/$(PKG_GNULIB_BASE)/$(PKG_GNULIB_BASE).la
+
+HOST_MAKE_FLAGS += \
+	LIBS='$$$$(if $$$$(findstring src,$$$$(subdir)), $$$$($(PKG_GNULIB_BASE)))'
+
 ifeq ($(HOST_OS),Darwin)
   HOST_CFLAGS += -I/opt/homebrew/include
 endif
