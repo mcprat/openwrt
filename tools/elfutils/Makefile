@@ -53,15 +53,15 @@ PKG_GNULIB_MODS = \
 include $(INCLUDE_DIR)/host-build.mk
 
 export $(PKG_GNULIB_BASE)=$(HOST_BUILD_DIR)/$(PKG_GNULIB_BASE)/$(PKG_GNULIB_BASE).la
-export LIBS='$$$$(if $$$$(findstring src,$$$$(subdir)), $$$$($(PKG_GNULIB_BASE)))'
+
+HOST_MAKE_FLAGS += \
+	LIBS='$$$$(if $$$$(findstring src,$$$$(subdir)), $$$$($(PKG_GNULIB_BASE)))'
 
 ifeq ($(HOST_OS),Darwin)
   HOST_CFLAGS += -I/opt/homebrew/include
 endif
 
 HOST_CFLAGS += -Wno-error -fPIC
-
-HOST_CONFIGURE_VARS += LIBS=
 
 HOST_CONFIGURE_ARGS += \
 	--without-libintl-prefix \
@@ -86,7 +86,7 @@ define Host/Gnulib
 endef
 
 define Host/Compile
-	$(call Host/Compile/Default,SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))' LIBS=$(LIBS))
+	$(call Host/Compile/Default,SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))')
 endef
 
 define Host/Install
