@@ -27,7 +27,9 @@ PKG_SUBDIRS := \
 	libebl \
 	libdwelf \
 	libdwfl \
-	libdw
+	libdw \
+	libasm \
+	src
 
 PKG_GNULIB_BASE:=libgnu
 
