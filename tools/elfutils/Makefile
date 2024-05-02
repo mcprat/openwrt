@@ -55,23 +55,7 @@ include $(INCLUDE_DIR)/host-build.mk
 export $(PKG_GNULIB_BASE)=$(HOST_BUILD_DIR)/$(PKG_GNULIB_BASE)/$(PKG_GNULIB_BASE).la
 
 HOST_AM_VARS := \
-	readelf_LDADD='$$$$(libdw) $$$$(libebl) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	nm_LDADD='$$$$(libdw) $$$$(libebl) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$(obstack_LIBS) $$$$(demanglelib) $$$$($(PKG_GNULIB_BASE))' \
-	size_LDADD='$$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	strip_LDADD='$$$$(libebl) $$$$(libelf) $$$$(libdw) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	elflint_LDADD='$$$$(libebl) $$$$(libdw) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	findtextrel_LDADD='$$$$(libdw) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	addr2line_LDADD='$$$$(libdw) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$(demanglelib) $$$$($(PKG_GNULIB_BASE))' \
-	elfcmp_LDADD='$$$$(libebl) $$$$(libdw) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	objdump_LDADD='$$$$(libasm) $$$$(libebl) $$$$(libdw) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	ranlib_LDADD='libar.la $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$(obstack_LIBS) $$$$($(PKG_GNULIB_BASE))' \
-	strings_LDADD='$$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	ar_LDADD='libar.la $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$(obstack_LIBS) $$$$($(PKG_GNULIB_BASE))' \
-	unstrip_LDADD='$$$$(libebl) $$$$(libelf) $$$$(libdw) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	stack_LDADD='$$$$(libebl) $$$$(libelf) $$$$(libdw) $$$$(libeu) $$$$(argp_LDADD) $$$$(demanglelib) $$$$($(PKG_GNULIB_BASE))' \
-	elfcompress_LDADD='$$$$(libebl) $$$$(libelf) $$$$(libdw) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	elfclassify_LDADD='$$$$(libelf) $$$$(libdw) $$$$(libeu) $$$$(argp_LDADD) $$$$($(PKG_GNULIB_BASE))' \
-	srcfiles_LDADD='$$$$(libdw) $$$$(libelf) $$$$(libeu) $$$$(argp_LDADD) $$$$(libarchive_LIBS) $$$$(libdebuginfod) $$$$($(PKG_GNULIB_BASE))'
+	LIBS='$$$$(if $$$$(findstring src,$$$$(subdir)), $$$$($(PKG_GNULIB_BASE)))'
 
 ifeq ($(HOST_OS),Darwin)
   HOST_CFLAGS += -I/opt/homebrew/include
