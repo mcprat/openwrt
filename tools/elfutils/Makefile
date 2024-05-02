@@ -17,18 +17,6 @@ PKG_CPE_ID:=cpe:/a:elfutils_project:elfutils
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
-PKG_SUBDIRS := \
-	libgnu \
-	config \
-	lib \
-	libelf \
-	libcpu \
-	backends \
-	libebl \
-	libdwelf \
-	libdwfl \
-	libdw
-
 PKG_GNULIB_BASE:=libgnu
 
 PKG_GNULIB_ARGS = \
@@ -81,14 +69,6 @@ Hooks/HostConfigure/Pre := Host/Gnulib $(Hooks/HostConfigure/Pre)
 define Host/Gnulib
 	$(STAGING_DIR_HOST)/bin/gnulib-tool $(PKG_GNULIB_ARGS) $(PKG_GNULIB_MODS);
 	ln -sf ../lib/eu-config.h $(HOST_BUILD_DIR)/libgnu/;
-endef
-
-define Host/Compile
-	$(call Host/Compile/Default,SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))')
-endef
-
-define Host/Install
-	$(call Host/Compile/Default,install SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))')
 endef
 
 define Host/Uninstall
