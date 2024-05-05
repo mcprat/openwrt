@@ -1,0 +1,14 @@
+--- a/lib/fts.h
++++ b/lib/fts.h
+@@ -49,6 +49,11 @@
+ #ifndef _FTS_H
+ # define _FTS_H 1
+ 
++/* Apple Xcode uses the original inclusion guard */
++# ifdef __APPLE__
++#  define _FTS_H_ 1
++# endif
++
+ /* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_NODISCARD.  */
+ # if !_LIBC && !_GL_CONFIG_H_INCLUDED
+ #  error "Please include config.h first."
