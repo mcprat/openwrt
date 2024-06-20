@@ -88,6 +88,9 @@ HOST_MAKE_VARS = \
 
 HOST_MAKE_FLAGS =
 
+HOST_MAKE_OVERRIDE = \
+	$(if $(PKG_SUBDIRS),SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))')
+
 HOST_CONFIGURE_CMD = $(BASH) ./configure
 
 ifeq ($(HOST_OS),Darwin)
@@ -119,7 +122,7 @@ define Host/Compile/Default
 endef
 
 define Host/Compile
-  $(call Host/Compile/Default,$(if $(PKG_SUBDIRS),SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))'))
+  $(call Host/Compile/Default,$(HOST_MAKE_OVERRIDE))
 endef
 
 define Host/Gnulib/Compile
@@ -127,7 +130,7 @@ define Host/Gnulib/Compile
 endef
 
 define Host/Install/Default
-  $(call Host/Compile/Default,$(if $(PKG_SUBDIRS),SUBDIRS='$$$$(wildcard $(PKG_SUBDIRS))') install)
+  $(call Host/Compile/Default,$(HOST_MAKE_OVERRIDE) install)
 endef
 
 define Host/Install
