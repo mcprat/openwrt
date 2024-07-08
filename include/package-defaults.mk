@@ -151,11 +151,11 @@ define Build/Compile/Default
 endef
 
 define Build/Install/Default
-	$(MAKE_VARS) \
-	$(MAKE) -C $(PKG_BUILD_DIR)/$(MAKE_PATH) \
-		$(MAKE_INSTALL_FLAGS) \
+	$(call Build/Compile/Default, \
+		$(filter-out $(MAKE_FLAGS),$(MAKE_INSTALL_FLAGS)) \
 		$(MAKE_OVERRIDE) \
-		$(if $(1), $(1), install);
+		$(if $(1), $(1), install) \
+	)
 endef
 
 define Build/Dist/Default
